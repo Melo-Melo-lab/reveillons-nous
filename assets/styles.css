@@ -118,7 +118,7 @@ p {
 
 /* ── LOGO IMAGE ─────────────────────────────── */
 .nav__logo-img {
-  height: 36px;
+  height: 56px;
   width: auto;
   display: block;
 }
@@ -1293,20 +1293,21 @@ p {
   .contact {
     padding: var(--section-py) 40px;
   }
-
   .contact__block {
     gap: 48px;
   }
-
   .testimonials__block {
     padding: 40px 32px 60px;
   }
   .testimonial__card {
     flex: 0 0 calc((100% - 42px) / 2);
   }
-
   .footer__contact-strip {
     grid-template-columns: 1fr;
+  }
+  /* newsletter était en grid-column:2 – inutile en grille 1 col */
+  .footer__newsletter {
+    grid-column: 1;
   }
 }
 
@@ -1314,14 +1315,17 @@ p {
 @media (max-width: 768px) {
   :root {
     --section-py: 60px;
-    --fs-hero: 2.25rem; /* H1 → 36px */
-    --fs-h2: 1.75rem; /* H2 → 28px */
-    --fs-h3: 1.375rem; /* H3 → 22px */
+    --fs-hero: 2.25rem;
+    --fs-h2: 1.75rem;
+    --fs-h3: 1.375rem;
   }
 
   /* Nav mobile */
   .nav {
     padding: 0 20px;
+  }
+  .nav__logo-img {
+    height: 44px; /* réduit pour tenir dans la nav 70px */
   }
   .nav__links {
     display: none;
@@ -1354,6 +1358,7 @@ p {
   }
   .hero__left {
     padding: 40px 20px;
+    border-bottom: none; /* supprime la bordure orpheline quand la colonne droite est cachée */
   }
   .hero__right {
     display: none;
@@ -1396,6 +1401,7 @@ p {
   }
   .heading__label {
     font-size: var(--fs-h3);
+    white-space: normal; /* le texte long (ex: pétition CESE) doit pouvoir revenir à la ligne */
   }
 
   /* Testimonials */
@@ -1404,7 +1410,7 @@ p {
     border-radius: 24px;
   }
   .testimonial__card {
-    flex: 0 0 calc(100% - 0px);
+    flex: 0 0 100%;
   }
   .testimonials__nav {
     padding-top: 12px;
@@ -1426,7 +1432,7 @@ p {
     gap: 16px;
   }
   .faq__answer-inner {
-    padding: 16px 0 24px 68px;
+    padding: 16px 0 24px 52px; /* réduit de 68px → 52px */
     margin: 0 24px;
   }
   .faq__icon {
@@ -1463,6 +1469,7 @@ p {
     padding: 32px 0;
   }
   .footer__newsletter {
+    grid-column: 1;
     flex-direction: column;
   }
 
@@ -1477,14 +1484,51 @@ p {
 
 /* ── VERY SMALL (≤480px) ───────────────────── */
 @media (max-width: 480px) {
+  :root {
+    --fs-hero: 1.875rem;
+    --fs-h2: 1.5rem;
+    --fs-h3: 1.25rem;
+    --fs-body: 1rem;
+  }
   .btn {
     padding: 16px 24px;
     font-size: var(--fs-body);
   }
   .counter__number {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   .faq__question {
     gap: 12px;
+  }
+  .faq__num {
+    font-size: 2rem;
+    min-width: 44px;
+  }
+  .faq__answer-inner {
+    padding: 12px 0 20px 40px;
+    margin: 0 16px;
+  }
+  .testimonials__block {
+    padding: 24px 16px 48px;
+  }
+  .testimonial__card {
+    padding: 24px 20px;
+  }
+}
+
+/* ── EXTREME SMALL (≤360px) ─────────────────── */
+@media (max-width: 360px) {
+  :root {
+    --fs-hero: 1.625rem;
+  }
+  .nav__logo-img {
+    height: 36px;
+  }
+  .counter__card {
+    padding: 20px 16px 32px;
+  }
+  .faq__answer-inner {
+    padding: 12px 0 20px 32px;
+    margin: 0 12px;
   }
 }
