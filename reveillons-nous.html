@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Réveillons-nous</title>
+    <meta
+      name="description"
+      content="Rejoignez le mouvement Réveillons-nous pour une intelligence artificielle éthique, transparente et au service de l'humain."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════ -->
+    <nav class="nav" id="nav">
+      <a href="#" class="nav__logo">
+        <img
+          src="img/logo.png"
+          alt="Réveillons-nous"
+          class="nav__logo-img"
+          onerror="
+            this.style.display = 'none';
+            this.nextElementSibling.style.display = 'block';
+          "
+        />
+        <span class="nav__logo-text" style="display: none"
+          >Réveillons-nous</span
+        >
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- <li><a href="#evenements">Évènements</a></li> -->
+      </ul>
+      <div class="nav__burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="hero__inner">
+        <div class="hero__left">
+          <h1 class="hero__title">Pour une convention citoyenne sur l'IA</h1>
+          <p class="hero__text">
+            Alors que nos emplois, nos passions, nos vies et sociétés sont
+            percutés de plein fouet par le déploiement de l'Intelligence
+            Artificielle, nous constatons que nous n'avons aucune prise sur son
+            développement effréné. Nous exigeons une Convention Citoyenne
+            nationale éclairée par la science et les retours des associations de
+            terrain mobilisées sur l'IA et le numérique.
+          </p>
+          <!-- <button class="hero__read-more" id="heroReadMore">+ Lire plus</button>
+          <div class="hero__more" id="heroMore" hidden>
+            <p class="hero__text">
+              Si elle atteint les 150 000 signatures, il devra se saisir
+              officiellement du sujet et ouvrir ce débat public indispensable.
+            </p>
+          </div> -->
+          <a
+            href="https://petitions.lecese.fr/initiatives/i-821?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn26lbWwDFctfYHjTz9BrRrjzC-GNYjJENg6IhoIiTFUFc4McP_2nO2hmH-6c_aem_YWdncwBu26akunW9gSrshL743vVq&brid=YWdncwE1gIfNiYBWFRhP23KY1ED6"
+            target="_blank"
+            rel="noopener"
+            class="btn btn--dark"
+            >Lire la pétition</a
+          >
+        </div>
+        <div class="hero__right">
+          <div class="hero__video">
+            <video autoplay muted loop playsinline id="heroVideo">
+              <source
+                src="img/Réveillons-Nous présentation vidéo-2.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <button
+              class="hero__fullscreen-btn"
+              id="heroFullscreenBtn"
+              aria-label="Plein écran"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="15 3 21 3 21 9" />
+                <polyline points="9 21 3 21 3 15" />
+                <line x1="21" y1="3" x2="14" y2="10" />
+                <line x1="3" y1="21" x2="10" y2="14" />
+              </svg>
+            </button>
+            <button
+              class="hero__sound-btn"
+              id="heroSoundBtn"
+              aria-label="Activer le son"
+            >
+              <svg
+                id="heroIconMuted"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg
+                id="heroIconSound"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                style="display: none"
+              >
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       LOGOTYPES — "Nos partenaires"
+    ══════════════════════════════════════
+    <section class="logos">
+      <div class="logos__inner">
+        <span class="logos__label">Nos partenaires</span>
+        <div class="logos__strip">
+          <div class="logos__track">
+            <span class="logo-text">Le Monde</span>
+            <span class="logo-text">France Info</span>
+            <span class="logo-text">Libération</span>
+            <span class="logo-text">Sciences Po</span>
+            <span class="logo-text">France Culture</span>
+            <span class="logo-text">INRIA</span>
+            <span class="logo-text">Mediapart</span>
+            <span class="logo-text">La Croix</span>
+            <span class="logo-text">Le Monde</span>
+            <span class="logo-text">France Info</span>
+            <span class="logo-text">Libération</span>
+            <span class="logo-text">Sciences Po</span>
+            <span class="logo-text">France Culture</span>
+            <span class="logo-text">INRIA</span>
+            <span class="logo-text">Mediapart</span>
+            <span class="logo-text">La Croix</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <!-- ══════════════════════════════════════
+       COMPTEUR — fond blanc + carte sombre
+    ══════════════════════════════════════ -->
+    <section class="counter" id="counter">
+      <div class="counter__inner">
+        <div class="section__heading">
+          <span class="heading__label"
+            >Une pétition officielle déposée sur le site du CESE</span
+          >
+          <p class="heading__desc">
+            Le Conseil Economique, Social et Environnemental, sera
+            automatiquement saisi dès que le seuil des 150 000 signatures sera
+            atteint.
+          </p>
+        </div>
+        <div class="counter__card">
+          <div class="sig-bar__inner" id="sigBarInner"></div>
+          <div class="counter__display">
+            <div class="counter__sig-label">Signature ↗</div>
+            <div class="counter__number">
+              <span id="countNum">0</span>
+              <span class="counter__goal"> / 150 000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       TÉMOIGNAGES
+    ══════════════════════════════════════ -->
+    <section class="testimonials" id="temoignages">
+      <div class="container">
+        <div class="section__heading reveal">
+          <span class="heading__label">Nos témoignages</span>
+          <p class="heading__desc">
+            Leur diversité souligne les nombreuses dimensions, et l'ampleur des
+            impacts de l'IA sur nos vies. Nous sommes tous concernés.
+          </p>
+        </div>
+      </div>
+      <div class="testimonials__block">
+        <div class="testimonials__track" id="testimonialTrack">
+          <div class="testimonial__card">
+            <p class="testimonial__quote">
+              "Je m'appelle Lisa. J'ai 39 ans, et perdu quelques points de vie
+              professionnelle avec l'IA. Mon statut n'avait rien de compliqué.
+              Mes fins de mois non plus. Chargée de synthèses en CDI pour une
+              grande entreprise. Conceptrice-rédactrice freelance pour une
+              grande agence de pub. Ces deux dernières années, les choses ont
+              commencé à changer."
+            </p>
+            <div class="testimonial__author">
+              <div class="testimonial__name">Lisa</div>
+              <div class="testimonial__role">Journaliste</div>
+            </div>
+          </div>
+
+          <div class="testimonial__card">
+            <p class="testimonial__quote">
+              "Je m'appelle Emmanuelle, j'ai bientôt 40 ans. Je suis perplexe
+              face au développement massif de l'IA générative. À titre
+              personnel, j'avais réussi à construire de toutes pièces une
+              activité de conceptrice-rédactrice & conseil en communication qui
+              s'est fait balayée par l'arrivée des LLMs en 2022-2023. Mon CA est
+              tombé à 0 sur cette activité, dure situation quand on est à son
+              compte."
+            </p>
+            <div class="testimonial__author">
+              <div class="testimonial__name">Emmanuelle</div>
+              <div class="testimonial__role">Conceptrice-rédactrice</div>
+            </div>
+          </div>
+
+          <div class="testimonial__card">
+            <p class="testimonial__quote">
+              "Bonjour, je m'appelle Laura, j'ai 30 ans, je suis pianiste et
+              compositrice. Ma guerre contre l'IA générative a débuté le
+              vendredi 20 février 2026, lorsque quatre instrumentistes
+              professionnels, dont mon conjoint et moi-même, ont failli sans le
+              savoir, être des pantins exécutant des compositions générées par
+              l'IA."
+            </p>
+            <div class="testimonial__author">
+              <div class="testimonial__name">Laura</div>
+              <div class="testimonial__role">Pianiste, compositrice</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonials__nav">
+          <button class="testimonials__btn" id="prevBtn">←</button>
+          <div class="testimonials__dots" id="dots"></div>
+          <button class="testimonials__btn" id="nextBtn">→</button>
+        </div>
+      </div>
+      <div class="testimonials__cta">
+        <a
+          href="https://www.instagram.com/ia.reveillonsnous/"
+          target="_blank"
+          rel="noopener"
+          class="btn btn--dark"
+          >Voir tous les témoignages</a
+        >
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="section__heading reveal">
+          <span class="heading__label">FAQ</span>
+          <p class="heading__desc">
+            Vos questions, nos réponses.<br />Si vous ne trouvez pas la vôtre,
+            n'hésitez pas à nous écrire, et nous complèterons cette FAQ.
+          </p>
+        </div>
+        <div class="faq__list">
+          <div class="faq__item faq__item--green open">
+            <div class="faq__question">
+              <span class="faq__num">01</span>
+              <span class="faq__q-text">Etes-vous anti-IA ?</span>
+              <div class="faq__icon"></div>
+            </div>
+            <div class="faq__answer" style="max-height: 400px">
+              <div class="faq__answer-inner">
+                Le collectif milite pour l'ouverture d'un débat national éclairé
+                sur le développement de l'IA. Nous voulons que l'opinion
+                publique et les choix de nos dirigeants soient basés sur un fort
+                consensus scientifique sur sa sûreté. Nous voulons que des
+                gardes-fous soient mis en place dans ce développement, ce qui
+                n'est pas le cas actuellement. Notre position est alignée avec
+                la Déclaration sur la SuperIntelligence.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__num">02</span>
+              <span class="faq__q-text"
+                >Je n'habite pas en France. Comment puis-je me mobiliser ?</span
+              >
+              <div class="faq__icon"></div>
+            </div>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Notre pétition s'adresse au gouvernement français. Cependant, si
+                votre vie est impactée par l'IA, n'hésitez pas à nous envoyer
+                votre témoignage, peu importe votre profession, âge ou
+                nationalité, car le développement de l'IA est bel et bien un
+                enjeu mondial.<br /><br />
+                Nous vous invitons aussi à rejoindre notre partenaire
+                <a href="https://pauseia.fr/fr" target="_blank" rel="noopener"
+                  >Pause IA</a
+                >, la branche francophone de
+                <a href="https://pauseai.info/" target="_blank" rel="noopener"
+                  >Pause IA Global</a
+                >, qui se mobilise sur le terrain.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__num">03</span>
+              <span class="faq__q-text"
+                >Comment puis-je m'impliquer davantage ?</span
+              >
+              <div class="faq__icon"></div>
+            </div>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Plusieurs façons : partager la pétition, télécharger notre kit
+                militant, devenir bénévole ou faire un don pour soutenir nos
+                actions juridiques et médiatiques.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <!-- ══════════════════════════════════════
+       CONTACT — formulaire + illustration
+    ══════════════════════════════════════ -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section__heading reveal">
+          <span class="heading__label">Contact</span>
+          <p class="heading__desc"></p>
+        </div>
+        <div class="contact__block">
+          <form class="contact__form reveal" id="contactForm" novalidate>
+            <!-- <div class="form__group">
+              <label class="form__label">Option <span>*</span></label>
+              <select class="form__input form__select" required>
+                <option value="" disabled selected>Title</option>
+                <option>Pétition</option>
+                <option>Bénévolat</option>
+                <option>Partenariat</option>
+                <option>Presse</option>
+                <option>Autre</option>
+              </select>
+            </div> -->
+            <div class="form__group">
+              <label class="form__label" for="contactNom">Nom</label>
+              <input
+                id="contactNom"
+                type="text"
+                class="form__input"
+                placeholder="Votre nom"
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="contactEmail"
+                >E-mail <span>*</span></label
+              >
+              <input
+                id="contactEmail"
+                type="email"
+                class="form__input"
+                placeholder="Votre adresse e-mail"
+              />
+              <span class="form__error" id="errEmail"></span>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="contactMessage"
+                >Message <span>*</span></label
+              >
+              <textarea
+                id="contactMessage"
+                class="form__textarea"
+                placeholder="Votre message"
+              ></textarea>
+              <span class="form__error" id="errMessage"></span>
+            </div>
+            <div class="form__feedback" id="contactFeedback"></div>
+            <button type="submit" class="btn btn--dark form__submit">
+              Envoyer
+            </button>
+          </form>
+          <div class="contact__illus">
+            <img src="img/megaphone.svg" alt="Mégaphone" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       FOOTER — fond #191a23
+    ══════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img
+              src="img/logo.png"
+              alt="Réveillons-nous"
+              class="footer__logo-img"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'block';
+              "
+            />
+            <span class="footer__logo-text" style="display: none"
+              >Réveillons-nous</span
+            >
+          </div>
+        </div>
+        <nav class="footer__nav">
+          <a href="#temoignages">Témoignages</a>
+          <a href="#contact">Contact</a>
+          <!-- <a href="#evenements">Évènements</a> -->
+        </nav>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/ia.reveillonsnous/"
+            target="_blank"
+            rel="noopener"
+            class="footer__social"
+            aria-label="Instagram"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="white" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__contact-strip">
+        <div class="footer__contact-info">
+          <div class="footer__contact-item">
+            <span class="footer__contact-label">Email :</span>
+            <a href="mailto:contact@reveillons-nous.org"
+              >contact@reveillons-nous.org</a
+            >
+          </div>
+        </div>
+        <div class="footer__newsletter">
+          <div class="newsletter__field">
+            <input
+              type="email"
+              id="newsletterEmail"
+              placeholder="Votre adresse e-mail"
+            />
+            <span
+              class="form__error newsletter__error"
+              id="errNewsletter"
+            ></span>
+          </div>
+          <div class="newsletter__actions">
+            <button id="newsletterBtn">
+              Inscrivez-vous à notre newsletter
+            </button>
+            <span class="newsletter__feedback" id="newsletterFeedback"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026 Réveillons-nous. Tous droits réservés.</span>
+        <a href="#">Politique de confidentialité</a>
+      </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════
+       BOUTON FIXE
+    ══════════════════════════════════════ -->
+    <a
+      class="float-cta hidden"
+      id="floatCta"
+      href="https://petitions.lecese.fr/initiatives/i-821?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn26lbWwDFctfYHjTz9BrRrjzC-GNYjJENg6IhoIiTFUFc4McP_2nO2hmH-6c_aem_YWdncwBu26akunW9gSrshL743vVq&brid=YWdncwE1gIfNiYBWFRhP23KY1ED6"
+      target="_blank"
+      rel="noopener"
+      >Signer la pétition</a
+    >
+
+    <script src="assets/main.js"></script>
+  </body>
+</html>
