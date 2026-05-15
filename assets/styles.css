@@ -1115,6 +1115,18 @@ p {
   fill: var(--black);
   stroke: var(--black);
 }
+/* Instagram : fond transparent, seul le contour (stroke) devient noir */
+.footer__social[aria-label="Instagram"]:hover svg {
+  fill: none;
+  stroke: var(--black);
+}
+.footer__social[aria-label="Instagram"]:hover svg circle:last-child {
+  fill: var(--black);
+}
+/* YouTube : le triangle intérieur prend la couleur du fond vert pour rester visible */
+.footer__social[aria-label="YouTube"]:hover svg polygon {
+  fill: var(--green);
+}
 
 .footer__contact-strip {
   display: grid;
