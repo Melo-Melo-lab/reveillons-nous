@@ -1,3 +1,6 @@
 .DS_Store
 node_modules/
 package-lock.json
+
+# Vidéos trop lourdes pour GitHub (>100 MB)
+img/Réveillons-Nous présentation vidéo-3.mp4
