@@ -735,6 +735,8 @@ p {
 }
 .faq__answer-inner a {
   text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 /* ════════════════════════════════════════════
