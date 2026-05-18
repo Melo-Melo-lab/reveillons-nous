@@ -733,6 +733,9 @@ p {
   color: var(--dark);
   line-height: 1.75;
 }
+.faq__answer-inner a {
+  text-decoration: underline;
+}
 
 /* ════════════════════════════════════════════
    TEAM
