@@ -505,6 +505,7 @@ p {
   font-weight: var(--fw-regular);
   line-height: 1.1;
   color: var(--white);
+  white-space: nowrap;
 }
 .counter__goal {
   color: var(--green);
@@ -727,7 +728,7 @@ p {
 .faq__answer-inner {
   border-top: 1.5px solid rgba(0, 0, 0, 0.12);
   margin: 0 40px;
-  padding: 20px 0 32px 96px;
+  padding: 20px 20px 32px 20px;
   font-size: var(--fs-h4);
   color: var(--dark);
   line-height: 1.75;
@@ -995,10 +996,25 @@ p {
   color: #c53030;
   border: 1px solid #feb2b2;
 }
-.newsletter__field { display: flex; flex-direction: column; }
-.newsletter__error { color: #e53e3e; font-size: 0.8125rem; margin-top: 4px; min-height: 1em; }
-.newsletter__actions { display: flex; flex-direction: column; gap: 6px; }
-.newsletter__feedback { font-size: 0.8125rem; min-height: 1em; }
+.newsletter__field {
+  display: flex;
+  flex-direction: column;
+}
+.newsletter__error {
+  color: #e53e3e;
+  font-size: 0.8125rem;
+  margin-top: 4px;
+  min-height: 1em;
+}
+.newsletter__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.newsletter__feedback {
+  font-size: 0.8125rem;
+  min-height: 1em;
+}
 
 .form__input,
 .form__textarea {
