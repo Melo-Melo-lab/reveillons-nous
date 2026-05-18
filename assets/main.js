@@ -79,39 +79,10 @@ const GOAL        = 150000;
 const RECT_COUNT  = 44;
 const sigBarInner = document.getElementById('sigBarInner');
 
-let petitionCount = 276;
-
-fetch('https://petitions.lecese.fr/initiatives/i-821.json')
-  .then(r => r.json())
-  .then(data => {
-    const live = data.supports_count ?? data.online_votes_count ?? data.votes_count ?? null;
-    if (typeof live === 'number' && live > 0) petitionCount = live;
-  })
-  .catch(() => {});
-
-for (let i = 0; i < RECT_COUNT; i++) {
-  const rect = document.createElement('div');
-  rect.className = 'sig-bar__rect';
-  sigBarInner.appendChild(rect);
-}
-
-const counterSection = document.getElementById('counter');
-
-const sigBarObs = new IntersectionObserver(entries => {
-  if (!entries[0].isIntersecting) return;
-  const filled = Math.max(1, Math.round((petitionCount / GOAL) * RECT_COUNT));
-  const rects = sigBarInner.querySelectorAll('.sig-bar__rect');
-  rects.forEach((r, i) => {
-    setTimeout(() => {
-      if (i < filled) r.classList.add('signed');
-    }, i * 30);
-  });
-  sigBarObs.disconnect();
-}, { threshold: 0.35 });
-sigBarObs.observe(counterSection);
-
-// ── COMPTEUR ANIMÉ ───────────────────────────
-let counted = false;
+let petitionCount   = 312; // valeur de repli mise à jour manuellement
+let fetchComplete   = false;
+let sectionVisible  = false;
+let animationStarted = false;
 
 function animateCount(el, target, duration = 2500) {
   const start = performance.now();
@@ -124,13 +95,44 @@ function animateCount(el, target, duration = 2500) {
   requestAnimationFrame(tick);
 }
 
-const counterObs = new IntersectionObserver(entries => {
-  if (!entries[0].isIntersecting || counted) return;
-  counted = true;
+function startCounterAnimation() {
+  if (!fetchComplete || !sectionVisible || animationStarted) return;
+  animationStarted = true;
+
+  const filled = Math.max(1, Math.round((petitionCount / GOAL) * RECT_COUNT));
+  sigBarInner.querySelectorAll('.sig-bar__rect').forEach((r, i) => {
+    setTimeout(() => { if (i < filled) r.classList.add('signed'); }, i * 30);
+  });
+
   animateCount(document.getElementById('countNum'), petitionCount);
-  counterObs.disconnect();
+}
+
+fetch('/api/signatures')
+  .then(r => r.json())
+  .then(data => {
+    if (typeof data.count === 'number' && data.count > 0) petitionCount = data.count;
+  })
+  .catch(() => {})
+  .finally(() => {
+    fetchComplete = true;
+    startCounterAnimation();
+  });
+
+for (let i = 0; i < RECT_COUNT; i++) {
+  const rect = document.createElement('div');
+  rect.className = 'sig-bar__rect';
+  sigBarInner.appendChild(rect);
+}
+
+const counterSection = document.getElementById('counter');
+
+const sigBarObs = new IntersectionObserver(entries => {
+  if (!entries[0].isIntersecting) return;
+  sectionVisible = true;
+  sigBarObs.disconnect();
+  startCounterAnimation();
 }, { threshold: 0.35 });
-counterObs.observe(counterSection);
+sigBarObs.observe(counterSection);
 
 // ── FAQ ACCORDÉON ────────────────────────────
 document.querySelectorAll('.faq__question').forEach(btn => {
