@@ -187,6 +187,7 @@ p {
   padding: 6px 16px;
   border-radius: 7px;
   white-space: nowrap;
+  transform: rotate(-2deg);
 }
 .heading__desc {
   font-size: var(--fs-body);
