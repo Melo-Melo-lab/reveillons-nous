@@ -180,14 +180,23 @@ p {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  background: var(--green);
+  position: relative;
   color: var(--black);
   font-size: var(--fs-h3); /* 30px */
   font-weight: var(--fw-medium);
   padding: 6px 16px;
   border-radius: 7px;
   white-space: nowrap;
-  transform: rotate(-2deg);
+  z-index: 1;
+}
+.heading__label::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--green);
+  border-radius: 7px;
+  transform: rotate(-1.5deg);
+  z-index: -1;
 }
 .heading__desc {
   font-size: var(--fs-body);
