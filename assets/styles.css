@@ -149,7 +149,7 @@ p {
   border-radius: 14px;
   font-family: var(--font);
   font-size: var(--fs-nav);
-  font-weight: var(--fw-regular);
+  font-weight: 600;
   line-height: 1.4;
   transition:
     opacity 0.25s var(--ease),
@@ -224,8 +224,8 @@ p {
   position: fixed;
   inset: 0 0 auto;
   z-index: 100;
-  height: 70px;
-  padding: 0 80px;
+  height: auto;
+  padding: 10px 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1251,13 +1251,20 @@ p {
   border-radius: 8px;
   font-family: var(--font);
   font-size: var(--fs-nav);
+  font-weight: 600;
   background: var(--green);
   color: var(--black);
   opacity: 1;
   transform: translateY(0);
   transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
     opacity 0.35s var(--ease),
     transform 0.4s var(--spring);
+}
+.float-cta--inverted {
+  background: var(--black);
+  color: var(--white);
 }
 .float-cta:hover {
   opacity: 0.85;
