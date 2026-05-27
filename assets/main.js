@@ -159,85 +159,29 @@ document.querySelectorAll('.faq__question').forEach(btn => {
   });
 });
 
-// ── SLIDER TÉMOIGNAGES ───────────────────────
-const track    = document.getElementById('testimonialTrack');
-const cards    = [...track.querySelectorAll('.testimonial__card')];
-const dotsWrap = document.getElementById('dots');
-const prevBtn  = document.getElementById('prevBtn');
-const nextBtn  = document.getElementById('nextBtn');
-
-let current  = 0;
-let perView  = 3;
-let maxIdx   = 0;
-let autoTimer;
-
-function getPerView() {
-  if (window.innerWidth < 769) return 1;
-  return 2;
-}
-
-function buildDots() {
-  dotsWrap.innerHTML = '';
-  maxIdx = Math.max(0, cards.length - perView);
-  for (let i = 0; i <= maxIdx; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'testimonials__dot' + (i === current ? ' active' : '');
-    dot.addEventListener('click', () => { goTo(i); resetAuto(); });
-    dotsWrap.appendChild(dot);
-  }
-}
-
-function updateDots() {
-  document.querySelectorAll('.testimonials__dot').forEach((d, i) => {
-    d.classList.toggle('active', i === current);
-  });
-}
-
-function goTo(idx) {
-  current = Math.max(0, Math.min(idx, maxIdx));
-  const w = cards[0].offsetWidth + 42;
-  track.style.transform = `translateX(-${current * w}px)`;
-  updateDots();
-}
-
-function setup() {
-  perView = getPerView();
-  maxIdx  = Math.max(0, cards.length - perView);
-  current = Math.min(current, maxIdx);
-  buildDots();
-  goTo(current);
-}
-
-prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
-nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
-
-function startAuto() {
-  autoTimer = setInterval(() => goTo(current < maxIdx ? current + 1 : 0), 5000);
-}
-function resetAuto() { clearInterval(autoTimer); startAuto(); }
-
-window.addEventListener('resize', setup);
-setup();
-startAuto();
 
 // ── FORMULAIRE CONTACT ───────────────────────
+function isValidEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
 function setError(inputEl, errorEl, msg) {
   inputEl.classList.toggle('form__input--error', !!msg);
   inputEl.classList.toggle('form__textarea--error', !!msg);
   errorEl.textContent = msg;
 }
 
-function isValidEmail(v) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
-
 document.getElementById('contactForm')?.addEventListener('submit', e => {
   e.preventDefault();
 
-  const email   = document.getElementById('contactEmail');
-  const message = document.getElementById('contactMessage');
+  const nom      = document.getElementById('contactNom');
+  const email    = document.getElementById('contactEmail');
+  const message  = document.getElementById('contactMessage');
+  const sujet    = document.getElementById('contactSujet');
   const feedback = document.getElementById('contactFeedback');
+  const btn      = e.target.querySelector('button[type=submit]');
 
+  // Validation
   let valid = true;
 
   setError(email, document.getElementById('errEmail'),
@@ -257,16 +201,28 @@ document.getElementById('contactForm')?.addEventListener('submit', e => {
     return;
   }
 
-  const btn = e.target.querySelector('button[type=submit]');
   btn.textContent = 'Envoi en cours…';
   btn.disabled = true;
 
-  setTimeout(() => {
-    feedback.textContent = 'Une erreur est survenue. Veuillez réessayer plus tard ou nous contacter directement par e-mail.';
+  emailjs.send('service_yp9ijoq', 'template_t1w61qj', {
+    nom:     nom.value.trim() || 'Non renseigné',
+    email:   email.value.trim(),
+    sujet:   sujet.value || 'Non renseigné',
+    message: message.value.trim(),
+  })
+  .then(() => {
+    feedback.textContent = '✓ Message envoyé ! Nous vous répondrons dans les plus brefs délais.';
+    feedback.classList.add('form__feedback--success');
+    e.target.reset();
+  })
+  .catch(() => {
+    feedback.textContent = 'Une erreur est survenue. Écrivez-nous directement à contact@reveillons-nous.org';
     feedback.classList.add('form__feedback--error');
+  })
+  .finally(() => {
     btn.textContent = 'Envoyer';
     btn.disabled = false;
-  }, 1200);
+  });
 });
 
 // ── NEWSLETTER ───────────────────────────────

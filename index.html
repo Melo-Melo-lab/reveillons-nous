@@ -89,6 +89,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init('s0ge4Zr5VBshGq6oA');</script>
   </head>
   <body>
     <!-- ══════════════════════════════════════
@@ -264,7 +266,7 @@
     </section>
 
     <!-- ══════════════════════════════════════
-       TÉMOIGNAGES
+       TÉMOIGNAGES — Instagram feed
     ══════════════════════════════════════ -->
     <section class="testimonials" id="temoignages">
       <div class="container">
@@ -275,60 +277,13 @@
             impacts de l'IA sur nos vies. Nous sommes tous concernés.
           </p>
         </div>
-      </div>
-      <div class="testimonials__block">
-        <div class="testimonials__track" id="testimonialTrack">
-          <div class="testimonial__card">
-            <p class="testimonial__quote">
-              "Je m'appelle Lisa. J'ai 39 ans, et perdu quelques points de vie
-              professionnelle avec l'IA. Mon statut n'avait rien de compliqué.
-              Mes fins de mois non plus. Chargée de synthèses en CDI pour une
-              grande entreprise. Conceptrice-rédactrice freelance pour une
-              grande agence de pub. Ces deux dernières années, les choses ont
-              commencé à changer."
-            </p>
-            <div class="testimonial__author">
-              <div class="testimonial__name">Lisa</div>
-              <div class="testimonial__role">Journaliste</div>
-            </div>
-          </div>
-
-          <div class="testimonial__card">
-            <p class="testimonial__quote">
-              "Je m'appelle Emmanuelle, j'ai bientôt 40 ans. Je suis perplexe
-              face au développement massif de l'IA générative. À titre
-              personnel, j'avais réussi à construire de toutes pièces une
-              activité de conceptrice-rédactrice & conseil en communication qui
-              s'est fait balayée par l'arrivée des LLMs en 2022-2023. Mon CA est
-              tombé à 0 sur cette activité, dure situation quand on est à son
-              compte."
-            </p>
-            <div class="testimonial__author">
-              <div class="testimonial__name">Emmanuelle</div>
-              <div class="testimonial__role">Conceptrice-rédactrice</div>
-            </div>
-          </div>
-
-          <div class="testimonial__card">
-            <p class="testimonial__quote">
-              "Bonjour, je m'appelle Laura, j'ai 30 ans, je suis pianiste et
-              compositrice. Ma guerre contre l'IA générative a débuté le
-              vendredi 20 février 2026, lorsque quatre instrumentistes
-              professionnels, dont mon conjoint et moi-même, ont failli sans le
-              savoir, être des pantins exécutant des compositions générées par
-              l'IA."
-            </p>
-            <div class="testimonial__author">
-              <div class="testimonial__name">Laura</div>
-              <div class="testimonial__role">Pianiste, compositrice</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonials__nav">
-          <button class="testimonials__btn" id="prevBtn">←</button>
-          <div class="testimonials__dots" id="dots"></div>
-          <button class="testimonials__btn" id="nextBtn">→</button>
-        </div>
+        <behold-widget feed-id="3o6jjyjrSeS9sLQF06Dl"></behold-widget>
+        <script>
+          (() => {
+            const d=document,s=d.createElement("script");s.type="module";
+            s.src="https://w.behold.so/widget.js";d.head.append(s);
+          })();
+        </script>
       </div>
       <div class="testimonials__cta">
         <a
@@ -477,25 +432,25 @@
     <!-- ══════════════════════════════════════
        CONTACT — formulaire + illustration
     ══════════════════════════════════════ -->
-    <!--  <section class="contact" id="contact">
+    <section class="contact" id="contact">
       <div class="container">
         <div class="section__heading reveal">
           <span class="heading__label">Contact</span>
-          <p class="heading__desc"></p>
+          <p class="heading__desc">Une question ? Écrivez-nous.</p>
         </div>
         <div class="contact__block">
           <form class="contact__form reveal" id="contactForm" novalidate>
             <div class="form__group">
-              <label class="form__label">Option <span>*</span></label>
-              <select class="form__input form__select" required>
-                <option value="" disabled selected>Title</option>
+              <label class="form__label">Sujet <span>*</span></label>
+              <select class="form__input form__select" id="contactSujet" required>
+                <option value="" disabled selected>Choisir un sujet</option>
                 <option>Pétition</option>
                 <option>Bénévolat</option>
                 <option>Partenariat</option>
                 <option>Presse</option>
                 <option>Autre</option>
               </select>
-            </div> 
+            </div>
             <div class="form__group">
               <label class="form__label" for="contactNom">Nom</label>
               <input
@@ -538,7 +493,7 @@
           </div>
         </div>
       </div>
-    </section>-->
+    </section>
 
     <!-- ══════════════════════════════════════
        FOOTER — fond #191a23
