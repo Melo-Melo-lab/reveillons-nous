@@ -231,7 +231,7 @@ function isValidEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 }
 
-document.getElementById('contactForm').addEventListener('submit', e => {
+document.getElementById('contactForm')?.addEventListener('submit', e => {
   e.preventDefault();
 
   const email   = document.getElementById('contactEmail');
@@ -270,7 +270,7 @@ document.getElementById('contactForm').addEventListener('submit', e => {
 });
 
 // ── NEWSLETTER ───────────────────────────────
-document.getElementById('newsletterBtn').addEventListener('click', () => {
+document.getElementById('newsletterBtn')?.addEventListener('click', () => {
   const input    = document.getElementById('newsletterEmail');
   const errEl    = document.getElementById('errNewsletter');
   const feedback = document.getElementById('newsletterFeedback');
@@ -296,22 +296,30 @@ document.getElementById('newsletterBtn').addEventListener('click', () => {
 // ── BOUTON FLOTTANT ──────────────────────────
 const floatCta = document.getElementById('floatCta');
 
-let scrollTimer;
-window.addEventListener('scroll', () => {
-  floatCta.classList.add('hidden');
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(() => {
-    const atBottom = (window.scrollY + window.innerHeight) > document.querySelector('.footer').offsetTop - 80;
-    if (!atBottom) floatCta.classList.remove('hidden');
-  }, 500);
-}, { passive: true });
+function updateFloatCta() {
+  if (!floatCta) return;
+  const footer   = document.querySelector('.footer');
+  const atBottom = footer && (window.scrollY + window.innerHeight) > footer.offsetTop - 80;
+  if (window.scrollY > 80 && !atBottom) {
+    floatCta.classList.remove('hidden');
+  } else {
+    floatCta.classList.add('hidden');
+  }
+}
+
+window.addEventListener('scroll', updateFloatCta, { passive: true });
+updateFloatCta();
 
 // ── SMOOTH SCROLL (offset nav) ───────────────
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+    const href = link.getAttribute('href');
+    if (!href || href === '#') return;
+    try {
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+    } catch (_) {}
   });
 });
