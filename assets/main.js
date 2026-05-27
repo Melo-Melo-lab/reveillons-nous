@@ -265,6 +265,25 @@ function updateFloatCta() {
 window.addEventListener('scroll', updateFloatCta, { passive: true });
 updateFloatCta();
 
+// ── FLOAT CTA : INVERSION SUR FOND VERT ─────
+function updateFloatCtaTheme() {
+  if (!floatCta) return;
+  const ctaRect = floatCta.getBoundingClientRect();
+  const greenEls = document.querySelectorAll('.heading__label');
+  let overGreen = false;
+  greenEls.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (
+      ctaRect.left < r.right  &&
+      ctaRect.right > r.left  &&
+      ctaRect.top   < r.bottom &&
+      ctaRect.bottom > r.top
+    ) overGreen = true;
+  });
+  floatCta.classList.toggle('float-cta--inverted', overGreen);
+}
+window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
+
 // ── SMOOTH SCROLL (offset nav) ───────────────
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
