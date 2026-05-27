@@ -171,7 +171,7 @@ function setError(inputEl, errorEl, msg) {
   errorEl.textContent = msg;
 }
 
-document.getElementById('contactForm')?.addEventListener('submit', e => {
+document.getElementById('contactForm')?.addEventListener('submit', async e => {
   e.preventDefault();
 
   const nom      = document.getElementById('contactNom');
@@ -204,25 +204,36 @@ document.getElementById('contactForm')?.addEventListener('submit', e => {
   btn.textContent = 'Envoi en cours…';
   btn.disabled = true;
 
-  emailjs.send('service_yp9ijoq', 'template_t1w61qj', {
-    nom:     nom.value.trim() || 'Non renseigné',
-    email:   email.value.trim(),
-    sujet:   sujet.value || 'Non renseigné',
-    message: message.value.trim(),
-  })
-  .then(() => {
-    feedback.textContent = '✓ Message envoyé ! Nous vous répondrons dans les plus brefs délais.';
-    feedback.classList.add('form__feedback--success');
-    e.target.reset();
-  })
-  .catch(() => {
-    feedback.textContent = 'Une erreur est survenue. Écrivez-nous directement à contact@reveillons-nous.org';
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'd010b76e-cfaa-47e2-90e2-10ffb057fdb0',
+        subject:    'Nouveau message - ' + (sujet.value || 'Non renseigné'),
+        nom:        nom.value.trim() || 'Non renseigné',
+        email:      email.value.trim(),
+        sujet:      sujet.value || 'Non renseigné',
+        message:    message.value.trim(),
+        from_name:  nom.value.trim() || 'Visiteur',
+        replyto:    email.value.trim(),
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      feedback.textContent = '✓ Message envoyé ! Nous vous répondrons dans les plus brefs délais.';
+      feedback.classList.add('form__feedback--success');
+      e.target.reset();
+    } else {
+      throw new Error();
+    }
+  } catch {
+    feedback.textContent = 'Une erreur est survenue. Écrivez-nous à contact@reveillons-nous.org';
     feedback.classList.add('form__feedback--error');
-  })
-  .finally(() => {
+  } finally {
     btn.textContent = 'Envoyer';
     btn.disabled = false;
-  });
+  }
 });
 
 // ── NEWSLETTER ───────────────────────────────
