@@ -672,7 +672,7 @@ p {
    ════════════════════════════════════════════ */
 .faq {
   padding: var(--section-py) 80px;
-  padding-top: 40px;
+  padding-top: 56px;
   background: var(--white);
 }
 .faq__list {
@@ -818,7 +818,7 @@ p {
    ════════════════════════════════════════════ */
 .testimonials {
   padding: var(--section-py) 0;
-  padding-top: 40px;
+  padding-top: 56px;
   background: var(--white);
 }
 .testimonials .container {
