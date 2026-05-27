@@ -55,7 +55,7 @@ button {
 
   /* Layout */
   --radius: 14px;
-  --section-py: 100px;
+  --section-py: 72px;
   --container: 1240px;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -112,7 +112,7 @@ p {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 120px;
+  padding: 0 80px;
   box-sizing: border-box;
 }
 
@@ -215,7 +215,7 @@ p {
   inset: 0 0 auto;
   z-index: 100;
   height: 70px;
-  padding: 0 120px;
+  padding: 0 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -288,7 +288,7 @@ p {
   grid-template-columns: 47fr 53fr;
 }
 .hero__left {
-  padding: 66px 120px;
+  padding: 56px 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -460,7 +460,7 @@ p {
    ════════════════════════════════════════════ */
 .counter {
   background: var(--white);
-  padding: var(--section-py) 120px;
+  padding: var(--section-py) 80px;
 }
 .counter__inner {
   max-width: var(--container);
@@ -661,7 +661,7 @@ p {
    FAQ
    ════════════════════════════════════════════ */
 .faq {
-  padding: var(--section-py) 120px;
+  padding: var(--section-py) 80px;
   background: var(--white);
 }
 .faq__list {
@@ -939,7 +939,7 @@ p {
    CONTACT
    ════════════════════════════════════════════ */
 .contact {
-  padding: var(--section-py) 120px;
+  padding: var(--section-py) 80px;
   background: var(--gray-100);
 }
 .contact__block {
@@ -1277,22 +1277,22 @@ p {
 /* ── TABLET LARGE (≤1200px) ─────────────────── */
 @media (max-width: 1200px) {
   .container {
-    padding: 0 60px;
+    padding: 0 48px;
   }
   .nav {
-    padding: 0 60px;
+    padding: 0 48px;
   }
   .hero__left {
-    padding: 60px 48px 60px 60px;
+    padding: 52px 40px 52px 48px;
   }
   .counter {
-    padding: var(--section-py) 60px;
+    padding: var(--section-py) 48px;
   }
   .faq {
-    padding: var(--section-py) 60px;
+    padding: var(--section-py) 48px;
   }
   .contact {
-    padding: var(--section-py) 60px;
+    padding: var(--section-py) 48px;
   }
   .testimonials__block {
     padding: 48px 40px 60px;
@@ -1305,26 +1305,26 @@ p {
 /* ── TABLET (≤1024px) ──────────────────────── */
 @media (max-width: 1024px) {
   :root {
-    --section-py: 80px;
+    --section-py: 60px;
   }
 
   .container {
-    padding: 0 40px;
+    padding: 0 32px;
   }
   .nav {
-    padding: 0 40px;
+    padding: 0 32px;
   }
   .hero__left {
-    padding: 48px 32px 48px 40px;
+    padding: 44px 28px 44px 32px;
   }
   .counter {
-    padding: var(--section-py) 40px;
+    padding: var(--section-py) 32px;
   }
   .faq {
-    padding: var(--section-py) 40px;
+    padding: var(--section-py) 32px;
   }
   .contact {
-    padding: var(--section-py) 40px;
+    padding: var(--section-py) 32px;
   }
   .contact__block {
     gap: 48px;
