@@ -442,25 +442,27 @@
         </div>
         <div class="contact__block">
           <form class="contact__form reveal" id="contactForm" novalidate>
-            <div class="form__group">
-              <label class="form__label">Sujet <span>*</span></label>
-              <select class="form__input form__select" id="contactSujet" required>
-                <option value="" disabled selected>Choisir un sujet</option>
-                <option>Pétition</option>
-                <option>Bénévolat</option>
-                <option>Partenariat</option>
-                <option>Presse</option>
-                <option>Autre</option>
-              </select>
-            </div>
-            <div class="form__group">
-              <label class="form__label" for="contactNom">Nom</label>
-              <input
-                id="contactNom"
-                type="text"
-                class="form__input"
-                placeholder="Votre nom"
-              />
+            <div class="form__row">
+              <div class="form__group">
+                <label class="form__label" for="contactNom">Nom</label>
+                <input
+                  id="contactNom"
+                  type="text"
+                  class="form__input"
+                  placeholder="Votre nom"
+                />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Sujet <span>*</span></label>
+                <select class="form__input form__select" id="contactSujet" required>
+                  <option value="" disabled selected>Choisir un sujet</option>
+                  <option>Pétition</option>
+                  <option>Bénévolat</option>
+                  <option>Partenariat</option>
+                  <option>Presse</option>
+                  <option>Autre</option>
+                </select>
+              </div>
             </div>
             <div class="form__group">
               <label class="form__label" for="contactEmail"
@@ -490,9 +492,6 @@
               Envoyer
             </button>
           </form>
-          <div class="contact__illus">
-            <img src="img/megaphone.svg" alt="Mégaphone" />
-          </div>
         </div>
       </div>
     </section>
