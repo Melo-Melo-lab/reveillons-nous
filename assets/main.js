@@ -205,63 +205,16 @@ document.getElementById('contactForm')?.addEventListener('submit', async e => {
   btn.disabled = true;
 
   try {
-    const nomVal     = nom.value.trim()     || 'Non renseigné';
-    const emailVal   = email.value.trim();
-    const sujetVal   = sujet.value          || 'Non renseigné';
-    const messageVal = message.value.trim();
-
-    const htmlBody = `
-<div style="font-family:Arial,sans-serif;background:#f3f3f3;padding:40px 20px;">
-  <div style="max-width:560px;margin:0 auto;background:#191a23;border-radius:24px;overflow:hidden;">
-    <div style="background:#b9ff66;padding:28px 40px;">
-      <p style="margin:0;font-size:13px;font-weight:bold;color:#191a23;text-transform:uppercase;letter-spacing:1px;">Réveillons-nous</p>
-      <h1 style="margin:6px 0 0;font-size:24px;color:#191a23;">Nouveau message reçu</h1>
-    </div>
-    <div style="padding:32px 40px;">
-      <table style="width:100%;border-collapse:collapse;">
-        <tr>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:12px;text-transform:uppercase;letter-spacing:1px;width:100px;">Nom</td>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:#fff;font-size:15px;">${nomVal}</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:12px;text-transform:uppercase;letter-spacing:1px;">Email</td>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:#b9ff66;font-size:15px;">${emailVal}</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:12px;text-transform:uppercase;letter-spacing:1px;">Sujet</td>
-          <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);color:#fff;font-size:15px;">${sujetVal}</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 0;color:rgba(255,255,255,0.4);font-size:12px;text-transform:uppercase;letter-spacing:1px;vertical-align:top;">Message</td>
-          <td style="padding:12px 0;color:#fff;font-size:15px;line-height:1.7;">${messageVal.replace(/\n/g, '<br>')}</td>
-        </tr>
-      </table>
-    </div>
-    <div style="padding:20px 40px;border-top:1px solid rgba(255,255,255,0.08);">
-      <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.3);">© 2026 Réveillons-nous — contact@reveillons-nous.org</p>
-    </div>
-  </div>
-</div>`;
-
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: 'd010b76e-cfaa-47e2-90e2-10ffb057fdb0',
-        subject:    'Nouveau message - ' + sujetVal,
-        from_name:  nomVal,
-        replyto:    emailVal,
-        html:       htmlBody,
-      })
+    await emailjs.send('service_yp9ijoq', 'template_fp6bvn3', {
+      nom:     nom.value.trim()   || 'Non renseigné',  // {{nom}} dans le corps
+      name:    nom.value.trim()   || 'Non renseigné',  // {{name}} dans From Name
+      email:   email.value.trim(),                      // {{email}} dans Reply To + corps
+      sujet:   sujet.value        || 'Non renseigné',   // {{sujet}}
+      message: message.value.trim(),                    // {{message}}
     });
-    const data = await res.json();
-    if (data.success) {
-      feedback.textContent = '✓ Message envoyé ! Nous vous répondrons dans les plus brefs délais.';
-      feedback.classList.add('form__feedback--success');
-      e.target.reset();
-    } else {
-      throw new Error();
-    }
+    feedback.textContent = '✓ Message envoyé ! Nous vous répondrons dans les plus brefs délais.';
+    feedback.classList.add('form__feedback--success');
+    e.target.reset();
   } catch {
     feedback.textContent = 'Une erreur est survenue. Écrivez-nous à contact@reveillons-nous.org';
     feedback.classList.add('form__feedback--error');
