@@ -269,20 +269,21 @@ updateFloatCta();
 function updateFloatCtaTheme() {
   if (!floatCta) return;
   const ctaRect = floatCta.getBoundingClientRect();
-  const greenEls = document.querySelectorAll('.heading__label');
   let overGreen = false;
-  greenEls.forEach(el => {
+
+  document.querySelectorAll('.faq__item--green, .btn--green, .sig-bar__rect.signed, .counter__goal').forEach(el => {
+    if (overGreen) return;
     const r = el.getBoundingClientRect();
-    if (
-      ctaRect.left < r.right  &&
-      ctaRect.right > r.left  &&
-      ctaRect.top   < r.bottom &&
-      ctaRect.bottom > r.top
-    ) overGreen = true;
+    if (ctaRect.left < r.right && ctaRect.right > r.left &&
+        ctaRect.top  < r.bottom && ctaRect.bottom > r.top) {
+      overGreen = true;
+    }
   });
+
   floatCta.classList.toggle('float-cta--inverted', overGreen);
 }
 window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
+updateFloatCtaTheme();
 
 // ── CALENDRIER GOOGLE CALENDAR API ───────────
 (function initCalendar() {
