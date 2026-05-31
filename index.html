@@ -310,13 +310,13 @@
           </p>
         </div>
         <div class="evenements__calendar">
-          <iframe
-            src="https://calendar.google.com/calendar/embed?src=f23aa8edc7d1484e74c26f9a8699a7e9e0d49c15a13c03d72804f7db12c1b6de%40group.calendar.google.com&ctz=Europe%2FParis&hl=fr&mode=AGENDA&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff"
-            style="border: 0"
-            width="100%"
-            frameborder="0"
-            scrolling="no"
-          ></iframe>
+          <div class="cal__nav">
+            <button class="cal__btn" id="calPrev">←</button>
+            <span class="cal__month-label" id="calMonthLabel"></span>
+            <button class="cal__btn" id="calNext">→</button>
+          </div>
+          <div class="cal__grid" id="calGrid"></div>
+          <div class="cal__events" id="calEvents"></div>
         </div>
       </div>
     </section>
