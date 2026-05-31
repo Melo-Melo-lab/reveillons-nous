@@ -358,7 +358,7 @@ window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
           <span class="cal__event-month">${MOISC[s.getMonth()]}</span>
         </div>
         <div class="cal__event-info">
-          <div class="cal__event-title">${ev.summary}</div>
+          <div class="cal__event-title">${ev.summary || '(Sans titre)'}</div>
           <div class="cal__event-time">${time}</div>
           ${ev.location ? `<div class="cal__event-loc">📍 ${ev.location}</div>` : ''}
         </div>
