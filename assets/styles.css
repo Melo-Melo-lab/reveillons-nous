@@ -695,23 +695,11 @@ p {
   background: var(--gray-100);
 }
 .evenements__calendar {
-  position: relative;
   background: var(--white);
   border-radius: 45px;
   overflow: hidden;
   border: 1px solid var(--gray-200);
   box-shadow: 0 4px 32px rgba(0,0,0,0.06);
-}
-.evenements__calendar::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  background: var(--white);
-  border-radius: 0 0 45px 45px;
-  pointer-events: none;
 }
 .evenements__calendar iframe {
   display: block;
