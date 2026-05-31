@@ -108,9 +108,9 @@
       </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#evenements">Évènements</a></li>
         <li><a href="#faq">Qui sommes-nous</a></li>
         <li><a href="#contact">Contact</a></li>
-        <!-- <li><a href="#evenements">Évènements</a></li> -->
       </ul>
       <div class="nav__burger" id="burger">
         <span></span><span></span><span></span>
@@ -295,6 +295,29 @@
           class="btn btn--dark"
           >Voir tous les témoignages</a
         >
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       ÉVÉNEMENTS — Google Calendar
+    ══════════════════════════════════════ -->
+    <section class="evenements" id="evenements">
+      <div class="container">
+        <div class="section__heading reveal">
+          <span class="heading__label">Nos évènements</span>
+          <p class="heading__desc">
+            Retrouvez toutes nos actions, conférences et mobilisations à venir.
+          </p>
+        </div>
+        <div class="evenements__calendar">
+          <div class="cal__nav">
+            <button class="cal__btn" id="calPrev">←</button>
+            <span class="cal__month-label" id="calMonthLabel"></span>
+            <button class="cal__btn" id="calNext">→</button>
+          </div>
+          <div class="cal__grid" id="calGrid"></div>
+          <div class="cal__events" id="calEvents"></div>
+        </div>
       </div>
     </section>
 
@@ -514,7 +537,7 @@
           <a href="#temoignages">Témoignages</a>
           <a href="#faq">Qui sommes-nous</a>
           <a href="#contact">Contact</a>
-          <!-- <a href="#evenements">Évènements</a> -->
+          <a href="#evenements">Évènements</a>
         </nav>
         <div class="footer__socials">
           <a

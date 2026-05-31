@@ -284,6 +284,100 @@ function updateFloatCtaTheme() {
 }
 window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
 
+// ── CALENDRIER GOOGLE CALENDAR API ───────────
+(function initCalendar() {
+  const API_KEY     = 'AIzaSyCkD6tPxJ0HAw8JUTwESMxEOrGnlSUWYNo';
+  const CALENDAR_ID = 'f23aa8edc7d1484e74c26f9a8699a7e9e0d49c15a13c03d72804f7db12c1b6de@group.calendar.google.com';
+  const MOIS   = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const MOISC  = ['jan.','fév.','mar.','avr.','mai','juin','juil.','aoû.','sep.','oct.','nov.','déc.'];
+  const JOURS  = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+  const calGrid   = document.getElementById('calGrid');
+  const calEvents = document.getElementById('calEvents');
+  const calLabel  = document.getElementById('calMonthLabel');
+  const btnPrev   = document.getElementById('calPrev');
+  const btnNext   = document.getElementById('calNext');
+  if (!calGrid) return;
+
+  let current = new Date();
+  let allEvents = [];
+
+  async function fetchEvents() {
+    const now  = new Date();
+    const max  = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+    const url  = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&timeMin=${now.toISOString()}&timeMax=${max.toISOString()}&orderBy=startTime&singleEvents=true&maxResults=100`;
+    try {
+      const data = await fetch(url).then(r => r.json());
+      allEvents  = data.items || [];
+    } catch(e) { allEvents = []; }
+    render();
+  }
+
+  function render() {
+    const y = current.getFullYear(), m = current.getMonth();
+    calLabel.textContent = `${MOIS[m]} ${y}`;
+    const firstDay    = new Date(y, m, 1).getDay();
+    const offset      = firstDay === 0 ? 6 : firstDay - 1;
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const today       = new Date();
+    const monthEvs    = allEvents.filter(ev => {
+      const d = new Date(ev.start.dateTime || ev.start.date);
+      return d.getFullYear() === y && d.getMonth() === m;
+    });
+
+    let html = JOURS.map(j => `<div class="cal__day-header">${j}</div>`).join('');
+    for (let i = 0; i < offset; i++) html += `<div class="cal__day cal__day--empty"></div>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday   = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
+      const hasEvent  = monthEvs.some(ev => new Date(ev.start.dateTime || ev.start.date).getDate() === d);
+      html += `<div class="cal__day${isToday?' cal__day--today':''}${hasEvent?' cal__day--has-event':''}" data-day="${d}">
+        <span class="cal__day-num">${d}</span>
+        ${hasEvent ? '<span class="cal__dot"></span>' : ''}
+      </div>`;
+    }
+    calGrid.innerHTML = html;
+
+    calGrid.querySelectorAll('.cal__day[data-day]').forEach(el => {
+      el.addEventListener('click', () => {
+        const day = +el.dataset.day;
+        const evs = monthEvs.filter(ev => new Date(ev.start.dateTime || ev.start.date).getDate() === day);
+        if (evs.length) renderDayEvents(evs);
+        else renderUpcoming();
+      });
+    });
+    renderUpcoming();
+  }
+
+  function renderDayEvents(evs) {
+    calEvents.innerHTML = evs.map(ev => {
+      const s    = new Date(ev.start.dateTime || ev.start.date);
+      const time = ev.start.dateTime ? s.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}) : 'Toute la journée';
+      return `<div class="cal__event-card">
+        <div class="cal__event-date">
+          <span class="cal__event-day">${String(s.getDate()).padStart(2,'0')}</span>
+          <span class="cal__event-month">${MOISC[s.getMonth()]}</span>
+        </div>
+        <div class="cal__event-info">
+          <div class="cal__event-title">${ev.summary}</div>
+          <div class="cal__event-time">${time}</div>
+          ${ev.location ? `<div class="cal__event-loc">📍 ${ev.location}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderUpcoming() {
+    const now     = new Date();
+    const upcoming = allEvents.filter(ev => new Date(ev.start.dateTime || ev.start.date) >= now).slice(0, 3);
+    if (!upcoming.length) { calEvents.innerHTML = '<p class="cal__no-events">Aucun évènement à venir.</p>'; return; }
+    renderDayEvents(upcoming);
+  }
+
+  btnPrev.addEventListener('click', () => { current.setMonth(current.getMonth()-1); render(); });
+  btnNext.addEventListener('click', () => { current.setMonth(current.getMonth()+1); render(); });
+  fetchEvents();
+})();
+
 // ── SMOOTH SCROLL (offset nav) ───────────────
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
