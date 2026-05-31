@@ -284,6 +284,47 @@ function updateFloatCtaTheme() {
 }
 window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
 
+// ── ÉVÉNEMENTS GOOGLE CALENDAR ───────────────
+(function loadEvents() {
+  const container = document.getElementById('eventsContainer');
+  if (!container) return;
+
+  const MOIS = ['jan.','fév.','mar.','avr.','mai','juin','juil.','aoû.','sep.','oct.','nov.','déc.'];
+  const JOURS = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+  fetch('/api/events')
+    .then(r => r.json())
+    .then(({ events }) => {
+      if (!events || events.length === 0) {
+        container.innerHTML = '<p class="events__empty">Aucun évènement à venir pour le moment.</p>';
+        return;
+      }
+      container.innerHTML = events.map(ev => {
+        const d    = new Date(ev.start);
+        const jour = String(d.getDate()).padStart(2, '0');
+        const mois = MOIS[d.getMonth()];
+        const nomJ = JOURS[d.getDay()];
+        const heure = ev.allDay ? '' : d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        return `
+          <div class="event__card">
+            <div class="event__date">
+              <span class="event__day">${jour}</span>
+              <span class="event__month">${mois}</span>
+            </div>
+            <div class="event__info">
+              <span class="event__weekday">${nomJ}${heure ? ' · ' + heure : ''}</span>
+              <h3 class="event__title">${ev.summary}</h3>
+              ${ev.location ? `<span class="event__location">${ev.location}</span>` : ''}
+              ${ev.description ? `<p class="event__desc">${ev.description}</p>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    })
+    .catch(() => {
+      container.innerHTML = '<p class="events__empty">Impossible de charger les évènements.</p>';
+    });
+})();
+
 // ── SMOOTH SCROLL (offset nav) ───────────────
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {

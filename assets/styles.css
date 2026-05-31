@@ -668,6 +668,117 @@ p {
 }
 
 /* ════════════════════════════════════════════
+   ÉVÉNEMENTS
+   ════════════════════════════════════════════ */
+.evenements {
+  padding: var(--section-py) 0;
+  padding-top: 56px;
+  background: var(--gray-100);
+}
+.evenements__calendar {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--white);
+}
+.evenements__calendar iframe {
+  display: block;
+  width: 100%;
+}
+
+/* ════════════════════════════════════════════
+   ÉVÉNEMENTS
+   ════════════════════════════════════════════ */
+.evenements {
+  padding: var(--section-py) 80px;
+  padding-top: 56px;
+  background: var(--white);
+}
+.evenements__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.events__loading,
+.events__empty {
+  text-align: center;
+  color: var(--gray-500);
+  font-size: var(--fs-body);
+  padding: 48px 0;
+}
+.event__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  background: var(--gray-100);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s;
+}
+.event__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+}
+.event__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 60px;
+  flex-shrink: 0;
+  gap: 2px;
+}
+.event__day {
+  font-size: 1.75rem;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+.event__month {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.event__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.event__weekday {
+  font-size: var(--fs-small);
+  color: var(--gray-500);
+  font-weight: var(--fw-medium);
+}
+.event__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-medium);
+  color: var(--black);
+  line-height: 1.3;
+}
+.event__location {
+  font-size: var(--fs-small);
+  color: var(--gray-500);
+}
+.event__location::before { content: '📍 '; }
+.event__desc {
+  font-size: var(--fs-small);
+  color: var(--gray-500);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .evenements { padding: var(--section-py) 20px; }
+  .event__card { padding: 20px; gap: 16px; }
+}
+
+/* ════════════════════════════════════════════
    FAQ
    ════════════════════════════════════════════ */
 .faq {
