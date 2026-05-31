@@ -310,13 +310,18 @@
           </p>
         </div>
         <div class="evenements__calendar">
-          <div class="cal__nav">
-            <button class="cal__btn" id="calPrev">←</button>
-            <span class="cal__month-label" id="calMonthLabel"></span>
-            <button class="cal__btn" id="calNext">→</button>
+          <div class="cal__left">
+            <div class="cal__nav">
+              <button class="cal__btn" id="calPrev">←</button>
+              <span class="cal__month-label" id="calMonthLabel"></span>
+              <button class="cal__btn" id="calNext">→</button>
+            </div>
+            <div class="cal__grid" id="calGrid"></div>
           </div>
-          <div class="cal__grid" id="calGrid"></div>
-          <div class="cal__events" id="calEvents"></div>
+          <div class="cal__right">
+            <div class="cal__events-title">Prochains évènements</div>
+            <div class="cal__events" id="calEvents"></div>
+          </div>
         </div>
       </div>
     </section>
