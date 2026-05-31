@@ -692,21 +692,26 @@ p {
 .evenements {
   padding: var(--section-py) 80px;
   padding-top: 56px;
-  background: var(--white);
+  background: var(--gray-100);
 }
 .evenements__calendar {
-  border-radius: var(--radius);
+  background: var(--white);
+  border-radius: 45px;
   overflow: hidden;
   border: 1px solid var(--gray-200);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.06);
 }
 .evenements__calendar iframe {
   display: block;
   width: 100%;
 }
 
+@media (max-width: 1200px) { .evenements { padding: var(--section-py) 48px; } }
+@media (max-width: 1024px) { .evenements { padding: var(--section-py) 32px; } }
 @media (max-width: 768px) {
   .evenements { padding: var(--section-py) 20px; }
-  .evenements__calendar iframe { height: 400px; }
+  .evenements__calendar { border-radius: 28px; }
+  .evenements__calendar iframe { height: 420px; }
 }
 
 /* ════════════════════════════════════════════
