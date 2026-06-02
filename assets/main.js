@@ -305,8 +305,9 @@ updateFloatCtaTheme();
 
   async function fetchEvents() {
     const now  = new Date();
+    const min  = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
     const max  = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-    const url  = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&timeMin=${now.toISOString()}&timeMax=${max.toISOString()}&orderBy=startTime&singleEvents=true&maxResults=100`;
+    const url  = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&timeMin=${min.toISOString()}&timeMax=${max.toISOString()}&orderBy=startTime&singleEvents=true&maxResults=200`;
     try {
       const data = await fetch(url).then(r => r.json());
       allEvents  = data.items || [];
