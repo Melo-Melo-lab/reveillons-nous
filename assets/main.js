@@ -285,6 +285,59 @@ document.getElementById('newsletterBtn')?.addEventListener('click', async () => 
   }
 });
 
+// ── YOUTUBE SHORTS ───────────────────────────
+const YT_API_KEY = 'AIzaSyBhqZtvJxQqhHtL0hASB2u-vCapQLMoqr0';
+
+function parseDuration(d) {
+  const m = d.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  return (parseInt(m?.[1] || 0) * 3600) + (parseInt(m?.[2] || 0) * 60) + parseInt(m?.[3] || 0);
+}
+
+async function loadShorts() {
+  const grid = document.getElementById('shortsGrid');
+  if (!grid) return;
+  try {
+    const chRes = await fetch(
+      `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=ia.reveillonsnous&key=${YT_API_KEY}`
+    );
+    const chData = await chRes.json();
+    const uploadsId = chData.items[0].contentDetails.relatedPlaylists.uploads;
+
+    const plRes = await fetch(
+      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${uploadsId}&key=${YT_API_KEY}`
+    );
+    const plData = await plRes.json();
+    const videoIds = plData.items.map(i => i.snippet.resourceId.videoId).join(',');
+
+    const vRes = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id=${videoIds}&key=${YT_API_KEY}`
+    );
+    const vData = await vRes.json();
+
+    const shorts = vData.items.filter(v => {
+      const secs = parseDuration(v.contentDetails.duration);
+      const hasTag = /short/i.test(v.snippet.title + ' ' + v.snippet.description);
+      return secs <= 60 || hasTag;
+    }).slice(0, 8);
+
+    grid.innerHTML = shorts.map(v => {
+      const thumb = v.snippet.thumbnails.high?.url || v.snippet.thumbnails.medium?.url;
+      const title = v.snippet.title.replace(/"/g, '&quot;');
+      return `
+        <a class="short__card" href="https://www.youtube.com/shorts/${v.id}" target="_blank" rel="noopener" aria-label="${title}">
+          <img src="${thumb}" alt="${title}" loading="lazy">
+          <div class="short__play">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </a>`;
+    }).join('');
+  } catch (e) {
+    console.error('YouTube Shorts:', e);
+  }
+}
+
+loadShorts();
+
 // ── BOUTON FLOTTANT ──────────────────────────
 const floatCta = document.getElementById('floatCta');
 
