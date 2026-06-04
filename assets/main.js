@@ -224,11 +224,16 @@ document.getElementById('contactForm')?.addEventListener('submit', async e => {
   }
 });
 
-// ── NEWSLETTER ───────────────────────────────
-document.getElementById('newsletterBtn')?.addEventListener('click', () => {
+// ── NEWSLETTER (Brevo) ───────────────────────────────
+// 👉 Remplacer ces deux valeurs après création du compte Brevo
+const BREVO_API_KEY = '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';
+const BREVO_LIST_ID = 3;
+
+document.getElementById('newsletterBtn')?.addEventListener('click', async () => {
   const input    = document.getElementById('newsletterEmail');
   const errEl    = document.getElementById('errNewsletter');
   const feedback = document.getElementById('newsletterFeedback');
+  const btn      = document.getElementById('newsletterBtn');
 
   feedback.textContent = '';
   feedback.style.color = '';
@@ -241,11 +246,43 @@ document.getElementById('newsletterBtn')?.addEventListener('click', () => {
 
   errEl.textContent = '';
   input.style.borderColor = '';
+  btn.disabled = true;
 
-  setTimeout(() => {
+  try {
+    const res = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: {
+        'accept':       'application/json',
+        'content-type': 'application/json',
+        'api-key':      BREVO_API_KEY,
+      },
+      body: JSON.stringify({
+        email:         input.value.trim(),
+        listIds:       [BREVO_LIST_ID],
+        updateEnabled: true,
+      }),
+    });
+
+    if (res.ok || res.status === 204) {
+      feedback.textContent = 'Merci ! Vous êtes bien inscrit(e).';
+      feedback.style.color = '#276749';
+      input.value = '';
+    } else {
+      const data = await res.json().catch(() => ({}));
+      // 400 + code DUPLICATE_PARAMETER = déjà inscrit
+      if (res.status === 400 && data.code === 'duplicate_parameter') {
+        feedback.textContent = 'Cette adresse est déjà inscrite.';
+        feedback.style.color = '#276749';
+      } else {
+        throw new Error(data.message || 'Erreur');
+      }
+    }
+  } catch {
     feedback.textContent = 'Une erreur est survenue. Veuillez réessayer plus tard.';
     feedback.style.color = '#c53030';
-  }, 800);
+  } finally {
+    btn.disabled = false;
+  }
 });
 
 // ── BOUTON FLOTTANT ──────────────────────────
