@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://reveillons-nous.vercel.app/sitemap.xml
+Sitemap: https://www.reveillons-nous.org/sitemap.xml
