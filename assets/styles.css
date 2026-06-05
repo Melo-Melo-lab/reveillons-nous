@@ -1778,24 +1778,28 @@ p {
   .faq {
     padding: var(--section-py) 20px;
   }
+  .faq__item {
+    border-radius: 24px;
+  }
   .faq__num {
-    font-size: 2.5rem;
-    min-width: 52px;
+    font-size: 1.25rem;
+    min-width: 28px;
   }
   .faq__q-text {
-    font-size: var(--fs-h3);
+    font-size: 1.0625rem;
   }
   .faq__question {
-    padding: 20px 24px;
-    gap: 16px;
+    padding: 18px 20px;
+    gap: 12px;
   }
   .faq__answer-inner {
-    padding: 16px 0 24px 52px; /* réduit de 68px → 52px */
-    margin: 0 24px;
+    padding: 14px 20px 24px;
+    margin: 0;
   }
   .faq__icon {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
   }
 
   /* Contact */
@@ -1856,15 +1860,16 @@ p {
     font-size: 2.5rem;
   }
   .faq__question {
-    gap: 12px;
+    padding: 14px 16px;
+    gap: 10px;
   }
   .faq__num {
-    font-size: 2rem;
-    min-width: 44px;
+    font-size: 1.125rem;
+    min-width: 24px;
   }
   .faq__answer-inner {
-    padding: 12px 0 20px 40px;
-    margin: 0 16px;
+    padding: 12px 16px 20px;
+    margin: 0;
   }
   .testimonials__block {
     padding: 24px 16px 48px;
@@ -1886,7 +1891,7 @@ p {
     padding: 20px 16px 32px;
   }
   .faq__answer-inner {
-    padding: 12px 0 20px 32px;
-    margin: 0 12px;
+    padding: 12px 14px 20px;
+    margin: 0;
   }
 }
