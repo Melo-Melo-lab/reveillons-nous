@@ -1640,6 +1640,9 @@ p {
   .testimonial__card {
     flex: 0 0 calc((100% - 42px) / 2);
   }
+  .shorts__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .footer__contact-strip {
     grid-template-columns: 1fr;
   }
@@ -1766,6 +1769,9 @@ p {
   }
   .testimonials__nav {
     padding-top: 12px;
+  }
+  .shorts__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* FAQ */
