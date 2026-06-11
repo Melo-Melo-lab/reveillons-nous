@@ -4,14 +4,15 @@ const path       = require('path');
 const requireAuth = require('../middleware/auth');
 const router     = express.Router();
 
-const DATA_FILE = path.join(__dirname, '..', 'data', 'siteContent.json');
+// DATA_FILE est défini au démarrage dans index.js (supporte le volume persistant Railway)
+const DATA_FILE = () => process.env.DATA_FILE || path.join(__dirname, '..', 'data', 'siteContent.json');
 
 function read() {
-  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  return JSON.parse(fs.readFileSync(DATA_FILE(), 'utf8'));
 }
 
 function write(data) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+  fs.writeFileSync(DATA_FILE(), JSON.stringify(data, null, 2), 'utf8');
 }
 
 // GET /api/content — public
