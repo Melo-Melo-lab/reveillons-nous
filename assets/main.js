@@ -621,7 +621,7 @@ updateFloatCtaTheme();
       const catStr   = evCats.length ? evCats.join(', ') : '';
       const meta     = catStr ? `${dateFmt} <span class="evt__cat">| ${catStr}</span>` : dateFmt;
       const footInfo = [ev.heure, ev.lieu].filter(Boolean).join(' · ');
-      return `<a class="evt__card" href="/evenement?id=${ev.id}">
+      return `<a class="evt__card" href="/evenements-details?id=${ev.id}">
         <div class="evt__card-meta">${meta}</div>
         <div class="evt__card-title">${ev.titre || '(Sans titre)'}</div>
         <div class="evt__card-footer">

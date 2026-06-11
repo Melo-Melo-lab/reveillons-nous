@@ -54,11 +54,12 @@ app.use('/api/auth',    require('./routes/auth'));
 app.use('/api/content', require('./routes/content'));
 app.use('/api/upload',  require('./routes/upload'));
 
-// ── SITE PRINCIPAL ────────────────────────────
-app.use(express.static(path.join(__dirname, '..')));
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
+// ── PAGES STATIQUES DU SITE ──────────────────
+const ROOT = path.join(__dirname, '..');
+app.use(express.static(ROOT));
+app.get('/evenements',         (_req, res) => res.sendFile(path.join(ROOT, 'evenements.html')));
+app.get('/evenements-details', (_req, res) => res.sendFile(path.join(ROOT, 'evenements-details.html')));
+app.get('*', (_req, res) => res.sendFile(path.join(ROOT, 'index.html')));
 
 // ── DÉMARRAGE ─────────────────────────────────
 const PORT = process.env.PORT || 3001;
