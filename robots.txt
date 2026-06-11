@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin
+Disallow: /gate
 
 Sitemap: https://www.reveillons-nous.org/sitemap.xml
