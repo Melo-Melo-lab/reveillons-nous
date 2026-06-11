@@ -1,4 +1,26 @@
 import { useState } from 'react';
+
+// Convertit du HTML stocké en texte lisible pour l'éditeur
+function htmlToPlain(html = '') {
+  return html
+    .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .trim();
+}
+
+// Convertit le texte saisi en HTML pour le stockage et l'affichage sur le site
+function plainToHtml(text = '') {
+  const paragraphs = text.split(/\n{2,}/);
+  if (paragraphs.length > 1) {
+    return paragraphs.map(p => `<p>${p.replace(/\n/g, '<br/>')}</p>`).join('');
+  }
+  return text.replace(/\n/g, '<br/>');
+}
 import {
   DndContext, closestCenter, PointerSensor, useSensor, useSensors,
 } from '@dnd-kit/core';
@@ -104,13 +126,13 @@ function SortableItem({ item, isOpen, onToggle, onChange, onDelete }) {
       </div>
       {isOpen && (
         <div style={s.itemBody}>
-          <Field label="Question"          value={item.question} onChange={v => onChange('question', v)} />
+          <Field label="Question" value={item.question} onChange={v => onChange('question', v)} />
           <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-            <label style={s.label}>Réponse (HTML autorisé)</label>
+            <label style={s.label}>Réponse</label>
             <textarea
-              style={{ ...s.input, height:120, resize:'vertical', fontFamily:'monospace', fontSize:'0.85rem' }}
-              value={item.reponse || ''}
-              onChange={e => onChange('reponse', e.target.value)}
+              style={{ ...s.input, height:120, resize:'vertical' }}
+              value={htmlToPlain(item.reponse)}
+              onChange={e => onChange('reponse', plainToHtml(e.target.value))}
             />
           </div>
         </div>
