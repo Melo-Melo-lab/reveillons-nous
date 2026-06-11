@@ -1,8 +1,10 @@
 try { require('dotenv').config(); } catch {} // local uniquement, Railway injecte les vars directement
-const express = require('express');
-const cors    = require('cors');
-const path    = require('path');
-const fs      = require('fs');
+const express   = require('express');
+const cors      = require('cors');
+const helmet    = require('helmet');
+const rateLimit = require('express-rate-limit');
+const path      = require('path');
+const fs        = require('fs');
 
 // ── DONNÉES PERSISTANTES ──────────────────────
 // DATA_DIR peut pointer vers un volume Railway persistant.
@@ -27,13 +29,23 @@ process.env.DATA_FILE = DATA_FILE;
 
 const app = express();
 
-// ── CORS ──────────────────────────────────────
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true,
-}));
+// ── SÉCURITÉ : headers HTTP ───────────────────
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
-app.use(express.json({ limit: '10mb' }));
+// ── CORS ──────────────────────────────────────
+const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3001').split(',').map(o => o.trim());
+app.use(cors({ origin: allowedOrigins, credentials: true }));
+
+app.use(express.json({ limit: '500kb' }));
+
+// ── RATE LIMITING : connexion admin ──────────
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: { error: 'Trop de tentatives, réessayez dans 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // ── FICHIERS STATIQUES : uploads ──────────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -50,12 +62,16 @@ app.get('/gate', (_req, res) => {
 });
 
 // ── ROUTES API ────────────────────────────────
-app.use('/api/auth',    require('./routes/auth'));
-app.use('/api/content', require('./routes/content'));
-app.use('/api/upload',  require('./routes/upload'));
+app.use('/api/auth/login', loginLimiter);
+app.use('/api/auth',       require('./routes/auth'));
+app.use('/api/content',    require('./routes/content'));
+app.use('/api/upload',     require('./routes/upload'));
+app.use('/api/newsletter', require('./routes/newsletter'));
 
 // ── PAGES STATIQUES DU SITE ──────────────────
 const ROOT = path.join(__dirname, '..');
+// Bloquer l'accès aux fichiers internes du serveur
+app.use('/server', (_req, res) => res.status(404).end());
 app.use(express.static(ROOT));
 app.get('/evenements-details', (_req, res) => res.sendFile(path.join(ROOT, 'evenements-details.html')));
 app.get('*', (_req, res) => res.sendFile(path.join(ROOT, 'index.html')));
