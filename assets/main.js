@@ -172,8 +172,6 @@ function renderFAQ(items) {
       </div>
     </div>
   `).join('');
-  // Réattacher l'accordéon
-  initFAQ();
 }
 
 // Lancer la récupération du contenu en premier
@@ -311,33 +309,33 @@ const sigBarObs = new IntersectionObserver(entries => {
 }, { threshold: 0.35 });
 sigBarObs.observe(counterSection);
 
-// ── FAQ ACCORDÉON ────────────────────────────
-function initFAQ() {
-  document.querySelectorAll('.faq__question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item   = btn.closest('.faq__item');
-      const answer = item.querySelector('.faq__answer');
-      const isOpen = item.classList.contains('open');
+// ── FAQ ACCORDÉON (event delegation — résiste aux remplacements DOM) ──
+(function initFAQ() {
+  const faqList = document.querySelector('.faq__list');
+  if (!faqList) return;
+  faqList.addEventListener('click', e => {
+    const question = e.target.closest('.faq__question');
+    if (!question) return;
+    const item   = question.closest('.faq__item');
+    const answer = item.querySelector('.faq__answer');
+    const isOpen = item.classList.contains('open');
 
-      document.querySelectorAll('.faq__item.open').forEach(open => {
-        if (open !== item) {
-          open.classList.remove('open', 'faq__item--green');
-          open.querySelector('.faq__answer').style.maxHeight = '0';
-        }
-      });
-
-      if (isOpen) {
-        item.classList.remove('open', 'faq__item--green');
-        answer.style.maxHeight = '0';
-      } else {
-        item.classList.add('open', 'faq__item--green');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
+    document.querySelectorAll('.faq__item.open').forEach(open => {
+      if (open !== item) {
+        open.classList.remove('open', 'faq__item--green');
+        open.querySelector('.faq__answer').style.maxHeight = '0';
       }
     });
-  });
-}
 
-initFAQ();
+    if (isOpen) {
+      item.classList.remove('open', 'faq__item--green');
+      answer.style.maxHeight = '0';
+    } else {
+      item.classList.add('open', 'faq__item--green');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+})();
 
 // ── FORMULAIRE CONTACT ───────────────────────
 function isValidEmail(v) {
@@ -623,7 +621,7 @@ updateFloatCtaTheme();
       const catStr   = evCats.length ? evCats.join(', ') : '';
       const meta     = catStr ? `${dateFmt} <span class="evt__cat">| ${catStr}</span>` : dateFmt;
       const footInfo = [ev.heure, ev.lieu].filter(Boolean).join(' · ');
-      return `<a class="evt__card" href="/evenements#evt-${ev.id}">
+      return `<a class="evt__card" href="/evenement?id=${ev.id}">
         <div class="evt__card-meta">${meta}</div>
         <div class="evt__card-title">${ev.titre || '(Sans titre)'}</div>
         <div class="evt__card-footer">

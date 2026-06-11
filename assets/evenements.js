@@ -113,9 +113,10 @@ if (nav) {
         <h2 class="evtpage__card-title">${ev.titre || '(Sans titre)'}</h2>
         ${ev.description ? `<p class="evtpage__card-desc">${ev.description}</p>` : ''}
         ${footInfo ? `<div class="evtpage__card-info">${footInfo}</div>` : ''}
-        ${ev.lien
-          ? `<a class="evtpage__card-link" href="${ev.lien}" target="_blank" rel="noopener">Voir l'événement →</a>`
-          : ''}
+        <div class="evtpage__card-actions">
+          <a class="evtpage__card-detail" href="/evenement?id=${ev.id}">Voir le détail →</a>
+          ${ev.lien ? `<a class="evtpage__card-link" href="${ev.lien}" target="_blank" rel="noopener">S'inscrire / Voir l'événement ↗</a>` : ''}
+        </div>
       </article>`;
   }
 
