@@ -11,4 +11,10 @@
       <image:title>Réveillons-nous — Pour une convention citoyenne sur l'IA</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.reveillons-nous.org/evenements-details</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
