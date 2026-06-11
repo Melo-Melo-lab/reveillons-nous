@@ -1,4 +1,4 @@
-require('dotenv').config();
+try { require('dotenv').config(); } catch {} // local uniquement, Railway injecte les vars directement
 const express = require('express');
 const cors    = require('cors');
 const path    = require('path');
