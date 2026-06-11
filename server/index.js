@@ -2,6 +2,13 @@ try { require('dotenv').config(); } catch {} // local uniquement, Railway inject
 const express = require('express');
 const cors    = require('cors');
 const path    = require('path');
+const fs      = require('fs');
+
+// Créer les dossiers uploads au démarrage s'ils n'existent pas
+['uploads/images', 'uploads/videos'].forEach(dir => {
+  const full = path.join(__dirname, dir);
+  if (!fs.existsSync(full)) fs.mkdirSync(full, { recursive: true });
+});
 
 const app = express();
 
