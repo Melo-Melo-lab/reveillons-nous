@@ -4,7 +4,22 @@ const cors    = require('cors');
 const path    = require('path');
 const fs      = require('fs');
 
-// Créer les dossiers uploads au démarrage s'ils n'existent pas
+// ── DONNÉES PERSISTANTES ──────────────────────
+// DATA_DIR peut pointer vers un volume Railway persistant.
+// Sans volume, on reste sur server/data/ (remis à zéro à chaque déploiement).
+const DATA_DIR  = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DATA_FILE = path.join(DATA_DIR, 'siteContent.json');
+const SEED_FILE = path.join(__dirname, 'data', 'siteContent.json');
+
+fs.mkdirSync(DATA_DIR, { recursive: true });
+if (!fs.existsSync(DATA_FILE) && fs.existsSync(SEED_FILE)) {
+  fs.copyFileSync(SEED_FILE, DATA_FILE);
+  console.log('siteContent.json initialisé depuis le seed');
+}
+// Rendre le chemin accessible aux routes sans module séparé
+process.env.DATA_FILE = DATA_FILE;
+
+// ── DOSSIERS UPLOADS ──────────────────────────
 ['uploads/images', 'uploads/videos'].forEach(dir => {
   const full = path.join(__dirname, dir);
   if (!fs.existsSync(full)) fs.mkdirSync(full, { recursive: true });
@@ -31,7 +46,6 @@ app.get('/admin/*', (_req, res) => res.sendFile(path.join(adminDist, 'index.html
 
 // ── PAGE /gate — accès admin caché via URL ────
 app.get('/gate', (_req, res) => {
-  // Sert la page principale ; le JS côté client gère la logique
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
@@ -50,4 +64,5 @@ app.get('*', (_req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
+  console.log(`Données : ${DATA_FILE}`);
 });
