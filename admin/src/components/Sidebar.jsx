@@ -12,15 +12,15 @@ const NAV = [
   { to: '/footer',          label: 'Footer' },
 ];
 
-const linkStyle = (isActive, side = 'left') => ({
+const linkStyle = (isActive) => ({
   display: 'block',
-  padding: '11px 20px',
-  color: isActive ? '#b9ff66' : 'rgba(255,255,255,0.55)',
+  padding: '10px 20px',
+  color: isActive ? '#191a23' : '#6b7280',
   textDecoration: 'none',
   fontSize: '0.9rem',
   fontWeight: isActive ? 600 : 400,
-  background: isActive ? 'rgba(185,255,102,0.07)' : 'transparent',
-  [side === 'left' ? 'borderLeft' : 'borderRight']: isActive ? '3px solid #b9ff66' : '3px solid transparent',
+  background: isActive ? '#f3f4f6' : 'transparent',
+  borderLeft: isActive ? '3px solid #191a23' : '3px solid transparent',
   transition: 'background .15s, color .15s',
 });
 
@@ -41,7 +41,7 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
             onClick={onClose}
             style={{
               position: 'fixed', inset: 0,
-              background: 'rgba(0,0,0,0.65)',
+              background: 'rgba(0,0,0,0.3)',
               zIndex: 299,
             }}
           />
@@ -51,20 +51,20 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
         <aside style={{
           position: 'fixed', top: 0, right: 0,
           width: 280, height: '100vh',
-          background: '#191a23',
-          borderLeft: '1px solid rgba(255,255,255,0.08)',
+          background: '#fff',
+          borderLeft: '1px solid #e5e7eb',
           display: 'flex', flexDirection: 'column',
           zIndex: 300,
           transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 0.25s ease',
-          boxShadow: isOpen ? '-4px 0 32px rgba(0,0,0,0.5)' : 'none',
+          boxShadow: isOpen ? '-4px 0 24px rgba(0,0,0,0.1)' : 'none',
           overflowY: 'auto',
         }}>
           {/* Header drawer : logo + bouton ✕ */}
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '0 16px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid #e5e7eb',
             minHeight: 56, flexShrink: 0,
           }}>
             <img src="/img/logo-reveillons-nous.png" height={26} alt="Réveillons-nous" />
@@ -72,9 +72,9 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
               onClick={onClose}
               style={{
                 width: 36, height: 36,
-                background: 'rgba(255,255,255,0.06)',
+                background: '#f3f4f6',
                 border: 'none', borderRadius: 8,
-                color: '#fff', fontSize: '1rem',
+                color: '#6b7280', fontSize: '1rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
@@ -90,7 +90,11 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
                 key={item.to}
                 to={item.to}
                 onClick={onClose}
-                style={({ isActive }) => linkStyle(isActive, 'right')}
+                style={({ isActive }) => ({
+                  ...linkStyle(isActive),
+                  borderLeft: 'none',
+                  borderRight: isActive ? '3px solid #191a23' : '3px solid transparent',
+                })}
               >
                 {item.label}
               </NavLink>
@@ -99,7 +103,7 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
 
           <div style={{
             padding: '16px 20px',
-            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderTop: '1px solid #e5e7eb',
             display: 'flex', flexDirection: 'column', gap: 10, flexShrink: 0,
           }}>
             <a
@@ -107,16 +111,16 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
               target="_blank"
               rel="noopener"
               onClick={onClose}
-              style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem', textDecoration: 'none' }}
+              style={{ color: '#9ca3af', fontSize: '0.82rem', textDecoration: 'none' }}
             >
               Voir le site →
             </a>
             <button
               onClick={handleLogout}
               style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(255,255,255,0.55)',
+                background: '#f3f4f6',
+                border: '1px solid #e5e7eb',
+                color: '#6b7280',
                 borderRadius: 8, padding: '9px 14px',
                 fontSize: '0.85rem', cursor: 'pointer',
                 fontFamily: 'inherit', textAlign: 'left',
@@ -130,23 +134,23 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
     );
   }
 
-  // Desktop — sidebar gauche
+  // Desktop — sidebar gauche blanche
   return (
     <aside style={{
-      width: 240, height: '100vh',
-      background: '#13141c',
-      borderRight: '1px solid rgba(255,255,255,0.06)',
+      width: 220, height: '100vh',
+      background: '#fff',
+      borderRight: '1px solid #e5e7eb',
       display: 'flex', flexDirection: 'column',
       flexShrink: 0,
       position: 'sticky', top: 0,
       overflowY: 'auto',
     }}>
       <div style={{
-        padding: '28px 20px 22px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        padding: '24px 20px 20px',
+        borderBottom: '1px solid #e5e7eb',
         display: 'flex', justifyContent: 'center',
       }}>
-        <img src="/img/logo-reveillons-nous.png" height={32} alt="Réveillons-nous" style={{ display: 'block' }} />
+        <img src="/img/logo-reveillons-nous.png" height={30} alt="Réveillons-nous" style={{ display: 'block' }} />
       </div>
 
       <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 0' }}>
@@ -154,7 +158,7 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
           <NavLink
             key={item.to}
             to={item.to}
-            style={({ isActive }) => linkStyle(isActive, 'left')}
+            style={({ isActive }) => linkStyle(isActive)}
           >
             {item.label}
           </NavLink>
@@ -162,24 +166,24 @@ export default function Sidebar({ isMobile, isOpen, onClose }) {
       </nav>
 
       <div style={{
-        padding: '18px 20px',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        padding: '16px 20px',
+        borderTop: '1px solid #e5e7eb',
         display: 'flex', flexDirection: 'column', gap: 10,
       }}>
         <a
           href="/"
           target="_blank"
           rel="noopener"
-          style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', textDecoration: 'none' }}
+          style={{ color: '#9ca3af', fontSize: '0.8rem', textDecoration: 'none' }}
         >
           Voir le site →
         </a>
         <button
           onClick={handleLogout}
           style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            color: 'rgba(255,255,255,0.45)',
+            background: '#f9fafb',
+            border: '1px solid #e5e7eb',
+            color: '#9ca3af',
             borderRadius: 8, padding: '8px 14px',
             fontSize: '0.82rem', cursor: 'pointer',
             fontFamily: 'inherit', textAlign: 'left',
