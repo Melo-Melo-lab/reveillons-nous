@@ -1,5 +1,10 @@
 import SaveStatus from '../components/SaveStatus';
 
+const INPUT = { padding:'10px 14px', borderRadius:8, border:'1.5px solid #e5e7eb', background:'#fff', color:'#191a23', fontSize:'0.9rem', fontFamily:'inherit', outline:'none' };
+const LABEL = { fontWeight:600, fontSize:'0.82rem', color:'#6b7280', textTransform:'uppercase', letterSpacing:'0.04em' };
+const SECTION = { background:'#fff', border:'1.5px solid #e5e7eb', borderRadius:12, padding:'22px 24px', marginBottom:16, display:'flex', flexDirection:'column', gap:16, boxShadow:'0 1px 4px rgba(0,0,0,0.04)' };
+const H2 = { fontSize:'0.95rem', fontWeight:700, color:'#191a23', margin:'0 0 4px' };
+
 export default function FooterPage({ content, onChange, saveStatus }) {
   const f = content?.footer || {};
 
@@ -27,47 +32,57 @@ export default function FooterPage({ content, onChange, saveStatus }) {
 
   return (
     <div>
-      <div style={s.header}>
-        <h1 style={s.title}>Footer</h1>
+      <div style={{ display:'flex', alignItems:'center', marginBottom:28 }}>
+        <h1 style={{ fontSize:'1.6rem', fontWeight:700, color:'#191a23', margin:0 }}>Footer</h1>
         <SaveStatus status={saveStatus} />
       </div>
 
-      <div style={s.section}>
-        <Field label="Texte copyright" value={f.copyright}      onChange={v => set('copyright', v)} />
+      <div style={SECTION}>
+        <Field label="Texte copyright"          value={f.copyright}    onChange={v => set('copyright', v)} />
         <Field label="Email de contact affiché" value={f.emailContact} onChange={v => set('emailContact', v)} type="email" />
       </div>
 
-      <div style={s.section}>
-        <h2 style={s.h2}>Newsletter</h2>
-        <Field label="Placeholder champ e-mail"   value={f.newsletter?.placeholder} onChange={v => setNewsletterField('placeholder', v)} />
-        <Field label="Texte du bouton newsletter"  value={f.newsletter?.ctaLabel}   onChange={v => setNewsletterField('ctaLabel', v)} />
+      <div style={SECTION}>
+        <h2 style={H2}>Newsletter</h2>
+        <Field label="Placeholder champ e-mail"  value={f.newsletter?.placeholder} onChange={v => setNewsletterField('placeholder', v)} />
+        <Field label="Texte du bouton newsletter" value={f.newsletter?.ctaLabel}   onChange={v => setNewsletterField('ctaLabel', v)} />
       </div>
 
-      <div style={s.section}>
+      <div style={SECTION}>
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-          <h2 style={s.h2}>Liens de navigation</h2>
-          <button style={s.btnAdd} onClick={addLink}>+ Ajouter</button>
+          <h2 style={H2}>Liens de navigation</h2>
+          <button
+            style={{ padding:'7px 14px', background:'#191a23', color:'#fff', border:'none', borderRadius:8, fontSize:'0.85rem', fontWeight:600, cursor:'pointer', fontFamily:'inherit' }}
+            onClick={addLink}
+          >
+            + Ajouter
+          </button>
         </div>
         {(f.liens || []).map((lien, idx) => (
-          <div key={idx} style={s.linkRow}>
+          <div key={idx} style={{ display:'flex', gap:8, alignItems:'center' }}>
             <input
-              style={{ ...s.input, flex:1 }}
+              style={{ ...INPUT, flex:1 }}
               value={lien.label || ''}
               onChange={e => setLink(idx, 'label', e.target.value)}
               placeholder="Texte"
             />
             <input
-              style={{ ...s.input, flex:2 }}
+              style={{ ...INPUT, flex:2 }}
               value={lien.href || ''}
               onChange={e => setLink(idx, 'href', e.target.value)}
               placeholder="Lien (ex: #contact)"
             />
-            <button style={s.btnDelete} onClick={() => deleteLink(idx)}>✕</button>
+            <button
+              style={{ padding:'7px 10px', background:'#fee2e2', color:'#dc2626', border:'none', borderRadius:7, fontSize:'0.82rem', cursor:'pointer' }}
+              onClick={() => deleteLink(idx)}
+            >
+              ✕
+            </button>
           </div>
         ))}
       </div>
 
-      <div style={s.section}>
+      <div style={SECTION}>
         <Field label="Texte mentions légales / politique de confidentialité" value={f.mentionsLegales} onChange={v => set('mentionsLegales', v)} />
       </div>
     </div>
@@ -76,20 +91,9 @@ export default function FooterPage({ content, onChange, saveStatus }) {
 
 function Field({ label, value, onChange, type = 'text' }) {
   return (
-    <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-      <label style={{ fontWeight:600, fontSize:'0.85rem', color:'#374151' }}>{label}</label>
-      <input style={s.input} type={type} value={value || ''} onChange={e => onChange(e.target.value)} />
+    <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+      <label style={LABEL}>{label}</label>
+      <input style={INPUT} type={type} value={value || ''} onChange={e => onChange(e.target.value)} />
     </div>
   );
 }
-
-const s = {
-  header:  { display:'flex', alignItems:'center', marginBottom:28 },
-  title:   { fontSize:'1.5rem', fontWeight:700, margin:0 },
-  section: { background:'#fff', border:'1.5px solid #e5e7eb', borderRadius:10, padding:'22px 24px', marginBottom:20, display:'flex', flexDirection:'column', gap:16 },
-  h2:      { fontSize:'1rem', fontWeight:700, color:'#374151', margin:'0 0 4px' },
-  input:   { padding:'9px 12px', borderRadius:7, border:'1.5px solid #e5e7eb', fontSize:'0.9rem', fontFamily:'inherit', outline:'none' },
-  linkRow: { display:'flex', gap:8, alignItems:'center' },
-  btnAdd:  { padding:'7px 14px', background:'#191a23', color:'#fff', border:'none', borderRadius:7, fontSize:'0.85rem', cursor:'pointer' },
-  btnDelete:{ padding:'7px 10px', background:'#fee2e2', color:'#dc2626', border:'none', borderRadius:6, fontSize:'0.82rem', cursor:'pointer' },
-};

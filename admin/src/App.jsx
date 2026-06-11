@@ -30,7 +30,7 @@ function AdminLayout() {
 
   if (loading) {
     return (
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', color:'#6b7280', fontFamily:'sans-serif' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', color:'#9ca3af', fontFamily:"'Space Grotesk', sans-serif", background:'#f8f9fc', fontSize:'1rem' }}>
         Chargement…
       </div>
     );
@@ -39,19 +39,49 @@ function AdminLayout() {
   const pageProps = { content, onChange: updateSection, saveStatus };
 
   return (
-    <div style={{ display:'flex', minHeight:'100vh', fontFamily:'system-ui, -apple-system, sans-serif', background:'#f9fafb', color:'#111827' }}>
+    <div style={{ display:'flex', minHeight:'100vh', fontFamily:"'Space Grotesk', sans-serif", background:'#f8f9fc', color:'#191a23' }}>
+
+      {/* Header fixe — mobile uniquement */}
+      {isMobile && (
+        <header style={{
+          position: 'fixed', top: 0, left: 0, right: 0, height: 56,
+          background: '#fff',
+          borderBottom: '1px solid #e5e7eb',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 16px', zIndex: 200,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+        }}>
+          <button
+            onClick={() => setSidebarOpen(true)}
+            style={{
+              width: 40, height: 40,
+              background: '#f3f4f6',
+              border: 'none', borderRadius: 8,
+              color: '#191a23',
+              fontSize: '1.2rem', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+            aria-label="Ouvrir le menu"
+          >
+            ☰
+          </button>
+          <img src="/img/logo-reveillons-nous.png" height={28} alt="Réveillons-nous" style={{ display:'block' }} />
+          <div style={{ width: 40 }} />
+        </header>
+      )}
+
       <Sidebar
         isMobile={isMobile}
         isOpen={sidebarOpen}
-        onOpen={() => setSidebarOpen(true)}
         onClose={() => setSidebarOpen(false)}
       />
+
       <main style={{
         flex: 1,
-        padding: isMobile ? '60px 16px 24px' : '36px 40px',
+        padding: isMobile ? '76px 16px 40px' : '40px 48px',
         overflowY: 'auto',
-        maxWidth: isMobile ? '100%' : 900,
         minWidth: 0,
+        maxWidth: isMobile ? '100%' : 860,
       }}>
         <Routes>
           <Route path="tableau-de-bord" element={<Dashboard {...pageProps} />} />

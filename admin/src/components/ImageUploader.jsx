@@ -25,26 +25,36 @@ export default function ImageUploader({ value, onChange, label = 'Image' }) {
   }
 
   return (
-    <div style={s.wrap}>
-      <label style={s.label}>{label}</label>
+    <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+      <label style={{ fontWeight:600, fontSize:'0.82rem', color:'#6b7280', textTransform:'uppercase', letterSpacing:'0.04em' }}>{label}</label>
       {value && (
-        <div style={s.preview}>
-          <img src={value} alt="" style={s.img} />
+        <div style={{ borderRadius:8, overflow:'hidden', maxWidth:240, border:'1.5px solid #e5e7eb' }}>
+          <img src={value} alt="" style={{ width:'100%', display:'block', maxHeight:160, objectFit:'cover' }} />
         </div>
       )}
       <div
-        style={{ ...s.dropzone, ...(dragging ? s.dropzoneActive : {}) }}
+        style={{
+          border: `2px dashed ${dragging ? '#191a23' : '#d1d5db'}`,
+          borderRadius: 8,
+          padding: '20px 16px',
+          textAlign: 'center',
+          cursor: 'pointer',
+          color: '#9ca3af',
+          fontSize: '0.88rem',
+          transition: 'border-color .2s, background .2s',
+          background: dragging ? '#f3f4f6' : '#fafafa',
+        }}
         onDragOver={e => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         onClick={() => inputRef.current?.click()}
       >
         {uploading
-          ? <span>{progress}%</span>
+          ? <span style={{ color:'#191a23', fontWeight:600 }}>{progress}%</span>
           : <span>Glisser une image ou <u>cliquer</u></span>
         }
       </div>
-      {error && <p style={s.error}>{error}</p>}
+      {error && <p style={{ color:'#dc2626', fontSize:'0.8rem', margin:0 }}>{error}</p>}
       <input
         ref={inputRef}
         type="file"
@@ -52,27 +62,22 @@ export default function ImageUploader({ value, onChange, label = 'Image' }) {
         style={{ display: 'none' }}
         onChange={e => { if (e.target.files[0]) handleFile(e.target.files[0]); }}
       />
-      <div style={s.urlRow}>
-        <input
-          type="url"
-          value={value || ''}
-          onChange={e => onChange(e.target.value)}
-          placeholder="ou coller une URL"
-          style={s.urlInput}
-        />
-      </div>
+      <input
+        type="url"
+        value={value || ''}
+        onChange={e => onChange(e.target.value)}
+        placeholder="ou coller une URL"
+        style={{
+          padding: '9px 12px',
+          borderRadius: 7,
+          border: '1.5px solid #e5e7eb',
+          background: '#fff',
+          color: '#191a23',
+          fontSize: '0.88rem',
+          fontFamily: 'inherit',
+          outline: 'none',
+        }}
+      />
     </div>
   );
 }
-
-const s = {
-  wrap:          { display:'flex', flexDirection:'column', gap:8 },
-  label:         { fontWeight:600, fontSize:'0.88rem', color:'#374151' },
-  preview:       { borderRadius:8, overflow:'hidden', maxWidth:240, border:'1px solid #e5e7eb' },
-  img:           { width:'100%', display:'block', maxHeight:160, objectFit:'cover' },
-  dropzone:      { border:'2px dashed #d1d5db', borderRadius:8, padding:'20px 16px', textAlign:'center', cursor:'pointer', color:'#6b7280', fontSize:'0.88rem', transition:'border-color .2s' },
-  dropzoneActive:{ borderColor:'#191a23' },
-  error:         { color:'#dc2626', fontSize:'0.8rem', margin:0 },
-  urlRow:        { display:'flex', gap:8 },
-  urlInput:      { flex:1, padding:'8px 12px', borderRadius:6, border:'1px solid #d1d5db', fontSize:'0.88rem' },
-};
