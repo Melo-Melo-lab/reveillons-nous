@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import AdminGuard from './components/AdminGuard';
 import Sidebar    from './components/Sidebar';
 import Login      from './pages/Login';
@@ -14,6 +15,18 @@ import { useAdminContent } from './hooks/useAdminContent';
 
 function AdminLayout() {
   const { content, loading, saveStatus, updateSection } = useAdminContent();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setSidebarOpen(false);
+    };
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   if (loading) {
     return (
@@ -27,8 +40,19 @@ function AdminLayout() {
 
   return (
     <div style={{ display:'flex', minHeight:'100vh', fontFamily:'system-ui, -apple-system, sans-serif', background:'#f9fafb', color:'#111827' }}>
-      <Sidebar />
-      <main style={{ flex:1, padding:'36px 40px', overflowY:'auto', maxWidth:900 }}>
+      <Sidebar
+        isMobile={isMobile}
+        isOpen={sidebarOpen}
+        onOpen={() => setSidebarOpen(true)}
+        onClose={() => setSidebarOpen(false)}
+      />
+      <main style={{
+        flex: 1,
+        padding: isMobile ? '60px 16px 24px' : '36px 40px',
+        overflowY: 'auto',
+        maxWidth: isMobile ? '100%' : 900,
+        minWidth: 0,
+      }}>
         <Routes>
           <Route path="tableau-de-bord" element={<Dashboard {...pageProps} />} />
           <Route path="parametres"      element={<GlobalSettings {...pageProps} />} />
