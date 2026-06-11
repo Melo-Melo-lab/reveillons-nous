@@ -49,18 +49,18 @@
     </nav>
 
     <!-- ══════════════════════════════════════
-       HERO DE LA PAGE
+       HERO
     ══════════════════════════════════════ -->
     <section class="evtpage__hero">
       <div class="container">
         <a href="/" class="evtpage__back">← Retour à l'accueil</a>
         <h1 class="evtpage__title reveal">Nos évènements</h1>
-        <p class="evtpage__desc reveal">Retrouvez toutes nos actions, conférences et mobilisations à venir.</p>
+        <p class="evtpage__desc reveal">Retrouvez toutes nos actions, conférences et mobilisations.</p>
       </div>
     </section>
 
     <!-- ══════════════════════════════════════
-       CONTENU — FILTRES + GRILLE
+       CONTENU
     ══════════════════════════════════════ -->
     <section class="evtpage__body">
       <div class="container">
@@ -68,23 +68,19 @@
         <!-- Filtres catégories -->
         <div class="evenements__filters" id="evtp-filters"></div>
 
-        <!-- Onglets À venir / Passés -->
-        <div class="evtpage__tabs">
-          <button class="evtpage__tab evtpage__tab--active" id="evtp-tab-upcoming">
-            À venir <span class="evtpage__tab-count" id="evtp-count-upcoming">0</span>
-          </button>
-          <button class="evtpage__tab" id="evtp-tab-past">
-            Passés <span class="evtpage__tab-count" id="evtp-count-past">0</span>
-          </button>
+        <!-- Section À venir -->
+        <div class="evtpage__section" id="evtp-upcoming-section">
+          <h2 class="evtpage__section-title">À venir</h2>
+          <div class="evtpage__grid" id="evtp-upcoming">
+            <p class="evtpage__empty">Chargement…</p>
+          </div>
         </div>
 
-        <!-- Grille événements à venir -->
-        <div class="evtpage__grid" id="evtp-upcoming">
-          <p class="evtpage__empty">Chargement…</p>
+        <!-- Section Passés -->
+        <div class="evtpage__section" id="evtp-past-section" style="display:none">
+          <h2 class="evtpage__section-title evtpage__section-title--dim">Passés</h2>
+          <div class="evtpage__grid" id="evtp-past"></div>
         </div>
-
-        <!-- Grille événements passés (masquée par défaut) -->
-        <div class="evtpage__grid" id="evtp-past" style="display:none"></div>
 
       </div>
     </section>

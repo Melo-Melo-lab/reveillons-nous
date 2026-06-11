@@ -900,6 +900,22 @@ p {
   background: rgba(0, 0, 0, 0.1);
 }
 
+/* ── Sections À venir / Passés ──────────────── */
+.evtpage__section {
+  margin-bottom: 56px;
+}
+.evtpage__section-title {
+  font-size: 1.1rem;
+  font-weight: var(--fw-bold);
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 24px;
+}
+.evtpage__section-title--dim {
+  color: rgba(255, 255, 255, 0.25);
+}
+
 /* ── Grille cartes détaillées ───────────────── */
 .evtpage__grid {
   display: grid;
@@ -968,6 +984,14 @@ p {
   padding: 40px 0;
   grid-column: 1 / -1;
   text-align: center;
+}
+@keyframes evtHighlight {
+  0%   { border-color: var(--green); box-shadow: 0 0 0 3px rgba(185,255,102,0.25); }
+  70%  { border-color: var(--green); box-shadow: 0 0 0 3px rgba(185,255,102,0.25); }
+  100% { border-color: rgba(255,255,255,0.1); box-shadow: none; }
+}
+.evtpage__card--highlight {
+  animation: evtHighlight 2s ease forwards;
 }
 
 /* ── Responsive ─────────────────────────────── */
