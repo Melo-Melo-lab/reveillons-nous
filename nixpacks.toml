@@ -1,7 +1,7 @@
 [phases.install]
 cmds = [
-  "npm ci --prefix server",
-  "npm ci --prefix admin"
+  "npm install --prefix server",
+  "npm install --prefix admin"
 ]
 
 [phases.build]
