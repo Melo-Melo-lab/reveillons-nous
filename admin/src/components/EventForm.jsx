@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const EMPTY = { id:'', titre:'', description:'', date:'', heure:'', lieu:'', lien:'' };
+const EMPTY = { id:'', titre:'', description:'', date:'', heure:'', lieu:'', lien:'', categories:[] };
 
 export default function EventForm({ initial = {}, onSave, onCancel }) {
   const [form, setForm] = useState({ ...EMPTY, ...initial });
@@ -32,6 +32,14 @@ export default function EventForm({ initial = {}, onSave, onCancel }) {
       </Row>
       <Row label="Lien externe">
         <input style={s.input} type="url" value={form.lien} onChange={e => set('lien', e.target.value)} placeholder="https://…" />
+      </Row>
+      <Row label="Catégories (séparées par virgule)">
+        <input
+          style={s.input}
+          value={Array.isArray(form.categories) ? form.categories.join(', ') : (form.categories || '')}
+          onChange={e => set('categories', e.target.value.split(',').map(c => c.trim()).filter(Boolean))}
+          placeholder="Conférence, Mobilisation…"
+        />
       </Row>
       <Row label="Description">
         <textarea style={{ ...s.input, height:90, resize:'vertical' }} value={form.description} onChange={e => set('description', e.target.value)} />

@@ -124,6 +124,7 @@ function SortableItem({ event, onEdit, onDelete }) {
           {event.date && new Date(event.date).toLocaleDateString('fr-FR')}
           {event.heure && ` — ${event.heure}`}
           {event.lieu && ` · ${event.lieu}`}
+          {event.categories?.length > 0 && ` · ${event.categories.join(', ')}`}
         </div>
       </div>
       <div style={{ display:'flex', gap:8 }}>
