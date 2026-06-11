@@ -163,8 +163,14 @@ p {
   background: var(--green);
   color: var(--black);
 }
+.btn--outline {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid var(--white);
+}
 .btn--dark:hover,
-.btn--green:hover {
+.btn--green:hover,
+.btn--outline:hover {
   opacity: 0.85;
   transform: translateY(-2px);
 }
