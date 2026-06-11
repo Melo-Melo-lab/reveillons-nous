@@ -551,20 +551,15 @@ window.addEventListener('scroll', updateFloatCtaTheme, { passive: true });
 updateFloatCtaTheme();
 
 // ── CALENDRIER (données admin) ────────────────
-(function initCalendarModule() {
-  const MOIS  = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  const MOISC = ['jan.','fév.','mar.','avr.','mai','juin','juil.','aoû.','sep.','oct.','nov.','déc.'];
-  const JOURS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+(function initEventsGrid() {
+  const grid    = document.getElementById('evtGrid');
+  const filters = document.getElementById('evtFilters');
+  const empty   = document.getElementById('evtEmpty');
+  if (!grid) return;
 
-  const calGrid   = document.getElementById('calGrid');
-  const calEvents = document.getElementById('calEvents');
-  const calLabel  = document.getElementById('calMonthLabel');
-  const btnPrev   = document.getElementById('calPrev');
-  const btnNext   = document.getElementById('calNext');
-  if (!calGrid) return;
-
-  let current   = new Date();
-  let allEvents = [];
+  const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  let allEvents    = [];
+  let activeFilter = 'Tous';
 
   window.renderCalendar = function(events) {
     allEvents = (events || []).map(ev => ({
@@ -575,80 +570,64 @@ updateFloatCtaTheme();
   };
 
   window._calendarReady = true;
-  // Si les données sont déjà disponibles (fetch API avant init)
-  if (window._siteEvents) {
-    window.renderCalendar(window._siteEvents);
-  } else {
-    render(); // Affiche un calendrier vide en attendant
+  if (window._siteEvents) window.renderCalendar(window._siteEvents);
+  else render();
+
+  function getCategories() {
+    const cats = new Set();
+    allEvents.forEach(ev => {
+      (ev.categories || []).forEach(c => { if (c && c.trim()) cats.add(c.trim()); });
+    });
+    return ['Tous', ...Array.from(cats)];
+  }
+
+  function formatDate(d) {
+    return `${d.getDate()} ${MOIS[d.getMonth()]}. ${d.getFullYear()}`;
   }
 
   function render() {
-    const y = current.getFullYear(), m = current.getMonth();
-    calLabel.textContent = `${MOIS[m]} ${y}`;
-    const firstDay    = new Date(y, m, 1).getDay();
-    const offset      = firstDay === 0 ? 6 : firstDay - 1;
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    const today       = new Date();
-    const monthEvs    = allEvents.filter(ev => {
-      return ev._date.getFullYear() === y && ev._date.getMonth() === m;
-    });
+    const cats = getCategories();
 
-    let html = JOURS.map(j => `<div class="cal__day-header">${j}</div>`).join('');
-    for (let i = 0; i < offset; i++) html += `<div class="cal__day cal__day--empty"></div>`;
-    for (let d = 1; d <= daysInMonth; d++) {
-      const isToday  = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
-      const hasEvent = monthEvs.some(ev => ev._date.getDate() === d);
-      html += `<div class="cal__day${isToday?' cal__day--today':''}${hasEvent?' cal__day--has-event':''}" data-day="${d}">
-        <span class="cal__day-num">${d}</span>
-        ${hasEvent ? '<span class="cal__dot"></span>' : ''}
-      </div>`;
-    }
-    calGrid.innerHTML = html;
-
-    calGrid.querySelectorAll('.cal__day[data-day]').forEach(el => {
-      el.addEventListener('click', () => {
-        const day = +el.dataset.day;
-        const evs = monthEvs.filter(ev => ev._date.getDate() === day);
-        if (evs.length) renderDayEvents(evs);
-        else renderUpcoming();
+    if (filters) {
+      filters.innerHTML = cats.map(c =>
+        `<button class="evt__filter-btn${c === activeFilter ? ' evt__filter-btn--active' : ''}" data-cat="${c}">${c}</button>`
+      ).join('');
+      filters.querySelectorAll('.evt__filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => { activeFilter = btn.dataset.cat; render(); });
       });
-    });
-    renderUpcoming();
-  }
+    }
 
-  function renderDayEvents(evs) {
-    calEvents.innerHTML = evs.map(ev => {
-      const s    = ev._date;
-      const time = ev.heure || 'Toute la journée';
-      return `<div class="cal__event-card">
-        <div class="cal__event-date">
-          <span class="cal__event-day">${String(s.getDate()).padStart(2,'0')}</span>
-          <span class="cal__event-month">${MOISC[s.getMonth()]}</span>
-        </div>
-        <div class="cal__event-info">
-          <div class="cal__event-title">${ev.titre || '(Sans titre)'}</div>
-          <div class="cal__event-time">${time}</div>
-          ${ev.lieu ? `<div class="cal__event-loc">📍 ${ev.lieu}</div>` : ''}
-          ${ev.lien ? `<a class="cal__event-link" href="${ev.lien}" target="_blank" rel="noopener">Voir l'événement →</a>` : ''}
-        </div>
-      </div>`;
-    }).join('');
-  }
+    const now     = new Date();
+    const visible = allEvents
+      .filter(ev => ev._date >= now)
+      .filter(ev => activeFilter === 'Tous' || (ev.categories || []).map(c => c.trim()).includes(activeFilter))
+      .sort((a, b) => a._date - b._date);
 
-  function renderUpcoming() {
-    const now      = new Date();
-    const upcoming = allEvents.filter(ev => ev._date >= now)
-      .sort((a, b) => a._date - b._date)
-      .slice(0, 3);
-    if (!upcoming.length) {
-      calEvents.innerHTML = '<p class="cal__no-events">Aucun évènement à venir.</p>';
+    if (!visible.length) {
+      grid.innerHTML = '';
+      if (empty) empty.style.display = '';
       return;
     }
-    renderDayEvents(upcoming);
-  }
+    if (empty) empty.style.display = 'none';
 
-  btnPrev.addEventListener('click', () => { current.setMonth(current.getMonth()-1); render(); });
-  btnNext.addEventListener('click', () => { current.setMonth(current.getMonth()+1); render(); });
+    grid.innerHTML = visible.map(ev => {
+      const dateFmt  = formatDate(ev._date);
+      const evCats   = (ev.categories || []).filter(c => c && c.trim());
+      const catStr   = evCats.length ? evCats.join(', ') : '';
+      const meta     = catStr ? `${dateFmt} <span class="evt__cat">| ${catStr}</span>` : dateFmt;
+      const footInfo = [ev.heure, ev.lieu].filter(Boolean).join(' · ');
+      const tag      = ev.lien ? 'a' : 'div';
+      const href     = ev.lien ? ` href="${ev.lien}" target="_blank" rel="noopener"` : '';
+      return `<${tag} class="evt__card"${href}>
+        <div class="evt__card-meta">${meta}</div>
+        <div class="evt__card-title">${ev.titre || '(Sans titre)'}</div>
+        <div class="evt__card-footer">
+          <div class="evt__card-info">${footInfo}</div>
+          <div class="evt__card-arrow">→</div>
+        </div>
+      </${tag}>`;
+    }).join('');
+  }
 })();
 
 // ── SMOOTH SCROLL (offset nav) ───────────────
