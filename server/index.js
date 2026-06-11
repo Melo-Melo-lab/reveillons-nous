@@ -17,7 +17,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── FICHIERS STATIQUES : admin build ─────────
-const adminDist = path.join(__dirname, '..', 'admin', 'dist');
+const adminDist = path.join(__dirname, 'admin-dist');
 app.use('/admin', express.static(adminDist));
 app.get('/admin', (_req, res) => res.sendFile(path.join(adminDist, 'index.html')));
 app.get('/admin/*', (_req, res) => res.sendFile(path.join(adminDist, 'index.html')));
