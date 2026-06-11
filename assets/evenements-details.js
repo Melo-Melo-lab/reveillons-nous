@@ -83,24 +83,36 @@ if (nav) {
     return `${d.getDate()} ${MOIS[d.getMonth()]}. ${d.getFullYear()}`;
   }
 
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function safeUrl(url) {
+    try { const u = new URL(url || ''); return ['http:','https:'].includes(u.protocol) ? url : ''; }
+    catch { return ''; }
+  }
+
   function renderCard(ev) {
     const dateFmt  = formatDate(ev._date);
-    const cats     = (ev.categories || []).filter(c => c?.trim());
+    const cats     = (ev.categories || []).filter(c => c?.trim()).map(esc);
     const catStr   = cats.join(', ');
     const infoParts = [];
-    if (ev.heure) infoParts.push('🕐 ' + ev.heure);
-    if (ev.lieu)  infoParts.push('📍 ' + ev.lieu);
+    if (ev.heure) infoParts.push('🕐 ' + esc(ev.heure));
+    if (ev.lieu)  infoParts.push('📍 ' + esc(ev.lieu));
     const footInfo = infoParts.join(' · ');
+    const titre    = esc(ev.titre) || '(Sans titre)';
+    const desc     = ev.description ? DOMPurify.sanitize(ev.description) : '';
+    const lien     = safeUrl(ev.lien);
 
-    return `<div class="evtpage__card" id="evt-${ev.id}">
+    return `<div class="evtpage__card" id="evt-${esc(ev.id)}">
       <div class="evtpage__card-meta">
         ${dateFmt}${catStr ? ` <span class="evt__cat">| ${catStr}</span>` : ''}
       </div>
-      <h2 class="evtpage__card-title">${ev.titre || '(Sans titre)'}</h2>
+      <h2 class="evtpage__card-title">${titre}</h2>
       ${footInfo ? `<div class="evtpage__card-info">${footInfo}</div>` : ''}
-      ${ev.description ? `<div class="evtpage__card-desc">${ev.description}</div>` : ''}
-      ${ev.lien ? `<div class="evtpage__card-actions">
-        <a href="${ev.lien}" target="_blank" rel="noopener" class="evtpage__card-link">Voir l'événement →</a>
+      ${desc ? `<div class="evtpage__card-desc">${desc}</div>` : ''}
+      ${lien ? `<div class="evtpage__card-actions">
+        <a href="${esc(lien)}" target="_blank" rel="noopener" class="evtpage__card-link">Voir l'événement →</a>
       </div>` : ''}
     </div>`;
   }

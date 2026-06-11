@@ -148,7 +148,7 @@ function setTextContent(selector, text) {
 function setInnerHTML(selector, html) {
   if (!html) return;
   const el = document.querySelector(selector);
-  if (el) el.innerHTML = html;
+  if (el) el.innerHTML = DOMPurify.sanitize(html);
 }
 
 function setHref(selector, href) {
@@ -160,18 +160,22 @@ function setHref(selector, href) {
 function renderFAQ(items) {
   const list = document.querySelector('.faq__list');
   if (!list) return;
-  list.innerHTML = items.map((item, idx) => `
+  list.innerHTML = items.map((item, idx) => {
+    const num      = String(item.numero || '').replace(/[<>&"]/g, '');
+    const question = DOMPurify.sanitize(item.question || '', { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+    const reponse  = DOMPurify.sanitize(item.reponse  || '');
+    return `
     <div class="faq__item${idx === 0 ? ' faq__item--green open' : ''}">
       <div class="faq__question">
-        <span class="faq__num">${item.numero}</span>
-        <span class="faq__q-text">${item.question}</span>
+        <span class="faq__num">${num}</span>
+        <span class="faq__q-text">${question}</span>
         <div class="faq__icon"></div>
       </div>
       <div class="faq__answer"${idx === 0 ? ' style="max-height:600px"' : ''}>
-        <div class="faq__answer-inner">${item.reponse}</div>
+        <div class="faq__answer-inner">${reponse}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 // Lancer la récupération du contenu en premier
@@ -400,10 +404,7 @@ document.getElementById('contactForm')?.addEventListener('submit', async e => {
   }
 });
 
-// ── NEWSLETTER (Brevo) ───────────────────────
-const BREVO_API_KEY = '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';
-const BREVO_LIST_ID = 3;
-
+// ── NEWSLETTER ───────────────────────────────
 document.getElementById('newsletterBtn')?.addEventListener('click', async () => {
   const input    = document.getElementById('newsletterEmail');
   const errEl    = document.getElementById('errNewsletter');
@@ -424,32 +425,19 @@ document.getElementById('newsletterBtn')?.addEventListener('click', async () => 
   btn.disabled = true;
 
   try {
-    const res = await fetch('https://api.brevo.com/v3/contacts', {
-      method: 'POST',
-      headers: {
-        'accept':       'application/json',
-        'content-type': 'application/json',
-        'api-key':      BREVO_API_KEY,
-      },
-      body: JSON.stringify({
-        email:         input.value.trim(),
-        listIds:       [BREVO_LIST_ID],
-        updateEnabled: true,
-      }),
+    const res  = await fetch('/api/newsletter', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email: input.value.trim() }),
     });
+    const data = await res.json().catch(() => ({}));
 
-    if (res.ok || res.status === 204) {
-      feedback.textContent = 'Merci ! Vous êtes bien inscrit(e).';
+    if (res.ok && data.success) {
+      feedback.textContent = data.duplicate ? 'Cette adresse est déjà inscrite.' : 'Merci ! Vous êtes bien inscrit(e).';
       feedback.style.color = '#276749';
       input.value = '';
     } else {
-      const data = await res.json().catch(() => ({}));
-      if (res.status === 400 && data.code === 'duplicate_parameter') {
-        feedback.textContent = 'Cette adresse est déjà inscrite.';
-        feedback.style.color = '#276749';
-      } else {
-        throw new Error(data.message || 'Erreur');
-      }
+      throw new Error(data.error || 'Erreur');
     }
   } catch {
     feedback.textContent = 'Une erreur est survenue. Veuillez réessayer plus tard.';
