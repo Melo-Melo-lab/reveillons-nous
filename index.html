@@ -16,7 +16,9 @@
     />
     <meta name="author" content="Collectif Réveillons-nous" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://reveillons-nous.vercel.app/" />
+    <meta name="theme-color" content="#191a23" />
+    <meta name="google-site-verification" content="jowA3yy7G7EQD1XkmPOwrJjmaaiKuLZooqnXdJCWMF0" />
+    <link rel="canonical" href="https://www.reveillons-nous.org/" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <!-- ── Favicon ── -->
@@ -36,7 +38,7 @@
 
     <!-- ── Open Graph (Facebook, LinkedIn…) ── -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://reveillons-nous.vercel.app/" />
+    <meta property="og:url" content="https://www.reveillons-nous.org/" />
     <meta
       property="og:title"
       content="Réveillons-nous — Pour une convention citoyenne sur l'IA"
@@ -47,7 +49,7 @@
     />
     <meta
       property="og:image"
-      content="https://reveillons-nous.vercel.app/img/reveillon-nous-png.png"
+      content="https://www.reveillons-nous.org/img/reveillon-nous-png.png"
     />
     <meta property="og:image:alt" content="Logo Réveillons-nous" />
     <meta property="og:locale" content="fr_FR" />
@@ -55,6 +57,7 @@
 
     <!-- ── Twitter / X Card ── -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@reveillonsnous" />
     <meta
       name="twitter:title"
       content="Réveillons-nous — Pour une convention citoyenne sur l'IA"
@@ -65,21 +68,118 @@
     />
     <meta
       name="twitter:image"
-      content="https://reveillons-nous.vercel.app/img/reveillon-nous-png.png"
+      content="https://www.reveillons-nous.org/img/logo-reveillons-nous.png"
     />
 
     <!-- ── Données structurées JSON-LD ── -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Réveillons-nous",
-        "url": "https://reveillons-nous.vercel.app",
-        "logo": "https://reveillons-nous.vercel.app/img/reveillon-nous-png.png",
-        "description": "Collectif citoyen exigeant une Convention Citoyenne nationale sur l'Intelligence Artificielle en France.",
-        "email": "contact@reveillons-nous.org",
-        "sameAs": ["https://www.instagram.com/ia.reveillonsnous/"]
-      }
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.reveillons-nous.org/#organization",
+          "name": "Réveillons-nous",
+          "url": "https://www.reveillons-nous.org",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.reveillons-nous.org/img/logo-reveillons-nous.png",
+            "width": 200,
+            "height": 60
+          },
+          "description": "Collectif citoyen exigeant une Convention Citoyenne nationale sur l'Intelligence Artificielle en France.",
+          "email": "contact@reveillons-nous.org",
+          "sameAs": [
+            "https://www.instagram.com/ia.reveillonsnous/",
+            "https://www.youtube.com/@ia.reveillonsnous"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.reveillons-nous.org/#website",
+          "url": "https://www.reveillons-nous.org",
+          "name": "Réveillons-nous",
+          "description": "Signez la pétition officielle au CESE pour une Convention Citoyenne sur l'Intelligence Artificielle.",
+          "inLanguage": "fr-FR",
+          "publisher": { "@id": "https://www.reveillons-nous.org/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.reveillons-nous.org/#webpage",
+          "url": "https://www.reveillons-nous.org/",
+          "name": "Réveillons-nous — Pour une convention citoyenne sur l'IA",
+          "description": "Signez la pétition officielle déposée au CESE. Nous exigeons une Convention Citoyenne nationale sur l'Intelligence Artificielle, éclairée par la science et les associations de terrain.",
+          "inLanguage": "fr-FR",
+          "isPartOf": { "@id": "https://www.reveillons-nous.org/#website" },
+          "about": { "@id": "https://www.reveillons-nous.org/#organization" },
+          "datePublished": "2025-01-01",
+          "dateModified": "2026-06-06"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.reveillons-nous.org/#faqpage",
+          "isPartOf": { "@id": "https://www.reveillons-nous.org/#webpage" },
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Vous êtes qui au fait ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le Collectif Réveillons-nous regroupe des citoyennes et citoyens de tout âge, bord politique et secteur professionnel, sidérés par le déploiement effréné et sans gardes-fous de l'IA. Nous exigeons l'organisation d'une Convention Citoyenne sur l'Intelligence Artificielle, éclairée par la science et les retours des associations de terrain mobilisées sur l'IA et le numérique."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Etes-vous anti-IA ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nous sommes avant tout pro-humain ! Au sein de notre collectif, les positions sont très diverses. Nous nous rejoignons toutefois sur la nécessité d'un contrôle véritablement démocratique de l'IA."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Mais la Convention Citoyenne ça sert à rien ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, on sait que Macron s'est assis sur les propositions de la Convention Climat. Mais pour résister, il faut connaître. C'est à minima ce que permettra de faire la Convention Citoyenne, à l'abri de la pression des lobbies et des biais politiciens."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Mais une pétition ça ne sert à rien !",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Si nous n'atteignons pas les 150 000 signatures, la pétition aura toutefois rendu visible un engagement citoyen massif vis-à-vis de l'IA. Si nous atteignons ce seuil, la première étape est franchie."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "C'est quoi en fait une Convention Citoyenne ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Un groupe de plus de 100 personnes tirées au sort, représentatif de notre société, planche sur un sujet complexe pour le clarifier puis débattre et faire des propositions. Les sessions de travail étalées sur plusieurs mois sont nourries par des connaissances sourcées. Les conclusions fournissent une base solide au débat national."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Pourquoi le Conseil Economique Social et Environnemental ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le CESE est une des trois assemblées constitutives de la République. Il a vocation à être saisi par voix de pétition : à partir de 150 000 signatures, il est tenu de se saisir du sujet. La Convention Citoyenne sur l'IA sera la quatrième, à la suite de celles sur le Climat (2020), sur la fin de vie (2023), et sur le temps de l'enfant (2025)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Bon ok, comment je signe ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Cette signature est officielle. Le bouton JE SIGNE propose deux options : passer par France Connect (comme pour les impôts) ou créer un compte CESE. Et voilà !"
+              }
+            }
+          ]
+        }
+      ]
+    }
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -92,7 +192,9 @@
 
     <!-- ── EmailJS SDK ── -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>emailjs.init('s0ge4Zr5VBshGq6oA');</script>
+    <script>
+      emailjs.init("s0ge4Zr5VBshGq6oA");
+    </script>
   </head>
   <body>
     <!-- ══════════════════════════════════════
@@ -108,9 +210,9 @@
       </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#evenements">Évènements</a></li>
         <li><a href="#faq">Qui sommes-nous</a></li>
         <li><a href="#contact">Contact</a></li>
-        <!-- <li><a href="#evenements">Évènements</a></li> -->
       </ul>
       <div class="nav__burger" id="burger">
         <span></span><span></span><span></span>
@@ -250,7 +352,7 @@
           >
           <p class="heading__desc">
             Le Conseil Economique, Social et Environnemental, sera
-            automatiquement saisi dès que le seuil des <br />150 000 signatures
+            automatiquement saisi dès que le seuil des 150 000 signatures<br />
             sera atteint.
           </p>
         </div>
@@ -279,22 +381,44 @@
             impacts de l'IA sur nos vies. Nous sommes tous concernés.
           </p>
         </div>
-        <behold-widget feed-id="3o6jjyjrSeS9sLQF06Dl"></behold-widget>
-        <script>
-          (() => {
-            const d=document,s=d.createElement("script");s.type="module";
-            s.src="https://w.behold.so/widget.js";d.head.append(s);
-          })();
-        </script>
+        <div id="shortsGrid" class="shorts__grid"></div>
       </div>
       <div class="testimonials__cta">
         <a
-          href="https://www.instagram.com/ia.reveillonsnous/"
+          href="https://www.youtube.com/@ia.reveillonsnous/shorts"
           target="_blank"
           rel="noopener"
           class="btn btn--dark"
           >Voir tous les témoignages</a
         >
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+       ÉVÉNEMENTS — Google Calendar
+    ══════════════════════════════════════ -->
+    <section class="evenements" id="evenements">
+      <div class="container">
+        <div class="section__heading reveal">
+          <span class="heading__label">Nos évènements</span>
+          <p class="heading__desc">
+            Retrouvez toutes nos actions, conférences et mobilisations à venir.
+          </p>
+        </div>
+        <div class="evenements__calendar">
+          <div class="cal__left">
+            <div class="cal__nav">
+              <button class="cal__btn" id="calPrev">←</button>
+              <span class="cal__month-label" id="calMonthLabel"></span>
+              <button class="cal__btn" id="calNext">→</button>
+            </div>
+            <div class="cal__grid" id="calGrid"></div>
+          </div>
+          <div class="cal__right">
+            <div class="cal__events-title">Prochains évènements</div>
+            <div class="cal__events" id="calEvents"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -314,10 +438,47 @@
           <div class="faq__item faq__item--green open">
             <div class="faq__question">
               <span class="faq__num">01</span>
+              <span class="faq__q-text">Vous êtes qui au fait ?</span>
+              <div class="faq__icon"></div>
+            </div>
+            <div class="faq__answer" style="max-height: 600px">
+              <div class="faq__answer-inner">
+                <p>
+                  Le Collectif Réveillons-nous regroupe des citoyennes et
+                  citoyens de tout âge, bord politique et secteur professionnel,
+                  sidérés par le déploiement effréné et sans gardes-fous de
+                  l'IA.
+                </p>
+                <p>
+                  Nos emplois, nos passions, nos vies et sociétés sont percutés
+                  de plein fouet par cette technologie.
+                </p>
+                <p>
+                  Personne ne nous consulte sur les objectifs et modalités de
+                  son développement.
+                </p>
+                <p>Les Réveilleurs veulent avoir voix au chapitre !</p>
+                <p>
+                  Nous exigeons l'organisation d'une Convention Citoyenne sur
+                  l'Intelligence Artificielle, éclairée par la science et les
+                  retours des associations de terrain mobilisées sur l'IA et le
+                  numérique.
+                </p>
+                <p>
+                  C'est l'objet de la pétition déposée sur le site du CESE
+                  (Conseil Economique, Social et Environnemental).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__num">02</span>
               <span class="faq__q-text">Etes-vous anti-IA ?</span>
               <div class="faq__icon"></div>
             </div>
-            <div class="faq__answer" style="max-height: 400px">
+            <div class="faq__answer">
               <div class="faq__answer-inner">
                 Nous sommes avant tout pro-humain ! Au sein de notre collectif,
                 les positions sont très diverses. Nous nous rejoignons toutefois
@@ -342,8 +503,10 @@
 
           <div class="faq__item">
             <div class="faq__question">
-              <span class="faq__num">02</span>
-              <span class="faq__q-text">Mais la Convention Citoyenne ça sert à rien</span>
+              <span class="faq__num">03</span>
+              <span class="faq__q-text"
+                >Mais la Convention Citoyenne ça sert à rien</span
+              >
               <div class="faq__icon"></div>
             </div>
             <div class="faq__answer">
@@ -358,8 +521,10 @@
 
           <div class="faq__item">
             <div class="faq__question">
-              <span class="faq__num">03</span>
-              <span class="faq__q-text">Mais une pétition ça ne sert à rien !</span>
+              <span class="faq__num">04</span>
+              <span class="faq__q-text"
+                >Mais une pétition ça ne sert à rien !</span
+              >
               <div class="faq__icon"></div>
             </div>
             <div class="faq__answer">
@@ -375,8 +540,10 @@
 
           <div class="faq__item">
             <div class="faq__question">
-              <span class="faq__num">04</span>
-              <span class="faq__q-text">C'est quoi en fait une Convention Citoyenne ?</span>
+              <span class="faq__num">05</span>
+              <span class="faq__q-text"
+                >C'est quoi en fait une Convention Citoyenne ?</span
+              >
               <div class="faq__icon"></div>
             </div>
             <div class="faq__answer">
@@ -395,26 +562,29 @@
 
           <div class="faq__item">
             <div class="faq__question">
-              <span class="faq__num">05</span>
-              <span class="faq__q-text">Pourquoi le Conseil Economique Social et Environnemental ?</span>
+              <span class="faq__num">06</span>
+              <span class="faq__q-text"
+                >Pourquoi le Conseil Economique Social et Environnemental
+                ?</span
+              >
               <div class="faq__icon"></div>
             </div>
             <div class="faq__answer">
               <div class="faq__answer-inner">
                 Le CESE est une des trois assemblées constitutives de la
-                République. Il a vocation à être saisi par voix de pétition :
-                à partir de 150 000 signatures, il est tenu de se saisir du
+                République. Il a vocation à être saisi par voix de pétition : à
+                partir de 150 000 signatures, il est tenu de se saisir du
                 sujet.<br /><br />
                 La Convention Citoyenne sur l'IA sera la quatrième, à la suite
-                de celles sur le Climat (2020), sur la fin de vie (2023), et
-                sur le temps de l'enfant (2025).
+                de celles sur le Climat (2020), sur la fin de vie (2023), et sur
+                le temps de l'enfant (2025).
               </div>
             </div>
           </div>
 
           <div class="faq__item">
             <div class="faq__question">
-              <span class="faq__num">06</span>
+              <span class="faq__num">07</span>
               <span class="faq__q-text">Bon ok, comment je signe ?</span>
               <div class="faq__icon"></div>
             </div>
@@ -438,7 +608,9 @@
       <div class="container">
         <div class="section__heading reveal">
           <span class="heading__label">Contact</span>
-          <p class="heading__desc">Une question ? Écrivez-nous.</p>
+          <p class="heading__desc">
+            Un commentaire,une question ? Écrivez-nous.
+          </p>
         </div>
         <div class="contact__block">
           <form class="contact__form reveal" id="contactForm" novalidate>
@@ -454,7 +626,11 @@
               </div>
               <div class="form__group">
                 <label class="form__label">Sujet <span>*</span></label>
-                <select class="form__input form__select" id="contactSujet" required>
+                <select
+                  class="form__input form__select"
+                  id="contactSujet"
+                  required
+                >
                   <option value="" disabled selected>Choisir un sujet</option>
                   <option>Pétition</option>
                   <option>Bénévolat</option>
@@ -514,7 +690,7 @@
           <a href="#temoignages">Témoignages</a>
           <a href="#faq">Qui sommes-nous</a>
           <a href="#contact">Contact</a>
-          <!-- <a href="#evenements">Évènements</a> -->
+          <a href="#evenements">Évènements</a>
         </nav>
         <div class="footer__socials">
           <a
@@ -568,7 +744,7 @@
             </svg>
           </a>
           <a
-            href="https://discord.gg/NQj4a9cp"
+            href="https://discord.gg/kCWfuppsGc"
             target="_blank"
             rel="noopener"
             class="footer__social"
@@ -592,7 +768,7 @@
             >
           </div>
         </div>
-        <!-- <div class="footer__newsletter">
+        <div class="footer__newsletter">
           <div class="newsletter__field">
             <input
               type="email"
@@ -610,7 +786,7 @@
             </button>
             <span class="newsletter__feedback" id="newsletterFeedback"></span>
           </div>
-        </div>-->
+        </div>
       </div>
 
       <div class="footer__bottom">

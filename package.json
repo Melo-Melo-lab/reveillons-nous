@@ -2,6 +2,7 @@
   "name": "reveillons-nous",
   "version": "1.0.0",
   "scripts": {
-    "dev": "npx live-server --port=3000 --open=index.html"
+    "dev": "npx live-server --port=3000 --open=index.html",
+    "start": "cd server && node index.js"
   }
 }
