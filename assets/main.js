@@ -689,6 +689,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   const SEQ = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','a'];
   let pos = 0;
   document.addEventListener('keydown', e => {
+    if (!e.key) return;
     if (e.key.toLowerCase() === SEQ[pos].toLowerCase() || e.key === SEQ[pos]) {
       pos++;
       if (pos === SEQ.length) {
