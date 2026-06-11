@@ -728,8 +728,9 @@ function openAdminLogin() {
   const modal = document.createElement('div');
   modal.id = 'adminLoginModal';
   modal.innerHTML = `
-    <div class="admin-login__overlay"></div>
+    <div class="admin-login__overlay" id="adminLoginOverlay"></div>
     <div class="admin-login__box">
+      <button class="admin-login__close" id="adminLoginClose" type="button" aria-label="Fermer">✕</button>
       <form class="admin-login__form" id="adminLoginForm" autocomplete="off">
         <input
           type="password"
@@ -776,10 +777,24 @@ function openAdminLogin() {
     }
     .admin-login__btn:hover { background: #2d2f3d; }
     .admin-login__btn:disabled { opacity: .6; cursor: not-allowed; }
+    .admin-login__close {
+      position: absolute; top: 14px; right: 14px;
+      background: none; border: none; font-size: 1.1rem;
+      color: #9ca3af; cursor: pointer; line-height: 1; padding: 4px;
+    }
+    .admin-login__close:hover { color: #374151; }
+    .admin-login__box { position: relative; }
   `;
 
   document.head.appendChild(style);
   document.body.appendChild(modal);
+
+  function closeModal() { modal.remove(); }
+  document.getElementById('adminLoginClose').addEventListener('click', closeModal);
+  document.getElementById('adminLoginOverlay').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function onEsc(e) {
+    if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', onEsc); }
+  });
 
   document.getElementById('adminLoginForm').addEventListener('submit', async e => {
     e.preventDefault();

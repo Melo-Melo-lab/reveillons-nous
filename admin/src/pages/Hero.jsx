@@ -1,5 +1,4 @@
 import SaveStatus from '../components/SaveStatus';
-import ImageUploader from '../components/ImageUploader';
 
 export default function Hero({ content, onChange, saveStatus }) {
   const hero = content?.hero || {};
