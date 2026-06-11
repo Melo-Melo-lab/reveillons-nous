@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*",      "destination": "https://VOTRE-APP.railway.app/api/:path*" },
+    { "source": "/uploads/:path*",  "destination": "https://VOTRE-APP.railway.app/uploads/:path*" },
+    { "source": "/admin/:path*",    "destination": "https://VOTRE-APP.railway.app/admin/:path*" },
+    { "source": "/admin",           "destination": "https://VOTRE-APP.railway.app/admin" },
+    { "source": "/gate",            "destination": "https://VOTRE-APP.railway.app/gate" }
+  ]
+}

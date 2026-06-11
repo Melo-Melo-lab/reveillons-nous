@@ -1,0 +1,11 @@
+[phases.install]
+cmds = [
+  "npm ci --prefix server",
+  "npm ci --prefix admin"
+]
+
+[phases.build]
+cmds = ["npm run build --prefix admin"]
+
+[start]
+cmd = "node server/index.js"
