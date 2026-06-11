@@ -1,5 +1,10 @@
 import SaveStatus from '../components/SaveStatus';
 
+const INPUT = { padding:'10px 14px', borderRadius:8, border:'1.5px solid #e5e7eb', background:'#fff', color:'#191a23', fontSize:'0.9rem', fontFamily:'inherit', outline:'none' };
+const LABEL = { fontWeight:600, fontSize:'0.82rem', color:'#6b7280', textTransform:'uppercase', letterSpacing:'0.04em' };
+const SECTION = { background:'#fff', border:'1.5px solid #e5e7eb', borderRadius:12, padding:'22px 24px', marginBottom:16, display:'flex', flexDirection:'column', gap:16, boxShadow:'0 1px 4px rgba(0,0,0,0.04)' };
+const H2 = { fontSize:'0.95rem', fontWeight:700, color:'#191a23', margin:'0 0 4px' };
+
 export default function Hero({ content, onChange, saveStatus }) {
   const hero = content?.hero || {};
 
@@ -9,25 +14,25 @@ export default function Hero({ content, onChange, saveStatus }) {
 
   return (
     <div>
-      <div style={s.header}>
-        <h1 style={s.title}>Page d&apos;accueil — Hero</h1>
+      <div style={{ display:'flex', alignItems:'center', marginBottom:28 }}>
+        <h1 style={{ fontSize:'1.6rem', fontWeight:700, color:'#191a23', margin:0 }}>Page d&apos;accueil — Hero</h1>
         <SaveStatus status={saveStatus} />
       </div>
 
-      <div style={s.section}>
+      <div style={SECTION}>
         <Field label="Titre principal" value={hero.titre} onChange={v => set('titre', v)} />
         <Textarea label="Texte de description" value={hero.texte} onChange={v => set('texte', v)} />
       </div>
 
-      <div style={s.section}>
-        <h2 style={s.h2}>Vidéo hero</h2>
+      <div style={SECTION}>
+        <h2 style={H2}>Vidéo hero</h2>
         <Field label="URL ou chemin de la vidéo (ex : /img/video-3.mp4)" value={hero.videoUrl} onChange={v => set('videoUrl', v)} />
       </div>
 
-      <div style={s.section}>
-        <h2 style={s.h2}>Bouton CTA</h2>
-        <Field label="Texte du bouton"  value={hero.ctaLabel} onChange={v => set('ctaLabel', v)} />
-        <Field label="Lien du bouton"   value={hero.ctaHref}  onChange={v => set('ctaHref', v)} type="url" />
+      <div style={SECTION}>
+        <h2 style={H2}>Bouton CTA</h2>
+        <Field label="Texte du bouton" value={hero.ctaLabel} onChange={v => set('ctaLabel', v)} />
+        <Field label="Lien du bouton"  value={hero.ctaHref}  onChange={v => set('ctaHref', v)} type="url" />
       </div>
     </div>
   );
@@ -35,28 +40,18 @@ export default function Hero({ content, onChange, saveStatus }) {
 
 function Field({ label, value, onChange, type = 'text' }) {
   return (
-    <div style={s.field}>
-      <label style={s.label}>{label}</label>
-      <input style={s.input} type={type} value={value || ''} onChange={e => onChange(e.target.value)} />
+    <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+      <label style={LABEL}>{label}</label>
+      <input style={INPUT} type={type} value={value || ''} onChange={e => onChange(e.target.value)} />
     </div>
   );
 }
 
 function Textarea({ label, value, onChange }) {
   return (
-    <div style={s.field}>
-      <label style={s.label}>{label}</label>
-      <textarea style={{ ...s.input, height:110, resize:'vertical' }} value={value || ''} onChange={e => onChange(e.target.value)} />
+    <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+      <label style={LABEL}>{label}</label>
+      <textarea style={{ ...INPUT, height:110, resize:'vertical' }} value={value || ''} onChange={e => onChange(e.target.value)} />
     </div>
   );
 }
-
-const s = {
-  header:  { display:'flex', alignItems:'center', marginBottom:28 },
-  title:   { fontSize:'1.5rem', fontWeight:700, margin:0 },
-  section: { background:'#fff', border:'1.5px solid #e5e7eb', borderRadius:10, padding:'22px 24px', marginBottom:20, display:'flex', flexDirection:'column', gap:16 },
-  h2:      { fontSize:'1rem', fontWeight:700, color:'#374151', margin:'0 0 4px' },
-  field:   { display:'flex', flexDirection:'column', gap:6 },
-  label:   { fontWeight:600, fontSize:'0.85rem', color:'#374151' },
-  input:   { padding:'9px 12px', borderRadius:7, border:'1.5px solid #e5e7eb', fontSize:'0.9rem', fontFamily:'inherit', outline:'none' },
-};
