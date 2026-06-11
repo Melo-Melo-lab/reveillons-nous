@@ -51,7 +51,20 @@
   "evenements": {
     "titre": "Nos évènements",
     "description": "Retrouvez toutes nos actions, conférences et mobilisations à venir.",
-    "liste": []
+    "liste": [
+      {
+        "id": "evt-1781212437778",
+        "titre": "TEST ",
+        "description": "TEST",
+        "date": "2026-06-21",
+        "heure": "01:30",
+        "lieu": "Bordeaux",
+        "lien": "",
+        "categories": [
+          "Mobilisation"
+        ]
+      }
+    ]
   },
   "faq": {
     "titre": "FAQ",
