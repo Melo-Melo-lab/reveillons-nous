@@ -61,21 +61,17 @@ if (nav) {
 (function initEventsPage() {
   const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
-  const filtersEl   = document.getElementById('evtp-filters');
-  const upcomingEl  = document.getElementById('evtp-upcoming');
-  const pastEl      = document.getElementById('evtp-past');
-  const tabUpcoming = document.getElementById('evtp-tab-upcoming');
-  const tabPast     = document.getElementById('evtp-tab-past');
-  const countUp     = document.getElementById('evtp-count-upcoming');
-  const countPast   = document.getElementById('evtp-count-past');
-  const titleEl     = document.querySelector('.evtpage__title');
-  const descEl      = document.querySelector('.evtpage__desc');
+  const filtersEl      = document.getElementById('evtp-filters');
+  const upcomingEl     = document.getElementById('evtp-upcoming');
+  const pastEl         = document.getElementById('evtp-past');
+  const pastSectionEl  = document.getElementById('evtp-past-section');
+  const titleEl        = document.querySelector('.evtpage__title');
+  const descEl         = document.querySelector('.evtpage__desc');
 
   if (!upcomingEl) return;
 
   let allEvents    = [];
   let activeFilter = 'Tous';
-  let activeTab    = 'upcoming';
 
   async function load() {
     try {
@@ -112,7 +108,7 @@ if (nav) {
     const meta     = catStr ? `${dateFmt} <span class="evt__cat">| ${catStr}</span>` : dateFmt;
     const footInfo = [ev.heure, ev.lieu].filter(Boolean).join(' · ');
     return `
-      <article class="evtpage__card">
+      <article class="evtpage__card" id="evt-${ev.id}">
         <div class="evtpage__card-meta">${meta}</div>
         <h2 class="evtpage__card-title">${ev.titre || '(Sans titre)'}</h2>
         ${ev.description ? `<p class="evtpage__card-desc">${ev.description}</p>` : ''}
@@ -135,42 +131,42 @@ if (nav) {
       });
     }
 
-    const now     = new Date();
+    const now      = new Date();
     const filtered = allEvents.filter(ev =>
       activeFilter === 'Tous' || (ev.categories || []).map(c => c.trim()).includes(activeFilter)
     );
     const upcoming = filtered.filter(ev => ev._date >= now).sort((a, b) => a._date - b._date);
     const past     = filtered.filter(ev => ev._date <  now).sort((a, b) => b._date - a._date);
 
-    if (countUp)   countUp.textContent   = upcoming.length;
-    if (countPast) countPast.textContent = past.length;
-
     upcomingEl.innerHTML = upcoming.length
       ? upcoming.map(cardHTML).join('')
       : '<p class="evtpage__empty">Aucun événement à venir.</p>';
 
-    if (pastEl) {
-      pastEl.innerHTML = past.length
-        ? past.map(cardHTML).join('')
-        : '<p class="evtpage__empty">Aucun événement passé.</p>';
+    if (pastEl && pastSectionEl) {
+      if (past.length) {
+        pastSectionEl.style.display = '';
+        pastEl.innerHTML = past.map(cardHTML).join('');
+      } else {
+        pastSectionEl.style.display = 'none';
+      }
     }
+
+    // Scroll vers l'ancre après rendu
+    scrollToHash();
   }
 
-  if (tabUpcoming && tabPast) {
-    tabUpcoming.addEventListener('click', () => {
-      activeTab = 'upcoming';
-      tabUpcoming.classList.add('evtpage__tab--active');
-      tabPast.classList.remove('evtpage__tab--active');
-      upcomingEl.style.display = '';
-      if (pastEl) pastEl.style.display = 'none';
-    });
-    tabPast.addEventListener('click', () => {
-      activeTab = 'past';
-      tabPast.classList.add('evtpage__tab--active');
-      tabUpcoming.classList.remove('evtpage__tab--active');
-      upcomingEl.style.display = 'none';
-      if (pastEl) pastEl.style.display = '';
-    });
+  function scrollToHash() {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const id = hash.slice(1); // retire le #
+    setTimeout(() => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.classList.add('evtpage__card--highlight');
+      const offset = target.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+      setTimeout(() => target.classList.remove('evtpage__card--highlight'), 2000);
+    }, 80);
   }
 
   load();

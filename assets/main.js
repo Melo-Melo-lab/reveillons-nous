@@ -555,11 +555,13 @@ updateFloatCtaTheme();
   const grid    = document.getElementById('evtGrid');
   const filters = document.getElementById('evtFilters');
   const empty   = document.getElementById('evtEmpty');
+  const cta     = document.getElementById('evtCta');
   if (!grid) return;
 
-  const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  let allEvents    = [];
-  let activeFilter = 'Tous';
+  const MOIS        = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const MAX_HOME    = 3;
+  let allEvents     = [];
+  let activeFilter  = 'Tous';
 
   window.renderCalendar = function(events) {
     allEvents = (events || []).map(ev => ({
@@ -597,35 +599,38 @@ updateFloatCtaTheme();
       });
     }
 
-    const now     = new Date();
-    const visible = allEvents
+    const now      = new Date();
+    const upcoming = allEvents
       .filter(ev => ev._date >= now)
       .filter(ev => activeFilter === 'Tous' || (ev.categories || []).map(c => c.trim()).includes(activeFilter))
       .sort((a, b) => a._date - b._date);
+    const past     = allEvents.filter(ev => ev._date < now);
 
-    if (!visible.length) {
+    // Bouton visible dès qu'il y a plus d'événements que ce qu'on affiche
+    if (cta) cta.style.display = (allEvents.length > MAX_HOME) ? '' : 'none';
+
+    if (!upcoming.length) {
       grid.innerHTML = '';
       if (empty) empty.style.display = '';
       return;
     }
     if (empty) empty.style.display = 'none';
 
-    grid.innerHTML = visible.map(ev => {
+    // Afficher max 6 — chaque carte pointe vers la page détail
+    grid.innerHTML = upcoming.slice(0, MAX_HOME).map(ev => {
       const dateFmt  = formatDate(ev._date);
       const evCats   = (ev.categories || []).filter(c => c && c.trim());
       const catStr   = evCats.length ? evCats.join(', ') : '';
       const meta     = catStr ? `${dateFmt} <span class="evt__cat">| ${catStr}</span>` : dateFmt;
       const footInfo = [ev.heure, ev.lieu].filter(Boolean).join(' · ');
-      const tag      = ev.lien ? 'a' : 'div';
-      const href     = ev.lien ? ` href="${ev.lien}" target="_blank" rel="noopener"` : '';
-      return `<${tag} class="evt__card"${href}>
+      return `<a class="evt__card" href="/evenements#evt-${ev.id}">
         <div class="evt__card-meta">${meta}</div>
         <div class="evt__card-title">${ev.titre || '(Sans titre)'}</div>
         <div class="evt__card-footer">
           <div class="evt__card-info">${footInfo}</div>
           <div class="evt__card-arrow">→</div>
         </div>
-      </${tag}>`;
+      </a>`;
     }).join('');
   }
 })();
