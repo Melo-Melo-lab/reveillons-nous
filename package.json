@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npx live-server --port=3000 --open=index.html",
-    "build": "npm ci --prefix admin && npm run build --prefix admin",
+    "build": "npm install --prefix admin && npm run build --prefix admin",
     "start": "node server/index.js"
   }
 }
