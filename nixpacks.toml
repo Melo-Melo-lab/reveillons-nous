@@ -8,4 +8,4 @@ cmds = [
 cmds = ["npm run build --prefix admin"]
 
 [start]
-cmd = "node server/index.js"
+cmd = "cd server && node index.js"
