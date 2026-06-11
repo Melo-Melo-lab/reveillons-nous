@@ -2,5 +2,9 @@
 node_modules/
 package-lock.json
 
+# Variables d'environnement — ne jamais committer
+server/.env
+.env
+
 # Vidéos trop lourdes pour GitHub (>100 MB)
 img/Réveillons-Nous présentation vidéo-3.mp4
