@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════
-   PAGE DÉTAIL ÉVÉNEMENT — evenement.js
+   PAGE LISTING ÉVÉNEMENTS — evenements-details.js
    ════════════════════════════════════════════ */
 
 const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -47,86 +47,103 @@ if (nav) {
   });
 })();
 
-// ── ÉVÉNEMENT ────────────────────────────────
-(async function loadEvent() {
+// ── LISTING ÉVÉNEMENTS ───────────────────────
+(async function loadEvents() {
   const root = document.getElementById('evtDetailRoot');
   if (!root) return;
 
-  const params = new URLSearchParams(window.location.search);
-  const id     = params.get('id');
+  const params     = new URLSearchParams(window.location.search);
+  const scrollToId = params.get('id');
 
-  if (!id) {
-    showError(root, 'Aucun événement spécifié.', true);
-    return;
-  }
-
-  let ev = null;
+  let data;
   try {
     const cached = sessionStorage.getItem('siteContent');
-    const data   = cached ? JSON.parse(cached) : await (await fetch('/api/content')).json();
+    data = cached ? JSON.parse(cached) : await (await fetch('/api/content')).json();
     if (!cached) sessionStorage.setItem('siteContent', JSON.stringify(data));
-    ev = (data.evenements?.liste || []).find(e => e.id === id) || null;
   } catch {
-    showError(root, 'Impossible de charger les données.');
+    root.innerHTML = `<section class="evtpage__hero"><div class="container">
+      <a href="/#evenements" class="evtpage__back">← Retour à l'accueil</a>
+      <p style="color:rgba(255,255,255,0.4);margin-top:24px;">Impossible de charger les événements.</p>
+    </div></section>`;
     return;
   }
 
-  if (!ev) {
-    showError(root, 'Cet événement est introuvable.', true);
-    return;
+  document.title = 'Tous nos évènements — Réveillons-nous';
+
+  const allEvents = (data.evenements?.liste || []).map(ev => ({
+    ...ev,
+    _date: new Date(ev.date + (ev.heure ? 'T' + ev.heure : 'T00:00')),
+  }));
+
+  const now      = new Date();
+  const upcoming = allEvents.filter(ev => ev._date >= now).sort((a, b) => a._date - b._date);
+  const past     = allEvents.filter(ev => ev._date < now).sort((a, b) => b._date - a._date);
+
+  function formatDate(d) {
+    return `${d.getDate()} ${MOIS[d.getMonth()]}. ${d.getFullYear()}`;
   }
 
-  const date    = new Date(ev.date + (ev.heure ? 'T' + ev.heure : 'T00:00'));
-  const dateFmt = `${date.getDate()} ${MOIS[date.getMonth()]}. ${date.getFullYear()}`;
-  const cats    = (ev.categories || []).filter(c => c?.trim());
-  const catStr  = cats.join(', ');
+  function renderCard(ev) {
+    const dateFmt  = formatDate(ev._date);
+    const cats     = (ev.categories || []).filter(c => c?.trim());
+    const catStr   = cats.join(', ');
+    const infoParts = [];
+    if (ev.heure) infoParts.push('🕐 ' + ev.heure);
+    if (ev.lieu)  infoParts.push('📍 ' + ev.lieu);
+    const footInfo = infoParts.join(' · ');
 
-  // Mettre à jour le title du document
-  document.title = `${ev.titre} — Réveillons-nous`;
+    return `<div class="evtpage__card" id="evt-${ev.id}">
+      <div class="evtpage__card-meta">
+        ${dateFmt}${catStr ? ` <span class="evt__cat">| ${catStr}</span>` : ''}
+      </div>
+      <h2 class="evtpage__card-title">${ev.titre || '(Sans titre)'}</h2>
+      ${footInfo ? `<div class="evtpage__card-info">${footInfo}</div>` : ''}
+      ${ev.description ? `<div class="evtpage__card-desc">${ev.description}</div>` : ''}
+      ${ev.lien ? `<div class="evtpage__card-actions">
+        <a href="${ev.lien}" target="_blank" rel="noopener" class="evtpage__card-link">Voir l'événement →</a>
+      </div>` : ''}
+    </div>`;
+  }
 
   root.innerHTML = `
-    <!-- Hero -->
-    <section class="evtdetail__hero">
+    <section class="evtpage__hero">
       <div class="container">
-        <a href="/evenements" class="evtpage__back">← Tous les évènements</a>
-        <div class="evtdetail__meta">
-          <span class="evtdetail__date">${dateFmt}</span>
-          ${catStr ? `<span class="evtdetail__cats">${catStr}</span>` : ''}
-        </div>
-        <h1 class="evtdetail__title">${ev.titre || '(Sans titre)'}</h1>
-        ${ev.heure || ev.lieu ? `
-          <div class="evtdetail__where">
-            ${ev.heure ? `<span class="evtdetail__info-item">🕐 ${ev.heure}</span>` : ''}
-            ${ev.lieu  ? `<span class="evtdetail__info-item">📍 ${ev.lieu}</span>` : ''}
-          </div>` : ''}
+        <a href="/#evenements" class="evtpage__back">← Retour à l'accueil</a>
+        <h1 class="evtpage__title">Tous nos évènements</h1>
+        <p class="evtpage__desc">Retrouvez toutes nos actions, conférences et mobilisations.</p>
       </div>
     </section>
 
-    <!-- Corps -->
-    <section class="evtdetail__body">
+    <section class="evtpage__body">
       <div class="container">
-        ${ev.description ? `
-          <div class="evtdetail__desc">
-            ${ev.description}
-          </div>` : '<p class="evtdetail__nodesc">Aucune description pour cet événement.</p>'}
-
-        ${ev.lien ? `
-          <div class="evtdetail__cta">
-            <a href="${ev.lien}" target="_blank" rel="noopener" class="evtdetail__btn">
-              Voir l'événement officiel →
-            </a>
+        ${upcoming.length ? `
+          <div class="evtpage__section">
+            <p class="evtpage__section-title">À venir · ${upcoming.length}</p>
+            <div class="evtpage__grid">
+              ${upcoming.map(ev => renderCard(ev)).join('')}
+            </div>
           </div>` : ''}
+
+        ${past.length ? `
+          <div class="evtpage__section">
+            <p class="evtpage__section-title evtpage__section-title--dim">Passés · ${past.length}</p>
+            <div class="evtpage__grid">
+              ${past.map(ev => renderCard(ev)).join('')}
+            </div>
+          </div>` : ''}
+
+        ${!allEvents.length ? `<p class="evtpage__empty">Aucun événement pour le moment.</p>` : ''}
       </div>
     </section>
   `;
-})();
 
-function showError(root, msg, withBack = false) {
-  root.innerHTML = `
-    <section class="evtdetail__hero">
-      <div class="container">
-        ${withBack ? '<a href="/evenements" class="evtpage__back">← Tous les évènements</a>' : ''}
-        <p style="color:rgba(255,255,255,0.5); margin-top:24px;">${msg}</p>
-      </div>
-    </section>`;
-}
+  if (scrollToId) {
+    const target = document.getElementById('evt-' + scrollToId);
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.add('evtpage__card--highlight');
+      }, 120);
+    }
+  }
+})();

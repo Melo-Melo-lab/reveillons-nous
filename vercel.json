@@ -6,7 +6,6 @@
     { "source": "/admin/:path*",    "destination": "https://reveillons-nous-production.up.railway.app/admin/:path*" },
     { "source": "/admin",           "destination": "https://reveillons-nous-production.up.railway.app/admin" },
     { "source": "/gate",            "destination": "https://reveillons-nous-production.up.railway.app/gate" },
-    { "source": "/evenements",         "destination": "/evenements.html" },
     { "source": "/evenements-details", "destination": "/evenements-details.html" }
   ]
 }

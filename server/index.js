@@ -57,7 +57,6 @@ app.use('/api/upload',  require('./routes/upload'));
 // ── PAGES STATIQUES DU SITE ──────────────────
 const ROOT = path.join(__dirname, '..');
 app.use(express.static(ROOT));
-app.get('/evenements',         (_req, res) => res.sendFile(path.join(ROOT, 'evenements.html')));
 app.get('/evenements-details', (_req, res) => res.sendFile(path.join(ROOT, 'evenements-details.html')));
 app.get('*', (_req, res) => res.sendFile(path.join(ROOT, 'index.html')));
 
