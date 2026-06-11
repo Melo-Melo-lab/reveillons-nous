@@ -114,7 +114,7 @@ if (nav) {
         ${ev.description ? `<p class="evtpage__card-desc">${ev.description}</p>` : ''}
         ${footInfo ? `<div class="evtpage__card-info">${footInfo}</div>` : ''}
         <div class="evtpage__card-actions">
-          <a class="evtpage__card-detail" href="/evenement?id=${ev.id}">Voir le détail →</a>
+          <a class="evtpage__card-detail" href="/evenements-details?id=${ev.id}">Voir le détail →</a>
           ${ev.lien ? `<a class="evtpage__card-link" href="${ev.lien}" target="_blank" rel="noopener">S'inscrire / Voir l'événement ↗</a>` : ''}
         </div>
       </article>`;
