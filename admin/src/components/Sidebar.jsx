@@ -12,7 +12,7 @@ const NAV = [
   { to: '/footer',          label: 'Footer' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isMobile, isOpen, onOpen, onClose }) {
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -20,39 +20,72 @@ export default function Sidebar() {
     navigate('/login');
   }
 
+  const sidebarStyle = isMobile ? {
+    ...styles.sidebar,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    height: '100vh',
+    zIndex: 300,
+    transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+    transition: 'transform 0.25s ease',
+    boxShadow: isOpen ? '4px 0 24px rgba(0,0,0,0.3)' : 'none',
+  } : styles.sidebar;
+
   return (
-    <aside style={styles.sidebar}>
-      <div style={styles.brand}>
-        <span style={styles.brandText}>Admin</span>
-      </div>
-      <nav style={styles.nav}>
-        {NAV.map(item => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            style={({ isActive }) => ({
-              ...styles.link,
-              ...(isActive ? styles.linkActive : {}),
-            })}
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
-      <div style={styles.footer}>
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener"
-          style={styles.viewSite}
+    <>
+      {/* Burger button — mobile uniquement */}
+      {isMobile && (
+        <button
+          style={styles.burger}
+          onClick={isOpen ? onClose : onOpen}
+          aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
         >
-          Voir le site →
-        </a>
-        <button style={styles.logoutBtn} onClick={handleLogout}>
-          Déconnexion
+          {isOpen ? '✕' : '☰'}
         </button>
-      </div>
-    </aside>
+      )}
+
+      {/* Overlay backdrop — mobile quand ouvert */}
+      {isMobile && isOpen && (
+        <div style={styles.overlay} onClick={onClose} />
+      )}
+
+      {/* Sidebar */}
+      <aside style={sidebarStyle}>
+        <div style={styles.brand}>
+          <span style={styles.brandText}>Admin</span>
+        </div>
+        <nav style={styles.nav}>
+          {NAV.map(item => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onClick={isMobile ? onClose : undefined}
+              style={({ isActive }) => ({
+                ...styles.link,
+                ...(isActive ? styles.linkActive : {}),
+              })}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div style={styles.footer}>
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener"
+            style={styles.viewSite}
+            onClick={isMobile ? onClose : undefined}
+          >
+            Voir le site →
+          </a>
+          <button style={styles.logoutBtn} onClick={handleLogout}>
+            Déconnexion
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
 
@@ -64,6 +97,30 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     flexShrink: 0,
+  },
+  burger: {
+    position: 'fixed',
+    top: 12,
+    left: 12,
+    zIndex: 400,
+    width: 40,
+    height: 40,
+    background: '#191a23',
+    color: '#b9ff66',
+    border: 'none',
+    borderRadius: 8,
+    fontSize: '1.2rem',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+  },
+  overlay: {
+    position: 'fixed',
+    inset: 0,
+    background: 'rgba(0,0,0,0.5)',
+    zIndex: 299,
   },
   brand: {
     padding: '28px 24px 20px',
