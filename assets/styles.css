@@ -704,7 +704,7 @@ p {
   background: transparent;
   color: rgba(255, 255, 255, 0.55);
   font-family: var(--font);
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: var(--fw-medium);
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
@@ -735,7 +735,7 @@ p {
   background: rgba(185, 255, 102, 0.06);
 }
 .evt__card-meta {
-  font-size: 0.82rem;
+  font-size: var(--fs-small);
   color: rgba(255, 255, 255, 0.4);
   letter-spacing: 0.02em;
   margin-bottom: 14px;
@@ -759,7 +759,7 @@ p {
   margin-top: auto;
 }
 .evt__card-info {
-  font-size: 0.8rem;
+  font-size: var(--fs-small);
   color: rgba(255, 255, 255, 0.35);
 }
 .evt__card-arrow {
@@ -1250,7 +1250,7 @@ p {
   background: #fff;
   border: 2px solid var(--gray-200);
   border-radius: 28px;
-  padding: 24px;
+  padding: 32px 22px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -1303,7 +1303,7 @@ p {
   margin: 0;
 }
 .team__desc {
-  font-size: var(--fs-h4);
+  font-size: var(--fs-body);
   color: var(--dark);
   line-height: 1.55;
   margin: 0;
