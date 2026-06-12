@@ -1051,7 +1051,6 @@ p {
   line-height: 1.7;
   margin-bottom: 16px;
   overflow-wrap: break-word;
-  max-width: 720px;
 }
 .evtlist__link {
   display: inline-block;
