@@ -151,7 +151,6 @@ if (nav) {
     if (target) {
       setTimeout(() => {
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        target.classList.add('evtpage__card--highlight');
       }, 120);
     }
   }
