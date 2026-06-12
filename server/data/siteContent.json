@@ -1,4 +1,28 @@
 {
+  "partenaires": {
+    "logos": [
+      {
+        "url": "/img/AFCIA.png",
+        "alt": "AFCIA"
+      },
+      {
+        "url": "/img/LOGO_LARUCHE.png",
+        "alt": "La Ruche"
+      },
+      {
+        "url": "/img/Logo_MFRB_noir_big.png",
+        "alt": "MFRB"
+      },
+      {
+        "url": "/img/OFF_Logotype.png",
+        "alt": "OFF"
+      },
+      {
+        "url": "/img/bannière Pause IA.png",
+        "alt": "Pause IA"
+      }
+    ]
+  },
   "global": {
     "logoUrl": "/img/logo-reveillons-nous.png",
     "logoAlt": "Réveillons-nous",
@@ -65,10 +89,10 @@
         ]
       },
       {
-        "id": "evt-1781286470135",
+        "id": "evt-1781286489652",
         "titre": "TEST",
-        "description": "TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST",
-        "date": "2026-06-26",
+        "description": "TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST",
+        "date": "2026-06-17",
         "heure": "10:00",
         "lieu": "Bordeaux",
         "lien": "",
@@ -77,10 +101,10 @@
         ]
       },
       {
-        "id": "evt-1781286489652",
-        "titre": "TEST",
-        "description": "TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST",
-        "date": "2026-06-17",
+        "id": "evt-1781296049543",
+        "titre": "TEST AVANT",
+        "description": "Ordre : à venir d'abord (du plus proche au plus lointain), puis passés (du plus récent au plus ancien) en complément",
+        "date": "2026-06-11",
         "heure": "10:00",
         "lieu": "Bordeaux",
         "lien": "",
