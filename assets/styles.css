@@ -856,7 +856,7 @@ p {
 /* ── Corps de la page ───────────────────────── */
 .evtpage__body {
   background: var(--black);
-  padding: 48px 80px var(--section-py);
+  padding: 16px 80px var(--section-py);
   min-height: 60vh;
 }
 

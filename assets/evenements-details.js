@@ -131,13 +131,13 @@ if (nav) {
       <div class="container">
         ${upcoming.length ? `
           <div class="evtpage__section">
-            <p class="evtpage__section-title">À venir · ${upcoming.length}</p>
+            <p class="evtpage__section-title">À venir</p>
             ${renderList(upcoming)}
           </div>` : ''}
 
         ${past.length ? `
           <div class="evtpage__section">
-            <p class="evtpage__section-title evtpage__section-title--dim">Passés · ${past.length}</p>
+            <p class="evtpage__section-title evtpage__section-title--dim">Passés</p>
             ${renderList(past)}
           </div>` : ''}
 
