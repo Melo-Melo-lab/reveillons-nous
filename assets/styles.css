@@ -1066,8 +1066,13 @@ p {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   margin: 0;
 }
-.evtlist__item.evtpage__card--highlight .evtlist__title {
-  color: var(--green);
+.evtlist__item--active .evtlist__title {
+  animation: evtlist-highlight 2.8s ease forwards;
+}
+@keyframes evtlist-highlight {
+  0%   { color: var(--green); }
+  60%  { color: var(--green); }
+  100% { color: #fff; }
 }
 
 /* ════════════════════════════════════════════
