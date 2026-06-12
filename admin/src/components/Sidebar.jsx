@@ -10,6 +10,7 @@ const NAV = [
   { to: '/faq',             label: 'FAQ' },
   { to: '/contact',         label: 'Contact' },
   { to: '/footer',          label: 'Footer' },
+  { to: '/partenaires',     label: 'Partenaires' },
 ];
 
 const linkStyle = (isActive) => ({
