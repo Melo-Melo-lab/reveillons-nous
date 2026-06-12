@@ -1249,8 +1249,8 @@ p {
 .team__card {
   background: #fff;
   border: 2px solid var(--black);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 28px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
