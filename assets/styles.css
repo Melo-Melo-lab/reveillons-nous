@@ -1020,6 +1020,49 @@ p {
   color: var(--green);
 }
 
+/* ── Listing événements (flat, sans cards) ── */
+.evtlist__item {
+  padding: 32px 0;
+  scroll-margin-top: 100px;
+}
+.evtlist__meta {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.evtlist__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+.evtlist__desc {
+  font-size: 0.97rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.evtlist__link {
+  display: inline-block;
+  color: var(--green);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.evtlist__link:hover { opacity: 0.75; }
+.evtlist__sep {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 0;
+}
+.evtlist__item.evtpage__card--highlight .evtlist__title {
+  color: var(--green);
+}
+
 /* ════════════════════════════════════════════
    PAGE DÉTAIL ÉVÉNEMENT
    ════════════════════════════════════════════ */

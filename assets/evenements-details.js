@@ -92,29 +92,30 @@ if (nav) {
     catch { return ''; }
   }
 
-  function renderCard(ev) {
+  function renderItem(ev) {
     const dateFmt  = formatDate(ev._date);
     const cats     = (ev.categories || []).filter(c => c?.trim()).map(esc);
     const catStr   = cats.join(', ');
     const infoParts = [];
-    if (ev.heure) infoParts.push('🕐 ' + esc(ev.heure));
-    if (ev.lieu)  infoParts.push('📍 ' + esc(ev.lieu));
+    if (ev.heure) infoParts.push(esc(ev.heure));
+    if (ev.lieu)  infoParts.push(esc(ev.lieu));
     const footInfo = infoParts.join(' · ');
     const titre    = esc(ev.titre) || '(Sans titre)';
     const desc     = ev.description ? DOMPurify.sanitize(ev.description) : '';
     const lien     = safeUrl(ev.lien);
 
-    return `<div class="evtpage__card" id="evt-${esc(ev.id)}">
-      <div class="evtpage__card-meta">
-        ${dateFmt}${catStr ? ` <span class="evt__cat">| ${catStr}</span>` : ''}
-      </div>
-      <h2 class="evtpage__card-title">${titre}</h2>
-      ${footInfo ? `<div class="evtpage__card-info">${footInfo}</div>` : ''}
-      ${desc ? `<div class="evtpage__card-desc">${desc}</div>` : ''}
-      ${lien ? `<div class="evtpage__card-actions">
-        <a href="${esc(lien)}" target="_blank" rel="noopener" class="evtpage__card-link">Voir l'événement →</a>
-      </div>` : ''}
+    return `<div class="evtlist__item" id="evt-${esc(ev.id)}">
+      <div class="evtlist__meta">${dateFmt}${catStr ? ` · ${catStr}` : ''}${footInfo ? ` · ${footInfo}` : ''}</div>
+      <h2 class="evtlist__title">${titre}</h2>
+      ${desc ? `<div class="evtlist__desc">${desc}</div>` : ''}
+      ${lien ? `<a href="${esc(lien)}" target="_blank" rel="noopener" class="evtlist__link">Voir l'événement →</a>` : ''}
     </div>`;
+  }
+
+  function renderList(events) {
+    return events.map((ev, i) =>
+      renderItem(ev) + (i < events.length - 1 ? '<hr class="evtlist__sep" />' : '')
+    ).join('');
   }
 
   root.innerHTML = `
@@ -131,17 +132,13 @@ if (nav) {
         ${upcoming.length ? `
           <div class="evtpage__section">
             <p class="evtpage__section-title">À venir · ${upcoming.length}</p>
-            <div class="evtpage__grid">
-              ${upcoming.map(ev => renderCard(ev)).join('')}
-            </div>
+            ${renderList(upcoming)}
           </div>` : ''}
 
         ${past.length ? `
           <div class="evtpage__section">
             <p class="evtpage__section-title evtpage__section-title--dim">Passés · ${past.length}</p>
-            <div class="evtpage__grid">
-              ${past.map(ev => renderCard(ev)).join('')}
-            </div>
+            ${renderList(past)}
           </div>` : ''}
 
         ${!allEvents.length ? `<p class="evtpage__empty">Aucun événement pour le moment.</p>` : ''}
