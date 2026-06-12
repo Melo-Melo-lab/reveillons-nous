@@ -1297,6 +1297,11 @@ p {
 .team__linkedin:hover {
   background: #0077b5;
 }
+.team__sep {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
 .team__desc {
   font-size: var(--fs-h4);
   color: var(--dark);
