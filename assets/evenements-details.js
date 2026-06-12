@@ -152,7 +152,7 @@ if (nav) {
       setTimeout(() => {
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         target.classList.add('evtlist__item--active');
-        setTimeout(() => target.classList.remove('evtlist__item--active'), 2800);
+        setTimeout(() => target.classList.remove('evtlist__item--active'), 3500);
       }, 120);
     }
   }
