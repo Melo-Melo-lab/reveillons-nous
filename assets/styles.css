@@ -1248,13 +1248,12 @@ p {
 }
 .team__card {
   background: #fff;
-  border: 2px solid var(--black);
+  border: 2px solid var(--gray-200);
   border-radius: 28px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 6px 0 0 var(--black);
 }
 .team__card-top {
   display: flex;
