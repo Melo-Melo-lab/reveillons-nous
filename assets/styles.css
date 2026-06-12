@@ -462,6 +462,19 @@ p {
 .logo-text:hover {
   opacity: 1;
 }
+.logos__img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.75;
+  filter: grayscale(20%);
+  transition: opacity 0.25s, filter 0.25s;
+}
+.logos__img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
 
 @keyframes scroll-logos {
   from {
