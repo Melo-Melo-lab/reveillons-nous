@@ -132,6 +132,18 @@ function applyContent(d) {
     }
   }
 
+  // Logos partenaires
+  if (d.partenaires?.logos?.length) {
+    const track = document.querySelector('.logos__track');
+    if (track) {
+      const makeImg = (logo, hidden) =>
+        `<img src="${logo.url.replace(/"/g,'&quot;')}" alt="${(logo.alt||'').replace(/"/g,'&quot;')}" class="logos__img" loading="lazy"${hidden ? ' aria-hidden="true"' : ''} />`;
+      track.innerHTML =
+        d.partenaires.logos.map(l => makeImg(l, false)).join('') +
+        d.partenaires.logos.map(l => makeImg(l, true)).join('');
+    }
+  }
+
   // Stocker les événements pour le calendrier (appelé après initContent)
   if (d.evenements?.liste) {
     window._siteEvents = d.evenements.liste;
@@ -545,7 +557,7 @@ updateFloatCtaTheme();
   if (!grid) return;
 
   const MOIS        = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  const MAX_HOME    = 3;
+  const MIN_HOME    = 3;
   let allEvents     = [];
   let activeFilter  = 'Tous';
 
@@ -586,24 +598,39 @@ updateFloatCtaTheme();
     }
 
     const now      = new Date();
+    const catFilter = ev => activeFilter === 'Tous' || (ev.categories || []).map(c => c.trim()).includes(activeFilter);
+
     const upcoming = allEvents
       .filter(ev => ev._date >= now)
-      .filter(ev => activeFilter === 'Tous' || (ev.categories || []).map(c => c.trim()).includes(activeFilter))
+      .filter(catFilter)
       .sort((a, b) => a._date - b._date);
-    const past     = allEvents.filter(ev => ev._date < now);
 
-    // Bouton visible dès qu'il y a plus d'événements que ce qu'on affiche
-    if (cta) cta.style.display = (allEvents.length > MAX_HOME) ? '' : 'none';
+    const past = allEvents
+      .filter(ev => ev._date < now)
+      .filter(catFilter)
+      .sort((a, b) => b._date - a._date); // plus récent en premier pour sélection
 
-    if (!upcoming.length) {
+    // Si moins de MIN_HOME à venir, on complète avec les passés les plus récents
+    // Ordre final : passés (ancien→récent) puis à venir (proche→lointain)
+    let toDisplay;
+    if (upcoming.length >= MIN_HOME) {
+      toDisplay = upcoming;
+    } else {
+      const needed          = MIN_HOME - upcoming.length;
+      const pastSupplement  = past.slice(0, needed).reverse(); // on inverse pour afficher ancien→récent
+      toDisplay = [...pastSupplement, ...upcoming];
+    }
+
+    if (cta) cta.style.display = (allEvents.length > toDisplay.length) ? '' : 'none';
+
+    if (!toDisplay.length) {
       grid.innerHTML = '';
       if (empty) empty.style.display = '';
       return;
     }
     if (empty) empty.style.display = 'none';
 
-    // Afficher max 6 — chaque carte pointe vers la page détail
-    grid.innerHTML = upcoming.slice(0, MAX_HOME).map(ev => {
+    grid.innerHTML = toDisplay.map(ev => {
       const dateFmt  = formatDate(ev._date);
       const evCats   = (ev.categories || []).filter(c => c && c.trim());
       const catStr   = evCats.length ? evCats.join(', ') : '';
