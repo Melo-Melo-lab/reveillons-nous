@@ -208,6 +208,9 @@ p {
   font-size: 1.25rem;
   color: var(--dark);
   line-height: 1.5;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* ── SCROLL REVEAL ──────────────────────────── */
