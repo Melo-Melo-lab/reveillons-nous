@@ -132,6 +132,33 @@ function applyContent(d) {
     }
   }
 
+  // Team
+  if (d.team?.visible && d.team?.membres?.length) {
+    const section = document.getElementById('team');
+    if (section) {
+      section.style.display = '';
+      setTextContent('#teamLabel', d.team.label || 'Team');
+      setTextContent('#teamDesc', d.team.description || '');
+      const grid = document.getElementById('teamGrid');
+      if (grid) {
+        const linkedinSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`;
+        grid.innerHTML = d.team.membres.map(m => `
+          <div class="team__card reveal visible">
+            <div class="team__card-top">
+              <img src="${(m.photo||'').replace(/"/g,'&quot;')}" alt="${(m.nom||'').replace(/"/g,'&quot;')}" class="team__avatar" />
+              <div class="team__info">
+                <div class="team__name">${m.nom || ''}</div>
+                <div class="team__role">${m.role || ''}</div>
+              </div>
+              ${m.linkedin ? `<a href="${m.linkedin.replace(/"/g,'&quot;')}" class="team__linkedin" aria-label="LinkedIn" target="_blank" rel="noopener">${linkedinSvg}</a>` : `<div class="team__linkedin" style="opacity:0;pointer-events:none">${linkedinSvg}</div>`}
+            </div>
+            <hr class="team__sep" />
+            <p class="team__desc">${(m.description||'').replace(/</g,'&lt;')}</p>
+          </div>`).join('');
+      }
+    }
+  }
+
   // Logos partenaires
   if (d.partenaires?.logos?.length) {
     const track = document.querySelector('.logos__track');
