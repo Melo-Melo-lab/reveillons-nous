@@ -153,7 +153,7 @@ function applyContent(d) {
               ${m.linkedin ? `<a href="${m.linkedin.replace(/"/g,'&quot;')}" class="team__linkedin" aria-label="LinkedIn" target="_blank" rel="noopener">${linkedinSvg}</a>` : `<div class="team__linkedin" style="opacity:0;pointer-events:none">${linkedinSvg}</div>`}
             </div>
             <hr class="team__sep" />
-            <p class="team__desc">${(m.description||'').replace(/</g,'&lt;')}</p>
+            <p class="team__desc" style="overflow-wrap:break-word;word-break:break-word">${(m.description||'').replace(/</g,'&lt;')}</p>
           </div>`).join('');
       }
     }
