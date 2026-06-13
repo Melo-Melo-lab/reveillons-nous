@@ -1244,6 +1244,9 @@ p {
   padding: var(--section-py) 0;
   background: var(--white);
 }
+.team .section__heading {
+  margin-bottom: 32px;
+}
 .team__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
