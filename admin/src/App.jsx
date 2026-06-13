@@ -12,6 +12,7 @@ import FAQ        from './pages/FAQ';
 import Contact    from './pages/Contact';
 import FooterPage from './pages/Footer';
 import Partenaires from './pages/Partenaires';
+import Team from './pages/Team';
 import { useAdminContent } from './hooks/useAdminContent';
 
 function AdminLayout() {
@@ -94,6 +95,7 @@ function AdminLayout() {
           <Route path="contact"         element={<Contact {...pageProps} />} />
           <Route path="footer"          element={<FooterPage {...pageProps} />} />
           <Route path="partenaires"     element={<Partenaires {...pageProps} />} />
+          <Route path="team"            element={<Team {...pageProps} />} />
           <Route path="*"               element={<Navigate to="tableau-de-bord" replace />} />
         </Routes>
       </main>

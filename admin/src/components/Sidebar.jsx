@@ -7,10 +7,11 @@ const NAV = [
   { to: '/hero',            label: "Page d'accueil" },
   { to: '/petition',        label: 'Pétition' },
   { to: '/evenements',      label: 'Événements' },
+  { to: '/partenaires',     label: 'Partenaires' },
+  { to: '/team',            label: 'Team' },
   { to: '/faq',             label: 'FAQ' },
   { to: '/contact',         label: 'Contact' },
   { to: '/footer',          label: 'Footer' },
-  { to: '/partenaires',     label: 'Partenaires' },
 ];
 
 const linkStyle = (isActive) => ({
