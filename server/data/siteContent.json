@@ -1,4 +1,35 @@
 {
+  "team": {
+    "visible": true,
+    "label": "Team",
+    "description": "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.",
+    "membres": [
+      {
+        "nom": "Laura Operti",
+        "role": "Co-fondatrice",
+        "description": "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.",
+        "photo": "/img/pepsi.jpeg",
+        "linkedin": "",
+        "id": "m1"
+      },
+      {
+        "id": "m2",
+        "nom": "Lisa Azorin",
+        "role": "Co-fondatrice",
+        "description": "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.",
+        "photo": "/img/pepsi.jpeg",
+        "linkedin": ""
+      },
+      {
+        "id": "m3",
+        "nom": "MC",
+        "role": "Co-fondatrice",
+        "description": "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.",
+        "photo": "/img/pepsi.jpeg",
+        "linkedin": ""
+      }
+    ]
+  },
   "partenaires": {
     "logos": [
       {
