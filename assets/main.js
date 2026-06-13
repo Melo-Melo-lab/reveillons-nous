@@ -133,7 +133,7 @@ function applyContent(d) {
   }
 
   // Team
-  if (d.team?.visible && d.team?.membres?.length) {
+  if (d.team?.membres?.length) {
     const section = document.getElementById('team');
     if (section) {
       section.style.display = '';
