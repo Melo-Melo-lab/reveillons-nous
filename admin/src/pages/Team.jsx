@@ -47,25 +47,6 @@ export default function Team({ content, onChange, saveStatus }) {
         <SaveStatus status={saveStatus} />
       </div>
 
-      {/* Paramètres de la section */}
-      <div style={SECTION}>
-        <h2 style={{ fontSize:'0.95rem', fontWeight:700, color:'#191a23', margin:0 }}>Paramètres de la section</h2>
-        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-          <input
-            type="checkbox"
-            id="teamVisible"
-            checked={!!team.visible}
-            onChange={e => setTeam({ visible: e.target.checked })}
-            style={{ width:18, height:18, cursor:'pointer', accentColor:'#191a23' }}
-          />
-          <label htmlFor="teamVisible" style={{ fontWeight:600, color:'#191a23', cursor:'pointer', fontSize:'0.9rem' }}>
-            Afficher la section Team sur le site
-          </label>
-        </div>
-        <Field label="Label (ex: Team)" value={team.label} onChange={v => setTeam({ label: v })} />
-        <Textarea label="Description de la section" value={team.description} onChange={v => setTeam({ description: v })} />
-      </div>
-
       {/* Liste des membres */}
       <div style={SECTION}>
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
