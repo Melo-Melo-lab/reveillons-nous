@@ -41,10 +41,7 @@ router.put('/:section', requireAuth, (req, res) => {
   try {
     const { section } = req.params;
     const current = read();
-    if (!(section in current)) {
-      return res.status(404).json({ error: `Section "${section}" introuvable` });
-    }
-    current[section] = { ...current[section], ...req.body };
+    current[section] = { ...(current[section] || {}), ...req.body };
     write(current);
     res.json(current[section]);
   } catch {

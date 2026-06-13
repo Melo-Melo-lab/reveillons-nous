@@ -47,6 +47,12 @@ export default function Team({ content, onChange, saveStatus }) {
         <SaveStatus status={saveStatus} />
       </div>
 
+      {/* Titre et description */}
+      <div style={SECTION}>
+        <Field label="Titre de la section" value={team.label}       onChange={v => setTeam({ label: v })} />
+        <Field label="Description"         value={team.description} onChange={v => setTeam({ description: v })} />
+      </div>
+
       {/* Liste des membres */}
       <div style={SECTION}>
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
