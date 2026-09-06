@@ -20,6 +20,26 @@ if (nav) {
   }, { passive: true });
 }
 
+// ── LOGO + FAVICON (depuis le dashboard) ─────
+(async function applyGlobalBranding() {
+  try {
+    const cached = sessionStorage.getItem('siteContent');
+    const data = cached ? JSON.parse(cached) : await (await fetch('/api/content')).json();
+    if (!cached) sessionStorage.setItem('siteContent', JSON.stringify(data));
+    const g = data.global;
+    if (!g) return;
+    if (g.logoUrl) {
+      document.querySelectorAll('.nav__logo-img, .footer__logo-img').forEach(img => img.setAttribute('src', g.logoUrl));
+    }
+    if (g.logoAlt) {
+      document.querySelectorAll('.nav__logo-img, .footer__logo-img').forEach(img => img.setAttribute('alt', g.logoAlt));
+    }
+    if (g.favicon) {
+      document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(link => link.setAttribute('href', g.favicon));
+    }
+  } catch {}
+})();
+
 // ── NEWSLETTER ───────────────────────────────
 (function initNewsletter() {
   const btn      = document.getElementById('newsletterBtn');

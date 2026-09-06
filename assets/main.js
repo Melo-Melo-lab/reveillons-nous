@@ -22,6 +22,24 @@ async function initContent() {
 }
 
 function applyContent(d) {
+  // Logo (nav + footer) et favicon
+  if (d.global) {
+    if (d.global.logoUrl) {
+      document.querySelectorAll('.nav__logo-img, .footer__logo-img').forEach(img => {
+        img.setAttribute('src', d.global.logoUrl);
+      });
+    }
+    if (d.global.logoAlt) {
+      document.querySelectorAll('.nav__logo-img, .footer__logo-img').forEach(img => {
+        img.setAttribute('alt', d.global.logoAlt);
+      });
+    }
+    if (d.global.favicon) {
+      document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(link => {
+        link.setAttribute('href', d.global.favicon);
+      });
+    }
+  }
   // Navigation
   // Reconstruit entièrement la liste (au lieu de mapper par position) pour
   // rester correct même si le nombre d'éléments a changé depuis un cache

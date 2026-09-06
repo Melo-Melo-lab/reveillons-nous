@@ -68,10 +68,6 @@
   "navigation": {
     "liens": [
       {
-        "label": "Partenaires",
-        "href": "/partenaires-details"
-      },
-      {
         "label": "Témoignages",
         "href": "#temoignages"
       },
@@ -82,6 +78,10 @@
       {
         "label": "Qui sommes-nous",
         "href": "#faq"
+      },
+      {
+        "label": "Partenaires",
+        "href": "/partenaires-details"
       },
       {
         "label": "Contact",
