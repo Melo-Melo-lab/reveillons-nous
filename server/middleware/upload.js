@@ -7,7 +7,7 @@ const VIDEO_TYPES = ['video/mp4','video/webm','video/quicktime'];
 
 function makeStorage(dest) {
   return multer.diskStorage({
-    destination: path.join(__dirname, '..', 'uploads', dest),
+    destination: path.join(process.env.UPLOADS_DIR || path.join(__dirname, '..', 'uploads'), dest),
     filename: (_req, file, cb) => {
       const ext  = path.extname(file.originalname);
       const name = crypto.randomBytes(12).toString('hex');

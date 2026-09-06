@@ -21,11 +21,16 @@ if (!fs.existsSync(DATA_FILE) && fs.existsSync(SEED_FILE)) {
 // Rendre le chemin accessible aux routes sans module séparé
 process.env.DATA_FILE = DATA_FILE;
 
-// ── DOSSIERS UPLOADS ──────────────────────────
-['uploads/images', 'uploads/videos'].forEach(dir => {
-  const full = path.join(__dirname, dir);
+// ── DOSSIERS UPLOADS ───────────────────────────
+// UPLOADS_DIR peut pointer vers le même volume persistant Railway que DATA_DIR.
+// Sans volume, on reste sur server/uploads/ (remis à zéro à chaque déploiement).
+const UPLOADS_DIR = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads');
+['images', 'videos'].forEach(sub => {
+  const full = path.join(UPLOADS_DIR, sub);
   if (!fs.existsSync(full)) fs.mkdirSync(full, { recursive: true });
 });
+// Rendre le chemin accessible aux routes/middleware sans module séparé
+process.env.UPLOADS_DIR = UPLOADS_DIR;
 
 const app = express();
 
@@ -48,7 +53,7 @@ const loginLimiter = rateLimit({
 });
 
 // ── FICHIERS STATIQUES : uploads ──────────────
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // ── FICHIERS STATIQUES : admin build ─────────
 const adminDist = path.join(__dirname, 'admin-dist');
