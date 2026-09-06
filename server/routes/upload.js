@@ -5,7 +5,7 @@ const requireAuth = require('../middleware/auth');
 const { uploadImage, uploadVideo } = require('../middleware/upload');
 const router      = express.Router();
 
-const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
+const UPLOADS_DIR = process.env.UPLOADS_DIR || path.join(__dirname, '..', 'uploads');
 
 // POST /api/upload/image
 router.post('/image', requireAuth, (req, res) => {
