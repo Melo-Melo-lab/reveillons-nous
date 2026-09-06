@@ -66,6 +66,29 @@ app.get('/gate', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
+// ── DIAGNOSTIC TEMPORAIRE : état du stockage uploads ──
+// À retirer une fois le bug de persistance résolu.
+app.get('/api/debug/uploads', (_req, res) => {
+  let writeTest = null;
+  const testFile = path.join(UPLOADS_DIR, 'images', '.write-test');
+  try {
+    fs.writeFileSync(testFile, 'ok');
+    fs.unlinkSync(testFile);
+    writeTest = 'ok';
+  } catch (err) {
+    writeTest = `erreur: ${err.message}`;
+  }
+  res.json({
+    UPLOADS_DIR_env: process.env.UPLOADS_DIR || null,
+    UPLOADS_DIR_resolved: UPLOADS_DIR,
+    imagesDirExists: fs.existsSync(path.join(UPLOADS_DIR, 'images')),
+    videosDirExists: fs.existsSync(path.join(UPLOADS_DIR, 'videos')),
+    imagesFiles: fs.existsSync(path.join(UPLOADS_DIR, 'images')) ? fs.readdirSync(path.join(UPLOADS_DIR, 'images')) : [],
+    writeTest,
+    DATA_DIR_env: process.env.DATA_DIR || null,
+  });
+});
+
 // ── ROUTES API ────────────────────────────────
 app.use('/api/auth/login', loginLimiter);
 app.use('/api/auth',       require('./routes/auth'));
@@ -87,4 +110,5 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
   console.log(`Données : ${DATA_FILE}`);
+  console.log(`Uploads : ${UPLOADS_DIR}`);
 });
