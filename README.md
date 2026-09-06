@@ -121,23 +121,7 @@ npm run build
 
 ## Accès à l'interface admin
 
-L'accès admin est intentionnellement invisible pour les visiteurs. Trois méthodes :
-
-### Méthode 1 — Clics rapides (mobile-friendly)
-Cliquer **5 fois rapidement** (en moins de 2 secondes) sur le texte de copyright dans le footer (ex: "© 2026 Réveillons-nous…").
-
-### Méthode 2 — Code Konami (desktop)
-Taper la séquence sur le clavier :
-```
-↑ ↑ ↓ ↓ ← → ← → A
-```
-
-### Méthode 3 — URL secrète
-Accéder à l'URL :
-```
-https://www.reveillons-nous.org/gate?k=VOTRE_GATE_TOKEN
-```
-Remplacer `VOTRE_GATE_TOKEN` par la valeur de `GATE_TOKEN` dans le `.env`.
+Les modalités d'accès à l'interface d'administration ne sont pas documentées ici. Contactez un membre de l'équipe pour les obtenir.
 
 ---
 
