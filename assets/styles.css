@@ -434,6 +434,8 @@ p {
   gap: 40px;
   max-width: var(--container);
   margin: 0 auto;
+  text-decoration: none;
+  cursor: pointer;
 }
 .logos__label {
   font-size: var(--fs-hero);
@@ -478,6 +480,61 @@ p {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* ════════════════════════════════════════════
+   PAGE LISTING PARTENAIRES
+   ════════════════════════════════════════════ */
+.partnerspage {
+  background: var(--white);
+  padding: 120px 0 80px;
+}
+.partnerspage__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.partnerspage__item {
+  background: #fff;
+  border-radius: 28px;
+  padding: 32px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+.partnerspage__img {
+  max-width: 100%;
+  max-height: 56px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.partnerspage__empty {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 1rem;
+  text-align: center;
+  padding: 40px 0;
+}
+
+@media (max-width: 1024px) {
+  .partnerspage__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .partnerspage {
+    padding: 100px 0 60px;
+  }
+  .partnerspage__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .partnerspage__item {
+    border-radius: 16px;
+    padding: 24px 16px;
+    min-height: 96px;
   }
 }
 

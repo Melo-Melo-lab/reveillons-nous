@@ -160,6 +160,7 @@ function applyContent(d) {
   }
 
   // Logos partenaires
+  setTextContent('#partenairesLabel', d.partenaires?.titre);
   if (d.partenaires?.logos?.length) {
     const track = document.querySelector('.logos__track');
     if (track) {
