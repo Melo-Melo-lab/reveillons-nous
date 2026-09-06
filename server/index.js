@@ -1,6 +1,4 @@
 try { require('dotenv').config(); } catch {} // local uniquement, Railway injecte les vars directement
-const RAW_UPLOADS_DIR_ENV = process.env.UPLOADS_DIR; // capturé avant toute réécriture, pour diagnostic
-const RAW_DATA_DIR_ENV    = process.env.DATA_DIR;
 const express   = require('express');
 const cors      = require('cors');
 const helmet    = require('helmet');
@@ -66,30 +64,6 @@ app.get('/admin/*', (_req, res) => res.sendFile(path.join(adminDist, 'index.html
 // ── PAGE /gate — accès admin caché via URL ────
 app.get('/gate', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
-
-// ── DIAGNOSTIC TEMPORAIRE : état du stockage uploads ──
-// À retirer une fois le bug de persistance résolu.
-app.get('/api/debug/uploads', (_req, res) => {
-  let writeTest = null;
-  const testFile = path.join(UPLOADS_DIR, 'images', '.write-test');
-  try {
-    fs.writeFileSync(testFile, 'ok');
-    fs.unlinkSync(testFile);
-    writeTest = 'ok';
-  } catch (err) {
-    writeTest = `erreur: ${err.message}`;
-  }
-  res.json({
-    RAW_UPLOADS_DIR_ENV_at_boot: RAW_UPLOADS_DIR_ENV || null,
-    RAW_DATA_DIR_ENV_at_boot: RAW_DATA_DIR_ENV || null,
-    dirname: __dirname,
-    UPLOADS_DIR_resolved: UPLOADS_DIR,
-    imagesDirExists: fs.existsSync(path.join(UPLOADS_DIR, 'images')),
-    videosDirExists: fs.existsSync(path.join(UPLOADS_DIR, 'videos')),
-    imagesFiles: fs.existsSync(path.join(UPLOADS_DIR, 'images')) ? fs.readdirSync(path.join(UPLOADS_DIR, 'images')) : [],
-    writeTest,
-  });
 });
 
 // ── ROUTES API ────────────────────────────────
