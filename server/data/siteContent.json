@@ -68,6 +68,10 @@
   "navigation": {
     "liens": [
       {
+        "label": "Partenaires",
+        "href": "#partenaires"
+      },
+      {
         "label": "Témoignages",
         "href": "#temoignages"
       },
