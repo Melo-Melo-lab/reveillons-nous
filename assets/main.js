@@ -23,14 +23,16 @@ async function initContent() {
 
 function applyContent(d) {
   // Navigation
+  // Reconstruit entièrement la liste (au lieu de mapper par position) pour
+  // rester correct même si le nombre d'éléments a changé depuis un cache
+  // sessionStorage plus ancien (sinon décalage/doublons).
   if (d.navigation?.liens) {
-    const items = document.querySelectorAll('.nav__links li a');
-    d.navigation.liens.forEach((lien, i) => {
-      if (items[i]) {
-        items[i].textContent = lien.label;
-        items[i].setAttribute('href', lien.href);
-      }
-    });
+    const navList = document.getElementById('navLinks');
+    if (navList) {
+      navList.innerHTML = d.navigation.liens
+        .map(lien => `<li><a href="${(lien.href || '#').replace(/"/g, '&quot;')}">${(lien.label || '').replace(/</g, '&lt;')}</a></li>`)
+        .join('');
+    }
   }
   // Hero
   if (d.hero) {
@@ -226,16 +228,18 @@ const burger   = document.getElementById('burger');
 const navLinks = document.getElementById('navLinks');
 
 burger.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => navLinks.classList.remove('open'));
+// Délégation : fonctionne même si les liens sont reconstruits dynamiquement (applyContent)
+navLinks.addEventListener('click', e => {
+  if (e.target.closest('a')) navLinks.classList.remove('open');
 });
 
 // ── NAV ACTIVE AU SCROLL ─────────────────────
-const sections   = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav__links a');
+const sections = document.querySelectorAll('section[id]');
 
 function updateActiveNav() {
   const y = window.scrollY + 80;
+  // Re-requêté à chaque appel : la liste peut être reconstruite dynamiquement (applyContent)
+  const navAnchors = document.querySelectorAll('.nav__links a');
   sections.forEach(s => {
     if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
       navAnchors.forEach(a => {
@@ -677,17 +681,18 @@ updateFloatCtaTheme();
 })();
 
 // ── SMOOTH SCROLL (offset nav) ───────────────
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    const href = link.getAttribute('href');
-    if (!href || href === '#') return;
-    try {
-      const target = document.querySelector(href);
-      if (!target) return;
-      e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
-    } catch (_) {}
-  });
+// Délégation sur document : fonctionne aussi pour les liens ajoutés dynamiquement (nav applyContent)
+document.addEventListener('click', e => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  const href = link.getAttribute('href');
+  if (!href || href === '#') return;
+  try {
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+  } catch (_) {}
 });
 
 // ── ACCÈS ADMIN CACHÉ ────────────────────────
