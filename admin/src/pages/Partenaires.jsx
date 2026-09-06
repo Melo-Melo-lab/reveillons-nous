@@ -50,6 +50,28 @@ export default function Partenaires({ content, onChange, saveStatus }) {
         <SaveStatus status={saveStatus} />
       </div>
 
+      <div style={SECTION}>
+        <h2 style={H2}>Titre de la section (page d'accueil)</h2>
+        <input
+          style={INPUT}
+          type="text"
+          value={partenaires.titre || ''}
+          onChange={e => onChange('partenaires', { ...partenaires, titre: e.target.value })}
+          placeholder="Ils ont signé"
+        />
+      </div>
+
+      <div style={SECTION}>
+        <h2 style={H2}>Titre de la page « Tous les partenaires »</h2>
+        <input
+          style={INPUT}
+          type="text"
+          value={partenaires.pageTitre || ''}
+          onChange={e => onChange('partenaires', { ...partenaires, pageTitre: e.target.value })}
+          placeholder="Les partenaires"
+        />
+      </div>
+
       {/* Logos existants */}
       {logos.map((logo, i) => (
         <div key={i} style={SECTION}>
