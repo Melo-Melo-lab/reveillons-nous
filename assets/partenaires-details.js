@@ -2,6 +2,31 @@
    PAGE LISTING PARTENAIRES — partenaires-details.js
    ════════════════════════════════════════════ */
 
+// ── CACHE CONTENU (expire après 5 min, évite de resservir une version
+//    obsolète à un onglet resté ouvert après une mise à jour dashboard) ──
+const CONTENT_CACHE_KEY = 'siteContent';
+const CONTENT_CACHE_TTL = 5 * 60 * 1000;
+let contentPromise = null;
+
+function fetchSiteContent() {
+  if (contentPromise) return contentPromise;
+  contentPromise = (async () => {
+    try {
+      const cached = sessionStorage.getItem(CONTENT_CACHE_KEY);
+      if (cached) {
+        const { data, ts } = JSON.parse(cached);
+        if (data && Date.now() - ts < CONTENT_CACHE_TTL) return data;
+      }
+    } catch {}
+    const res = await fetch('/api/content');
+    if (!res.ok) throw new Error('API indisponible');
+    const data = await res.json();
+    try { sessionStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
+    return data;
+  })();
+  return contentPromise;
+}
+
 // ── NAV BURGER ───────────────────────────────
 const burger   = document.getElementById('burger');
 const navLinks = document.getElementById('navLinks');
@@ -23,9 +48,7 @@ if (nav) {
 // ── LOGO + FAVICON (depuis le dashboard) ─────
 (async function applyGlobalBranding() {
   try {
-    const cached = sessionStorage.getItem('siteContent');
-    const data = cached ? JSON.parse(cached) : await (await fetch('/api/content')).json();
-    if (!cached) sessionStorage.setItem('siteContent', JSON.stringify(data));
+    const data = await fetchSiteContent();
     const g = data.global;
     if (!g) return;
     if (g.logoUrl) {
@@ -74,9 +97,7 @@ if (nav) {
 
   let data;
   try {
-    const cached = sessionStorage.getItem('siteContent');
-    data = cached ? JSON.parse(cached) : await (await fetch('/api/content')).json();
-    if (!cached) sessionStorage.setItem('siteContent', JSON.stringify(data));
+    data = await fetchSiteContent();
   } catch {
     if (empty) { empty.textContent = 'Impossible de charger les partenaires.'; empty.style.display = ''; }
     return;

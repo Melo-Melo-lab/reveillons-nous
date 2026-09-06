@@ -3,18 +3,30 @@
    ════════════════════════════════════════════ */
 
 // ── CONTENU DYNAMIQUE DEPUIS L'API ───────────
-async function initContent() {
-  let data;
+// Cache sessionStorage avec expiration (5 min) : évite de resservir une
+// version obsolète (ex: après une mise à jour depuis le dashboard) à un
+// onglet resté ouvert.
+const CONTENT_CACHE_KEY = 'siteContent';
+const CONTENT_CACHE_TTL = 5 * 60 * 1000;
+
+async function fetchSiteContent() {
   try {
-    const cached = sessionStorage.getItem('siteContent');
+    const cached = sessionStorage.getItem(CONTENT_CACHE_KEY);
     if (cached) {
-      data = JSON.parse(cached);
-    } else {
-      const res = await fetch('/api/content');
-      if (!res.ok) throw new Error('API indisponible');
-      data = await res.json();
-      sessionStorage.setItem('siteContent', JSON.stringify(data));
+      const { data, ts } = JSON.parse(cached);
+      if (data && Date.now() - ts < CONTENT_CACHE_TTL) return data;
     }
+  } catch {}
+  const res = await fetch('/api/content');
+  if (!res.ok) throw new Error('API indisponible');
+  const data = await res.json();
+  try { sessionStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
+  return data;
+}
+
+async function initContent() {
+  try {
+    const data = await fetchSiteContent();
     applyContent(data);
   } catch {
     // Fallback silencieux : les valeurs hardcodées dans le HTML restent affichées
