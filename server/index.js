@@ -74,6 +74,7 @@ const ROOT = path.join(__dirname, '..');
 app.use('/server', (_req, res) => res.status(404).end());
 app.use(express.static(ROOT));
 app.get('/evenements-details', (_req, res) => res.sendFile(path.join(ROOT, 'evenements-details.html')));
+app.get('/partenaires-details', (_req, res) => res.sendFile(path.join(ROOT, 'partenaires-details.html')));
 app.get('*', (_req, res) => res.sendFile(path.join(ROOT, 'index.html')));
 
 // ── DÉMARRAGE ─────────────────────────────────
